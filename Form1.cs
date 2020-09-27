@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TheBattleShipClient.Controllers;
@@ -21,13 +16,13 @@ namespace TheBattleShipClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            CreatePlayer();
+            //CreatePlayer();
         }
 
         public void CreatePlayer()
         {
             Task<string> create = fack.Connector.PostAction("Identity/Register",
-                "{\"userName\":\"" + "JONAS" + "\", \"email\":\"" + "meailemail@mail.com" + "\", \"password\":\"" + "Pass-w0rd" + "\"}");
+                "{\"userName\":\"" + "JONAS" + "\", \"email\":\"" + "mailas@one.lt" + "\", \"password\":\"" + "abc" + "\"}");
             var result = create.Result; // result = "" ?
             var obj = JObject.Parse(result);
             string id = obj["token"].Value<string>();
