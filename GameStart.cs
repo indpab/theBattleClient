@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TheBattleShipClient.Controllers;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace TheBattleShipClient
 {
     public partial class GameStart : Form
     {
-        Form1 form1 = new Form1();
+        Game game = new Game();
         Facafe fack = new Facafe();
 
         public GameStart()
@@ -18,7 +19,10 @@ namespace TheBattleShipClient
 
         private void joinButton_Click(object sender, EventArgs e)
         {
-            CheckInput();
+            //this.Dispose();
+            game.Show();
+
+            //CheckInput();
         }
         private void hostButton_Click(object sender, EventArgs e)
         {
@@ -40,11 +44,22 @@ namespace TheBattleShipClient
             errorLabel.Visible = false;
             if (IsValidInput(userNameTextBox.Text, emailTextBox.Text, passwordTextBox.Text))
             {
-                Task<string> create = fack.Connector.PostAction("Identity/Register",
+                try
+                {
+                    Task<string> create = fack.Connector.PostAction("Identity/Register",
 "{\"userName\":\"" + userNameTextBox.Text + "\", \"email\":\"" + emailTextBox.Text + "\", \"password\":\"" + passwordTextBox.Text + "\"}");
-                var result = create.Result; // result = "" ?
-                var obj = JObject.Parse(result);
-                string id = obj["token"].Value<string>();
+                    var result = create.Result; // result = "" ?
+                    var obj = JObject.Parse(result);
+
+                    string id = obj["token"].Value<string>();
+                    game.Show();
+                }
+
+                catch (Exception e)
+                {
+                    errorLabel.Text = e.Message;
+                    errorLabel.Visible = true;
+                }
 
                 //form1.Show();
             }
@@ -52,9 +67,9 @@ namespace TheBattleShipClient
 
         bool IsValidInput(string userName, string email, string password)
         {
-            if (userName.Length < 3)
+            if (userName.Length < 4)
             {
-                errorLabel.Text = "Username has to be longer than 2 letters";
+                errorLabel.Text = "Username must be atleast 4 characters.";
                 errorLabel.Visible = true;
                 return false;
             }
@@ -64,13 +79,40 @@ namespace TheBattleShipClient
                 errorLabel.Visible = true;
                 return false;
             }
-            else if (password.Length < 3)
+            else if (!IsValidPass(password))
             {
-                errorLabel.Text = "Password has to be longer than 2 letters";
-                errorLabel.Visible = true;
                 return false;
             }
 
+            return true;
+        }
+
+        bool IsValidPass(string pass)
+        {
+            if (pass.Length < 6)
+            {
+                errorLabel.Text = "Password must be atleast 6 characters.";
+                errorLabel.Visible = true;
+                return false;
+            }
+            if (!pass.Any(c => char.IsLetterOrDigit(c))) //Turetu veikt, no idea, kodel neveikia
+            {
+                errorLabel.Text = "Passwords must have at least one non alphanumeric character.";
+                errorLabel.Visible = true;
+                return false;
+            }
+            if (!pass.Any(char.IsDigit))
+            {
+                errorLabel.Text = "Passwords must have at least one digit ('0'-'9').";
+                errorLabel.Visible = true;
+                return false;
+            }
+            if (!pass.Any(char.IsUpper))
+            {
+                errorLabel.Text = "Password must have at least one uppercase ('A'-'Z').";
+                errorLabel.Visible = true;
+                return false;
+            }
             return true;
         }
         bool IsValidEmail(string email)
@@ -84,16 +126,6 @@ namespace TheBattleShipClient
             {
                 return false;
             }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void passwordTextBox_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

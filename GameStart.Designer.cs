@@ -54,7 +54,7 @@
             this.userNameTextBox.Name = "userNameTextBox";
             this.userNameTextBox.Size = new System.Drawing.Size(156, 23);
             this.userNameTextBox.TabIndex = 1;
-            this.userNameTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.userNameTextBox.Text = "JONAS";
             // 
             // hostButton
             // 
@@ -101,6 +101,7 @@
             this.emailTextBox.Name = "emailTextBox";
             this.emailTextBox.Size = new System.Drawing.Size(156, 23);
             this.emailTextBox.TabIndex = 6;
+            this.emailTextBox.Text = "meailemail@mail.com";
             // 
             // passwordTextBox
             // 
@@ -110,14 +111,15 @@
             this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(156, 23);
             this.passwordTextBox.TabIndex = 7;
-            this.passwordTextBox.TextChanged += new System.EventHandler(this.passwordTextBox_TextChanged);
+            this.passwordTextBox.Text = "Pass-w0rd";
             // 
             // errorLabel
             // 
             this.errorLabel.AutoSize = true;
             this.errorLabel.ForeColor = System.Drawing.Color.Red;
-            this.errorLabel.Location = new System.Drawing.Point(333, 97);
+            this.errorLabel.Location = new System.Drawing.Point(255, 103);
             this.errorLabel.Name = "errorLabel";
+            this.errorLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.errorLabel.Size = new System.Drawing.Size(81, 15);
             this.errorLabel.TabIndex = 8;
             this.errorLabel.Text = "Error message";
