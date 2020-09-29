@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
+using TheBattleShipClient.Services;
 
 namespace TheBattleShipClient
 {
@@ -13,6 +14,8 @@ namespace TheBattleShipClient
     {
         List<Button> playerPositionButtons;
         List<Button> enemyPositionButtons;
+
+        Services.RoomsService.RoomResponse RoomResponse { get; set; }
 
         Random rand = new Random();
 
@@ -22,10 +25,11 @@ namespace TheBattleShipClient
         int enemyScore;
 
         Facafe fack = new Facafe();
-        public Game()
+        public Game(RoomsService.RoomResponse rr)
         {
             InitializeComponent();
             RestartGame();
+            RoomResponse = rr;
         }
 
         private void Game_Load(object sender, EventArgs e)
@@ -156,6 +160,8 @@ namespace TheBattleShipClient
 
         private void RestartGame()
         {
+            //var size = RoomResponse.Size;
+
             playerPositionButtons = new List<Button> { w1, w2, w3, w4, x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4 };
             enemyPositionButtons = new List<Button> { a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 };
 

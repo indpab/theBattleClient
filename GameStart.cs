@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using TheBattleShipClient.Controllers;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using TheBattleShipClient.Services;
 
 namespace TheBattleShipClient
 {
@@ -24,7 +25,7 @@ namespace TheBattleShipClient
 
             //CheckInput();
         }
-        private void hostButton_Click(object sender, EventArgs e)
+        private void registerButton_Click(object sender, EventArgs e)
         {
             //        Task<string> create = fack.Connector.PostAction("Identity/Register",
             //"{\"userName\":\"" + "JONAS" + "\", \"email\":\"" + "mailas@one.lt" + "\", \"password\":\"" + "abc" + "\"}");
@@ -36,9 +37,23 @@ namespace TheBattleShipClient
             //userNameLabel.Text = userNameTextBox.Text;
             //emailLabel.Text = emailTextBox.Text;
             //passwordLabel.Text = passwordTextBox.Text;
-
-            CheckInput();
+            Register();
+            
         }
+
+        private async void Register()
+        {
+            AuthenticationResponse ar = new AuthenticationResponse();
+            if (IsValidInput(userNameTextBox.Text, emailTextBox.Text, passwordTextBox.Text)){
+                ar =  await IdentityService.Register(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
+            }
+
+            StartGameOption gso = new StartGameOption(ar);
+
+            this.Hide();
+            gso.Show();
+        }
+
         private void CheckInput()
         {
             errorLabel.Visible = false;

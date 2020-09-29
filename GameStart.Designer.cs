@@ -30,7 +30,7 @@
         {
             this.userNameLabel = new System.Windows.Forms.Label();
             this.userNameTextBox = new System.Windows.Forms.TextBox();
-            this.hostButton = new System.Windows.Forms.Button();
+            this.registerButton = new System.Windows.Forms.Button();
             this.joinButton = new System.Windows.Forms.Button();
             this.emailLabel = new System.Windows.Forms.Label();
             this.passwordLabel = new System.Windows.Forms.Label();
@@ -56,15 +56,15 @@
             this.userNameTextBox.TabIndex = 1;
             this.userNameTextBox.Text = "JONAS";
             // 
-            // hostButton
+            // registerButton
             // 
-            this.hostButton.Location = new System.Drawing.Point(293, 279);
-            this.hostButton.Name = "hostButton";
-            this.hostButton.Size = new System.Drawing.Size(75, 23);
-            this.hostButton.TabIndex = 2;
-            this.hostButton.Text = "Host";
-            this.hostButton.UseVisualStyleBackColor = true;
-            this.hostButton.Click += new System.EventHandler(this.hostButton_Click);
+            this.registerButton.Location = new System.Drawing.Point(293, 279);
+            this.registerButton.Name = "registerButton";
+            this.registerButton.Size = new System.Drawing.Size(75, 23);
+            this.registerButton.TabIndex = 2;
+            this.registerButton.Text = "Register";
+            this.registerButton.UseVisualStyleBackColor = true;
+            this.registerButton.Click += new System.EventHandler(this.registerButton_Click);
             // 
             // joinButton
             // 
@@ -137,7 +137,7 @@
             this.Controls.Add(this.passwordLabel);
             this.Controls.Add(this.emailLabel);
             this.Controls.Add(this.joinButton);
-            this.Controls.Add(this.hostButton);
+            this.Controls.Add(this.registerButton);
             this.Controls.Add(this.userNameTextBox);
             this.Controls.Add(this.userNameLabel);
             this.Name = "GameStart";
@@ -151,7 +151,7 @@
 
         private System.Windows.Forms.Label userNameLabel;
         private System.Windows.Forms.TextBox userNameTextBox;
-        private System.Windows.Forms.Button hostButton;
+        private System.Windows.Forms.Button registerButton;
         private System.Windows.Forms.Button joinButton;
         private System.Windows.Forms.Label emailLabel;
         private System.Windows.Forms.Label passwordLabel;
