@@ -64,8 +64,15 @@ namespace TheBattleShipClient
                 rs = await RoomsService.CreateRoom(ar.Token, new RoomsService.RoomRequest { Size = roomSizeVal });
 
             }
+            else if (join.Checked)
+            {
+                var roomIdVal = roomId.Text;
+                rs = await RoomsService.JoinRoom(ar.Token, roomIdVal);
+            }
 
             Game g = new Game(rs);
+            this.Hide();
+            g.Show();
         }
     }
 }

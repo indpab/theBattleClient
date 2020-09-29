@@ -57,21 +57,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="roomSize.Items" xml:space="preserve">
+    <value>4</value>
+  </data>
   <assembly alias="System.Drawing.Primitives" name="System.Drawing.Primitives, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="modeSelection.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>200, 100</value>
+  <data name="roomSize.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>524, 117</value>
   </data>
-  <data name="hostSelectionRadio.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>7, 23</value>
+  <data name="roomSize.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>121, 23</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <assembly alias="System.Private.CoreLib" name="System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+  <data name="roomSize.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>1</value>
   </data>
-  <data name="&gt;&gt;modeSelection.Parent" xml:space="preserve">
+  <data name="&gt;&gt;roomSize.Name" xml:space="preserve">
+    <value>roomSize</value>
+  </data>
+  <data name="&gt;&gt;roomSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;roomSize.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>StartGameOption</value>
+  <data name="&gt;&gt;roomSize.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="roomSizeLabel.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>421, 117</value>
+  </data>
+  <data name="roomSizeLabel.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>100, 23</value>
+  </data>
+  <data name="roomSizeLabel.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>2</value>
+  </data>
+  <data name="roomSizeLabel.Text" xml:space="preserve">
+    <value>Select map size</value>
+  </data>
+  <data name="&gt;&gt;roomSizeLabel.Name" xml:space="preserve">
+    <value>roomSizeLabel</value>
+  </data>
+  <data name="&gt;&gt;roomSizeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;roomSizeLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;roomSizeLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="roomId.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>524, 153</value>
+  </data>
+  <data name="roomId.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>100, 23</value>
+  </data>
+  <data name="roomId.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;roomId.Name" xml:space="preserve">
+    <value>roomId</value>
+  </data>
+  <data name="&gt;&gt;roomId.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;roomId.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;roomId.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="roomIdLabel.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>421, 156</value>
+  </data>
+  <data name="roomIdLabel.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>100, 23</value>
+  </data>
+  <data name="roomIdLabel.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>4</value>
+  </data>
+  <data name="roomIdLabel.Text" xml:space="preserve">
+    <value>Enter room id</value>
+  </data>
+  <data name="&gt;&gt;roomIdLabel.Name" xml:space="preserve">
+    <value>roomIdLabel</value>
   </data>
   <data name="&gt;&gt;roomIdLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -79,227 +149,134 @@
   <data name="&gt;&gt;roomIdLabel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="hostSelectionRadio.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>91, 19</value>
-  </data>
-  <data name="&gt;&gt;roomId.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>0, 0</value>
-  </data>
-  <data name="startGameButton.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>75, 23</value>
-  </data>
-  <assembly alias="System.Private.CoreLib" name="System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
-  <data name="roomIdLabel.TabIndex" type="System.Int32, System.Private.CoreLib">
-    <value>4</value>
-  </data>
-  <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>274, 200</value>
-  </data>
-  <data name="roomId.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>100, 23</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;roomIdLabel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;joinSelectionRadio.Parent" xml:space="preserve">
-    <value>modeSelection</value>
+  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+  <data name="startGameButton.Font" type="System.Drawing.Font, System.Drawing.Common">
+    <value>Microsoft Sans Serif, 20.25pt</value>
   </data>
-  <data name="&gt;&gt;joinSelectionRadio.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="startGameButton.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>262, 249</value>
   </data>
-  <data name="&gt;&gt;joinSelectionRadio.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="startGameButton.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>321, 93</value>
   </data>
-  <data name="roomSize.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>286, 190</value>
+  <data name="startGameButton.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>5</value>
   </data>
-  <data name="roomSizeLabel.TabIndex" type="System.Int32, System.Private.CoreLib">
-    <value>2</value>
+  <data name="startGameButton.Text" xml:space="preserve">
+    <value>Start</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;startGameButton.Name" xml:space="preserve">
+    <value>startGameButton</value>
   </data>
-  <data name="joinSelectionRadio.Text" xml:space="preserve">
-    <value>Join a room</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>800, 450</value>
+  <data name="&gt;&gt;startGameButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;startGameButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="roomId.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>418, 137</value>
-  </data>
-  <data name="hostSelectionRadio.TabIndex" type="System.Int32, System.Private.CoreLib">
-    <value>0</value>
-  </data>
-  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>100, 23</value>
-  </data>
-  <data name="modeSelection.Text" xml:space="preserve">
-    <value>Select how to start a game:</value>
-  </data>
-  <data name="joinSelectionRadio.TabIndex" type="System.Int32, System.Private.CoreLib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;roomIdLabel.Name" xml:space="preserve">
-    <value>roomIdLabel</value>
-  </data>
-  <data name="&gt;&gt;roomSizeLabel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;startGameButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>100, 23</value>
+  <data name="hostSelectionRadio.AutoSize" type="System.Boolean, System.Private.CoreLib">
+    <value>True</value>
   </data>
-  <data name="roomId.TabIndex" type="System.Int32, System.Private.CoreLib">
-    <value>3</value>
+  <data name="hostSelectionRadio.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>19, 22</value>
   </data>
-  <data name="startGameButton.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>337, 224</value>
+  <data name="hostSelectionRadio.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>91, 19</value>
   </data>
-  <data name="&gt;&gt;roomSize.Name" xml:space="preserve">
-    <value>roomSize</value>
-  </data>
-  <data name="&gt;&gt;modeSelection.Name" xml:space="preserve">
-    <value>modeSelection</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="roomIdLabel.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>419, 119</value>
-  </data>
-  <data name="&gt;&gt;joinSelectionRadio.Name" xml:space="preserve">
-    <value>joinSelectionRadio</value>
-  </data>
-  <data name="&gt;&gt;roomSizeLabel.Name" xml:space="preserve">
-    <value>roomSizeLabel</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="roomSize.TabIndex" type="System.Int32, System.Private.CoreLib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;roomSize.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, System.Private.CoreLib">
-    <value>0</value>
-  </data>
-  <data name="modeSelection.TabIndex" type="System.Int32, System.Private.CoreLib">
+  <data name="hostSelectionRadio.TabIndex" type="System.Int32, System.Private.CoreLib">
     <value>0</value>
   </data>
   <data name="hostSelectionRadio.Text" xml:space="preserve">
     <value>Host a room</value>
   </data>
-  <data name="roomSize.Items" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;hostSelectionRadio.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="roomSize.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>121, 23</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="joinSelectionRadio.AutoSize" type="System.Boolean, System.Private.CoreLib">
-    <value>True</value>
-  </data>
-  <data name="joinSelectionRadio.Size" type="System.Drawing.Size, System.Drawing.Primitives">
-    <value>87, 19</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing.Primitives">
-    <value>7, 15</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;modeSelection.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;startGameButton.Name" xml:space="preserve">
-    <value>startGameButton</value>
-  </data>
-  <data name="textBox1.TabIndex" type="System.Int32, System.Private.CoreLib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="hostSelectionRadio.AutoSize" type="System.Boolean, System.Private.CoreLib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
-    <value>textBox1</value>
-  </data>
-  <data name="&gt;&gt;roomId.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;modeSelection.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;hostSelectionRadio.Name" xml:space="preserve">
     <value>hostSelectionRadio</value>
-  </data>
-  <data name="&gt;&gt;roomId.Name" xml:space="preserve">
-    <value>roomId</value>
   </data>
   <data name="&gt;&gt;hostSelectionRadio.Type" xml:space="preserve">
     <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>StartGameOption</value>
-  </data>
   <data name="&gt;&gt;hostSelectionRadio.Parent" xml:space="preserve">
     <value>modeSelection</value>
   </data>
-  <data name="&gt;&gt;startGameButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;hostSelectionRadio.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="joinSelectionRadio.AutoSize" type="System.Boolean, System.Private.CoreLib">
+    <value>True</value>
   </data>
   <data name="joinSelectionRadio.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>7, 49</value>
+    <value>19, 61</value>
   </data>
-  <data name="&gt;&gt;roomSizeLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="joinSelectionRadio.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>87, 19</value>
   </data>
-  <data name="roomSizeLabel.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>419, 72</value>
+  <data name="joinSelectionRadio.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>1</value>
   </data>
-  <data name="&gt;&gt;roomId.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="joinSelectionRadio.Text" xml:space="preserve">
+    <value>Join a room</value>
+  </data>
+  <data name="joinSelectionRadio.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing.Common">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;joinSelectionRadio.Name" xml:space="preserve">
+    <value>joinSelectionRadio</value>
+  </data>
+  <data name="&gt;&gt;joinSelectionRadio.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;joinSelectionRadio.Parent" xml:space="preserve">
+    <value>modeSelection</value>
+  </data>
+  <data name="&gt;&gt;joinSelectionRadio.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="modeSelection.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>12, 12</value>
+    <value>200, 95</value>
   </data>
-  <data name="&gt;&gt;roomSize.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="modeSelection.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>200, 100</value>
   </data>
-  <data name="&gt;&gt;roomSizeLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="modeSelection.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>0</value>
   </data>
-  <data name="startGameButton.TabIndex" type="System.Int32, System.Private.CoreLib">
+  <data name="modeSelection.Text" xml:space="preserve">
+    <value>Select how to start a game:</value>
+  </data>
+  <data name="&gt;&gt;modeSelection.Name" xml:space="preserve">
+    <value>modeSelection</value>
+  </data>
+  <data name="&gt;&gt;modeSelection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;modeSelection.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;modeSelection.ZOrder" xml:space="preserve">
     <value>5</value>
-  </data>
-  <data name="&gt;&gt;roomSize.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
     <value>True</value>
   </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
-    <value>af-NA</value>
-  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing.Primitives">
+    <value>7, 15</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>866, 482</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>StartGameOption</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>StartGameOption</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

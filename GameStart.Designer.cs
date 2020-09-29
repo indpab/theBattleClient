@@ -58,9 +58,9 @@
             // 
             // registerButton
             // 
-            this.registerButton.Location = new System.Drawing.Point(293, 279);
+            this.registerButton.Location = new System.Drawing.Point(225, 279);
             this.registerButton.Name = "registerButton";
-            this.registerButton.Size = new System.Drawing.Size(75, 23);
+            this.registerButton.Size = new System.Drawing.Size(124, 58);
             this.registerButton.TabIndex = 2;
             this.registerButton.Text = "Register";
             this.registerButton.UseVisualStyleBackColor = true;
@@ -68,9 +68,9 @@
             // 
             // joinButton
             // 
-            this.joinButton.Location = new System.Drawing.Point(386, 279);
+            this.joinButton.Location = new System.Drawing.Point(377, 279);
             this.joinButton.Name = "joinButton";
-            this.joinButton.Size = new System.Drawing.Size(75, 23);
+            this.joinButton.Size = new System.Drawing.Size(124, 58);
             this.joinButton.TabIndex = 3;
             this.joinButton.Text = "Join";
             this.joinButton.UseVisualStyleBackColor = true;

@@ -29,53 +29,23 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartGameOption));
-            this.modeSelection = new System.Windows.Forms.GroupBox();
-            this.joinSelectionRadio = new System.Windows.Forms.RadioButton();
-            this.hostSelectionRadio = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
             this.roomSize = new System.Windows.Forms.ComboBox();
             this.roomSizeLabel = new System.Windows.Forms.Label();
             this.roomId = new System.Windows.Forms.TextBox();
             this.roomIdLabel = new System.Windows.Forms.Label();
             this.startGameButton = new System.Windows.Forms.Button();
+            this.hostSelectionRadio = new System.Windows.Forms.RadioButton();
+            this.joinSelectionRadio = new System.Windows.Forms.RadioButton();
+            this.modeSelection = new System.Windows.Forms.GroupBox();
             this.modeSelection.SuspendLayout();
             this.SuspendLayout();
             // 
-            // modeSelection
-            // 
-            resources.ApplyResources(this.modeSelection, "modeSelection");
-            this.modeSelection.Controls.Add(this.joinSelectionRadio);
-            this.modeSelection.Controls.Add(this.hostSelectionRadio);
-            this.modeSelection.Name = "modeSelection";
-            this.modeSelection.TabStop = false;
-            // 
-            // joinSelectionRadio
-            // 
-            resources.ApplyResources(this.joinSelectionRadio, "joinSelectionRadio");
-            this.joinSelectionRadio.Name = "joinSelectionRadio";
-            this.joinSelectionRadio.UseVisualStyleBackColor = true;
-            this.joinSelectionRadio.CheckedChanged += new System.EventHandler(this.joinSelectionRadio_CheckedChanged);
-            // 
-            // hostSelectionRadio
-            // 
-            resources.ApplyResources(this.hostSelectionRadio, "hostSelectionRadio");
-            this.hostSelectionRadio.Checked = true;
-            this.hostSelectionRadio.Name = "hostSelectionRadio";
-            this.hostSelectionRadio.TabStop = true;
-            this.hostSelectionRadio.UseVisualStyleBackColor = true;
-            this.hostSelectionRadio.CheckedChanged += new System.EventHandler(this.hostSelectionRadio_CheckedChanged);
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
             // roomSize
             // 
-            resources.ApplyResources(this.roomSize, "roomSize");
             this.roomSize.FormattingEnabled = true;
             this.roomSize.Items.AddRange(new object[] {
             resources.GetString("roomSize.Items")});
+            resources.ApplyResources(this.roomSize, "roomSize");
             this.roomSize.Name = "roomSize";
             // 
             // roomSizeLabel
@@ -100,6 +70,30 @@
             this.startGameButton.UseVisualStyleBackColor = true;
             this.startGameButton.Click += new System.EventHandler(this.startGameButton_Click);
             // 
+            // hostSelectionRadio
+            // 
+            resources.ApplyResources(this.hostSelectionRadio, "hostSelectionRadio");
+            this.hostSelectionRadio.Checked = true;
+            this.hostSelectionRadio.Name = "hostSelectionRadio";
+            this.hostSelectionRadio.TabStop = true;
+            this.hostSelectionRadio.UseVisualStyleBackColor = true;
+            this.hostSelectionRadio.CheckedChanged += new System.EventHandler(this.hostSelectionRadio_CheckedChanged);
+            // 
+            // joinSelectionRadio
+            // 
+            resources.ApplyResources(this.joinSelectionRadio, "joinSelectionRadio");
+            this.joinSelectionRadio.Name = "joinSelectionRadio";
+            this.joinSelectionRadio.UseVisualStyleBackColor = true;
+            this.joinSelectionRadio.CheckedChanged += new System.EventHandler(this.joinSelectionRadio_CheckedChanged);
+            // 
+            // modeSelection
+            // 
+            this.modeSelection.Controls.Add(this.hostSelectionRadio);
+            this.modeSelection.Controls.Add(this.joinSelectionRadio);
+            resources.ApplyResources(this.modeSelection, "modeSelection");
+            this.modeSelection.Name = "modeSelection";
+            this.modeSelection.TabStop = false;
+            // 
             // StartGameOption
             // 
             resources.ApplyResources(this, "$this");
@@ -109,7 +103,6 @@
             this.Controls.Add(this.roomId);
             this.Controls.Add(this.roomSizeLabel);
             this.Controls.Add(this.roomSize);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.modeSelection);
             this.Name = "StartGameOption";
             this.modeSelection.ResumeLayout(false);
@@ -120,15 +113,13 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox modeSelection;
-        private System.Windows.Forms.RadioButton hostSelectionRadio;
-        private System.Windows.Forms.RadioButton joinSelectionRadio;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox roomSize;
         private System.Windows.Forms.Label roomSizeLabel;
         private System.Windows.Forms.TextBox roomId;
         private System.Windows.Forms.Label roomIdLabel;
         private System.Windows.Forms.Button startGameButton;
+        private System.Windows.Forms.RadioButton hostSelectionRadio;
+        private System.Windows.Forms.RadioButton joinSelectionRadio;
+        private System.Windows.Forms.GroupBox modeSelection;
     }
 }

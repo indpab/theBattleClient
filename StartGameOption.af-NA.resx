@@ -57,13 +57,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing.Primitives" name="System.Drawing.Primitives, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="modeSelection.Location" type="System.Drawing.Point, System.Drawing.Primitives">
-    <value>212, 70</value>
-  </data>
   <data name="roomSize.Items" xml:space="preserve">
     <value>4</value>
   </data>
+  <assembly alias="System.Drawing.Primitives" name="System.Drawing.Primitives, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="roomSize.Location" type="System.Drawing.Point, System.Drawing.Primitives">
     <value>418, 90</value>
   </data>
@@ -94,5 +91,38 @@
   </data>
   <data name="startGameButton.Text" xml:space="preserve">
     <value>Start</value>
+  </data>
+  <data name="hostSelectionRadio.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>33, 34</value>
+  </data>
+  <data name="hostSelectionRadio.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>1</value>
+  </data>
+  <data name="joinSelectionRadio.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>33, 59</value>
+  </data>
+  <data name="joinSelectionRadio.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>0</value>
+  </data>
+  <data name="modeSelection.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>91, 60</value>
+  </data>
+  <data name="modeSelection.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>6</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, System.Private.CoreLib">
+    <value>True</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>91, 220</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>149, 15</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>7</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Select how to start a game:</value>
   </data>
 </root>

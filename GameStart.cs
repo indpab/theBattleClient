@@ -10,7 +10,6 @@ namespace TheBattleShipClient
 {
     public partial class GameStart : Form
     {
-        Game game = new Game();
         Facafe fack = new Facafe();
 
         public GameStart()
@@ -21,9 +20,9 @@ namespace TheBattleShipClient
         private void joinButton_Click(object sender, EventArgs e)
         {
             //this.Dispose();
-            game.Show();
 
             //CheckInput();
+            Login();
         }
         private void registerButton_Click(object sender, EventArgs e)
         {
@@ -54,6 +53,20 @@ namespace TheBattleShipClient
             gso.Show();
         }
 
+        private async void Login()
+        {
+            AuthenticationResponse ar = new AuthenticationResponse();
+            if (IsValidInput(userNameTextBox.Text, emailTextBox.Text, passwordTextBox.Text))
+            {
+                ar = await IdentityService.Login(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
+            }
+
+            StartGameOption gso = new StartGameOption(ar);
+
+            this.Hide();
+            gso.Show();
+        }
+
         private void CheckInput()
         {
             errorLabel.Visible = false;
@@ -67,7 +80,6 @@ namespace TheBattleShipClient
                     var obj = JObject.Parse(result);
 
                     string id = obj["token"].Value<string>();
-                    game.Show();
                 }
 
                 catch (Exception e)
