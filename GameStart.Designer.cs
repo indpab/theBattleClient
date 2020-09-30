@@ -72,7 +72,7 @@
             this.joinButton.Name = "joinButton";
             this.joinButton.Size = new System.Drawing.Size(124, 58);
             this.joinButton.TabIndex = 3;
-            this.joinButton.Text = "Join";
+            this.joinButton.Text = "Login";
             this.joinButton.UseVisualStyleBackColor = true;
             this.joinButton.Click += new System.EventHandler(this.joinButton_Click);
             // 

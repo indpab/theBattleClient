@@ -59,10 +59,15 @@ namespace TheBattleShipClient
 
             if (host.Checked)
             {
-
-                var roomSizeVal = Convert.ToInt32(roomSize.SelectedItem.ToString());
-                rs = await RoomsService.CreateRoom(ar.Token, new RoomsService.RoomRequest { Size = roomSizeVal });
-
+                if(roomSize.SelectedItem != null)
+                {
+                    var roomSizeVal = Convert.ToInt32(roomSize.SelectedItem.ToString());
+                    rs = await RoomsService.CreateRoom(ar.Token, new RoomsService.RoomRequest { Size = roomSizeVal });
+                }
+                else
+                {
+                    return;
+                }
             }
             else if (join.Checked)
             {

@@ -46,6 +46,10 @@ namespace TheBattleShipClient
             if (IsValidInput(userNameTextBox.Text, emailTextBox.Text, passwordTextBox.Text)){
                 ar =  await IdentityService.Register(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
             }
+            else
+            {
+                return;
+            }
 
             StartGameOption gso = new StartGameOption(ar);
 
@@ -59,6 +63,10 @@ namespace TheBattleShipClient
             if (IsValidInput(userNameTextBox.Text, emailTextBox.Text, passwordTextBox.Text))
             {
                 ar = await IdentityService.Login(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
+            }
+            else
+            {
+                return;
             }
 
             StartGameOption gso = new StartGameOption(ar);
