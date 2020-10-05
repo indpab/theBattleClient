@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships
 {
-    public class AtomicDestroyer : Destroyer
+    class AtomicSubmarine : Submarine
     {
-        public AtomicDestroyer(int x, int y, bool horizontal) : base(x, y, horizontal, 4)
+        public AtomicSubmarine(int x, int y, bool horizontal) : base(x, y, horizontal, 4)
         {
         }
 

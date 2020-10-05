@@ -6,14 +6,14 @@ namespace TheBattleShipClient.Models.Ships.Factories
 {
     public class SmallShipFactory : AbstractShipFactory
     {
-        public override Submarine CreateSubmarine()
+        public override Submarine CreateSubmarine(int x, int y, bool horizontal)
         {
-            return new SmallSubmarine();
+            return new SmallSubmarine(x, y, horizontal);
         }
 
-        public override Destroyer CreateDestroyer()
+        public override Destroyer CreateDestroyer(int x, int y, bool horizontal)
         {
-            return new SmallDestroyer();
+            return new SmallDestroyer(x, y, horizontal);
         }
     }
 }
