@@ -32,17 +32,26 @@ namespace TheBattleShipClient.Services
             }
         }
 
-        /*
-        public static async Task<string> UpdateShip(Ship ship)
+        
+        public static async Task<ShipResponse> UpdateShip(string token, int shipId, ShipRequest ship)
         {
-
+            var jsonRequest = JsonConvert.SerializeObject(ship);
+            HttpContent content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+            Uri uri = new Uri(BASE_URL + shipId);
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var response = await client.PutAsync(uri, content);
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<ShipResponse>(jsonResponse);
+                }
+                throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(jsonResponse));
+            }
         }
 
-        public static async Task<string> MoveShip(Ship ship)
-        {
-            
-        }
-        */
+        
 
         public class ShipRequest
         {
