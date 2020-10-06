@@ -13,7 +13,7 @@ namespace TheBattleShipClient.Models.Ships
         {
         }
 
-        public override async void Create()
+        public override async Task Create()
         {
             var request = new Services.ShipsService.ShipRequest
             {
