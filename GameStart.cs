@@ -62,7 +62,7 @@ namespace TheBattleShipClient
             AuthenticationResponse ar = new AuthenticationResponse();
             if (IsValidInput(userNameTextBox.Text, emailTextBox.Text, passwordTextBox.Text))
             {
-                ar = await IdentityService.Login(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
+                //ar = await IdentityService.Login(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
             }
             else
             {

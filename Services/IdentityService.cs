@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using TheBattleShipClient.Exceptions;
 
 namespace TheBattleShipClient.Services
 {
     public class IdentityService
     {
-        public const string BASE_URL = "https://thebattleapi.azurewebsites.net/api/v1/Identity/";
+        public const string BASE_URL = "https://thebattleshipapi.azurewebsites.net/api/v1/Identity/";
 
         public static async Task<AuthenticationResponse> Register(UserRequest request)
         {
@@ -20,7 +21,11 @@ namespace TheBattleShipClient.Services
             {
                 var response = await client.PostAsync(uri, content);
                 var responseString = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<AuthenticationResponse>(responseString);
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<AuthenticationResponse>(responseString);
+                }
+                throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(responseString));
             }
         }
 
@@ -33,7 +38,11 @@ namespace TheBattleShipClient.Services
             {
                 var response = await client.PostAsync(uri, content);
                 var responseString = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<AuthenticationResponse>(responseString);
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<AuthenticationResponse>(responseString);
+                }
+                throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(responseString));
             }
         }
     }

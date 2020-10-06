@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using TheBattleShipClient.Services;
 
 namespace TheBattleShipClient.Models.Ships
 {
@@ -10,9 +12,19 @@ namespace TheBattleShipClient.Models.Ships
         {
         }
 
-        public override void Create()
+        public override async void Create(string token, string roomId)
         {
-            throw new NotImplementedException();
+            var request = new Services.ShipsService.ShipRequest
+            {
+                X = this.X,
+                XOffset = this.XOffset,
+                Y = this.Y,
+                YOffset = this.YOffset,
+                ShipTypeId = 8
+            };
+            var ship = await ShipsService.CreateShip(token, roomId, request);
+            this.Id = ship.Id;
+            this.HP = ship.HP;
         }
     }
 }

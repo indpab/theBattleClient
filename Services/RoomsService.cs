@@ -5,12 +5,13 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using TheBattleShipClient.Exceptions;
 
 namespace TheBattleShipClient.Services
 {
     public class RoomsService
     {
-        public const string BASE_URL = "https://thebattleapi.azurewebsites.net/api/v1/Rooms/";
+        public const string BASE_URL = "https://thebattleshipapi.azurewebsites.net/api/v1/Rooms/";
 
         public static async Task<RoomResponse> CreateRoom(string token, RoomRequest request)
         {
@@ -22,7 +23,11 @@ namespace TheBattleShipClient.Services
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var response = await client.PostAsync(uri, content);
                 var jsonResponse = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<RoomResponse>(jsonResponse);
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<RoomResponse>(jsonResponse);
+                }
+                throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(jsonResponse));
             }
         }
         
@@ -36,7 +41,11 @@ namespace TheBattleShipClient.Services
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var response = await client.PutAsync(uri, content);
                 var jsonResponse = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<RoomResponse>(jsonResponse);
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<RoomResponse>(jsonResponse);
+                }
+                throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(jsonResponse));
             }
         }
         

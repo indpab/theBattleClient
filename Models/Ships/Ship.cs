@@ -35,6 +35,6 @@ namespace TheBattleShipClient.Models.Ships
 
         }
 
-        public abstract void Create();
+        public abstract void Create(string token, string roomId);
     }
 }
