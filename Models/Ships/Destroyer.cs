@@ -6,7 +6,8 @@ namespace TheBattleShipClient.Models.Ships
 {
     public abstract class Destroyer : Ship
     {
-        public Destroyer(int x, int y, bool horizontal, int hp) : base(x, y, horizontal, hp)
+        public Destroyer(string token, string roomId, int x, int y, bool horizontal, int hp)
+            : base(token, roomId, x, y, horizontal, hp)
         {
         }
     }

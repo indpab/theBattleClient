@@ -8,11 +8,12 @@ namespace TheBattleShipClient.Models.Ships
 {
     public class LargeDestroyer : Destroyer
     {
-        public LargeDestroyer(int x, int y, bool horizontal) : base(x, y, horizontal, 3)
+        public LargeDestroyer(string token, string roomId, int x, int y, bool horizontal)
+            : base(token, roomId, x, y, horizontal, 3)
         {
         }
 
-        public override async void Create(string token, string roomId)
+        public override async void Create()
         {
             var request = new Services.ShipsService.ShipRequest
             {
@@ -22,7 +23,7 @@ namespace TheBattleShipClient.Models.Ships
                 YOffset = this.YOffset,
                 ShipTypeId = 3
             };
-            var ship = await ShipsService.CreateShip(token, roomId, request);
+            var ship = await ShipsService.CreateShip(_token, _roomId, request);
             this.Id = ship.Id;
             this.HP = ship.HP;
         }
