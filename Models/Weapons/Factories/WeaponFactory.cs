@@ -7,13 +7,13 @@ namespace TheBattleShipClient.Models.Weapons.Factories
 {
     public abstract class WeaponFactory
     {
-        public string Token { get; set; }
-        public string RoomId { get; set; }
+        protected string _token { get; set; }
+        protected string _roomId { get; set; }
 
         public WeaponFactory(string token, string roomId)
         {
-            Token = token;
-            RoomId = roomId;
+            _token = token;
+            _roomId = roomId;
         }
 
         public abstract Task<Weapon> CreateWeapon(int x, int y);

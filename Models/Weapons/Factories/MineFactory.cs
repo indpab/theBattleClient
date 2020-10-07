@@ -23,7 +23,7 @@ namespace TheBattleShipClient.Models.Weapons.Factories
                 Y = y,
                 WeaponTypeId = 3
             };
-            ShotResponse shot = await WeaponsService.Shot(Token, RoomId, weaponRequest);
+            ShotResponse shot = await WeaponsService.Shot(_token, _roomId, weaponRequest);
             var mine = new Mine
             {
                 Id = shot.WeaponId,
