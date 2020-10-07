@@ -25,7 +25,7 @@ namespace TheBattleShipClient.Models.Weapons.Factories
                 Y = y,
                 WeaponTypeId = 1
             };
-            ShotResponse shot = await WeaponsService.Shot(Token, RoomId, weaponRequest);
+            ShotResponse shot = await WeaponsService.Shot(_token, _roomId, weaponRequest);
             var bomb = new Bomb
             {
                 Id = shot.WeaponId,
