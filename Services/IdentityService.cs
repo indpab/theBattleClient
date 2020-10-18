@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,11 +26,13 @@ namespace TheBattleShipClient.Services
                 {
                     return JsonConvert.DeserializeObject<AuthenticationResponse>(responseString);
                 }
-                else {
-                    throw new Exception(responseString);
-                }
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse.Root>(responseString);
+                //ErrorResponse errorResponse = (ErrorResponse)
+                throw new ApiException(string.Join(',', errorResponse.Errors.Select((x) => x.Message)), new ErrorResponse());
                 
-                //throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(responseString));
+
+
+                //J
             }
         }
 
