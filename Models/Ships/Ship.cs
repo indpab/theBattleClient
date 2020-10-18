@@ -68,5 +68,7 @@ namespace TheBattleShipClient.Models.Ships
         }
 
         public abstract Task Create();
+
+
     }
 }
