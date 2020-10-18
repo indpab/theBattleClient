@@ -5,6 +5,7 @@ using TheBattleShipClient.Controllers;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using TheBattleShipClient.Services;
+using TheBattleShipClient.Exceptions;
 
 namespace TheBattleShipClient
 {
@@ -62,17 +63,35 @@ namespace TheBattleShipClient
             AuthenticationResponse ar = new AuthenticationResponse();
             if (IsValidInput(userNameTextBox.Text, emailTextBox.Text, passwordTextBox.Text))
             {
-                //ar = await IdentityService.Login(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
+
+                try
+                {
+                    ar = await IdentityService.Login(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
+                }
+                catch (Exception e)
+                {
+
+                    errorLabel.Text = e.Message;
+                    errorLabel.Visible = true;
+                }
+                finally
+                {
+                    if (ar.Token is object)
+                    {
+                        StartGameOption gso = new StartGameOption(ar);
+
+                        this.Hide();
+                        gso.Show();
+                    }
+                }
+                
             }
             else
             {
                 return;
             }
 
-            StartGameOption gso = new StartGameOption(ar);
 
-            this.Hide();
-            gso.Show();
         }
 
         private void CheckInput()

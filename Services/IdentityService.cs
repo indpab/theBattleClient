@@ -25,7 +25,11 @@ namespace TheBattleShipClient.Services
                 {
                     return JsonConvert.DeserializeObject<AuthenticationResponse>(responseString);
                 }
-                throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(responseString));
+                else {
+                    throw new Exception(responseString);
+                }
+                
+                //throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(responseString));
             }
         }
 
@@ -42,7 +46,11 @@ namespace TheBattleShipClient.Services
                 {
                     return JsonConvert.DeserializeObject<AuthenticationResponse>(responseString);
                 }
-                throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(responseString));
+                else
+                {
+                    throw new Exception(response.ReasonPhrase.ToString());
+                }
+
             }
         }
     }

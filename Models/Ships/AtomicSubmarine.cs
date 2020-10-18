@@ -28,4 +28,5 @@ namespace TheBattleShipClient.Models.Ships
             this.HP = ship.HP;
         }
     }
+
 }

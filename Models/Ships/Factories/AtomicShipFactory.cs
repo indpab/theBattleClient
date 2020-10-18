@@ -20,5 +20,6 @@ namespace TheBattleShipClient.Models.Ships.Factories
         {
             return new AtomicDestroyer(_token, _roomId, x, y, horizontal);
         }
+
     }
 }
