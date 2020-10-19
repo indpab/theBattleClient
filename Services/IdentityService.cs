@@ -27,12 +27,9 @@ namespace TheBattleShipClient.Services
                     return JsonConvert.DeserializeObject<AuthenticationResponse>(responseString);
                 }
                 var errorResponse = JsonConvert.DeserializeObject<ErrorResponse.Root>(responseString);
-                //ErrorResponse errorResponse = (ErrorResponse)
+               
                 throw new ApiException(string.Join(',', errorResponse.Errors.Select((x) => x.Message)), new ErrorResponse());
                 
-
-
-                //J
             }
         }
 
@@ -49,10 +46,9 @@ namespace TheBattleShipClient.Services
                 {
                     return JsonConvert.DeserializeObject<AuthenticationResponse>(responseString);
                 }
-                else
-                {
-                    throw new Exception(response.ReasonPhrase.ToString());
-                }
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse.Root>(responseString);
+
+                throw new ApiException(string.Join(',', errorResponse.Errors.Select((x) => x.Message)), new ErrorResponse());
 
             }
         }
