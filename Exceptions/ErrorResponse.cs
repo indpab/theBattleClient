@@ -2,12 +2,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace TheBattleShipClient.Exceptions
+
+
 {
-    [JsonArray]
+
     public class ErrorResponse
     {
-        public List<ErrorModel> Errors { get; set; }
+        public class Error
+        {
+            [JsonPropertyName("message")]
+            public string Message { get; set; }
+        }
+
+        public class Root
+        {
+            [JsonPropertyName("errors")]
+            public List<Error> Errors { get; set; }
+        }
     }
+    //public class ErrorResponse
+    //{
+    //    [JsonPropertyName("errors")]
+    //    public List<Error> Errors { get; set; }
+    //}
+
+
+    //public class Error
+    //{
+    //    [JsonPropertyName("message")]
+    //    public string Message { get; set; }
+    //}
+
+
+
 }

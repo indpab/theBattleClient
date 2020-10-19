@@ -44,18 +44,35 @@ namespace TheBattleShipClient
         private async void Register()
         {
             AuthenticationResponse ar = new AuthenticationResponse();
-            if (IsValidInput(userNameTextBox.Text, emailTextBox.Text, passwordTextBox.Text)){
-                ar =  await IdentityService.Register(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
+            if (IsValidInput(userNameTextBox.Text, emailTextBox.Text, passwordTextBox.Text))
+            {
+
+                try
+                {
+                    ar = await IdentityService.Register(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
+                }
+                catch (ApiException e)
+                {
+
+                    errorLabel.Text = e.Message;
+                    errorLabel.Visible = true;
+                }
+                finally
+                {
+                    if (ar.Token is object)
+                    {
+                        StartGameOption gso = new StartGameOption(ar);
+
+                        this.Hide();
+                        gso.Show();
+                    }
+                }
+
             }
             else
             {
                 return;
             }
-
-            StartGameOption gso = new StartGameOption(ar);
-
-            this.Hide();
-            gso.Show();
         }
 
         private async void Login()
@@ -68,7 +85,7 @@ namespace TheBattleShipClient
                 {
                     ar = await IdentityService.Login(new UserRequest { UserName = userNameTextBox.Text, Email = emailTextBox.Text, Password = passwordTextBox.Text });
                 }
-                catch (Exception e)
+                catch (ApiException e)
                 {
 
                     errorLabel.Text = e.Message;
