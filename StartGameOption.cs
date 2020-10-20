@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using TheBattleShipClient.Services;
+using TheBattleShipClient.Services.Communication;
 
 namespace TheBattleShipClient
 {
@@ -56,11 +57,14 @@ namespace TheBattleShipClient
             RadioButton host = hostSelectionRadio;
             RadioButton join = joinSelectionRadio;
             RoomsService.RoomResponse rs = new RoomsService.RoomResponse();
+            GameSubject gameSubject = new GameSubject();
+            GameObserver startGameObserver = new GameObserver("startGameObserver");
 
             if (host.Checked)
             {
                 if(roomSize.SelectedItem != null)
                 {
+                    gameSubject.Attach(startGameObserver);
                     var roomSizeVal = Convert.ToInt32(roomSize.SelectedItem.ToString());
                     rs = await RoomsService.CreateRoom(ar.Token, new RoomsService.RoomRequest { Size = roomSizeVal });
                 }
@@ -73,11 +77,23 @@ namespace TheBattleShipClient
             {
                 var roomIdVal = roomId.Text;
                 rs = await RoomsService.JoinRoom(ar.Token, roomIdVal);
+                gameSubject.SubjectState = true;
+                gameSubject.Unattach(startGameObserver);
             }
 
             Game g = new Game(rs);
+            GameStart login = new GameStart();
+
             this.Hide();
-            g.Show();
+            if (gameSubject.SubjectState == true)
+            {
+                g.Show();
+            }
+            else 
+            {
+                login.Show();
+                g.Show();
+            }
         }
     }
 }
