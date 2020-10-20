@@ -7,21 +7,32 @@ namespace TheBattleShipClient.Services.Communication
     class GameSubject 
     {
         private List<IGameObserver> _observers;
-        public bool SubjectState 
+        public bool JoinedState 
         {
-            get { return _subjectState; }
+            get { return _joinedState; }
             set 
             {
-                _subjectState = value;
+                _joinedState = value;
                 NotifyObservers();
             } 
         }
-        private bool _subjectState;
+        private bool _joinedState;
+        public bool PlayerState
+        {
+            get { return _playerState; }
+            set
+            {
+                _playerState = value;
+                NotifyObservers();
+            }
+        }
+        private bool _playerState;
 
         public GameSubject()
         {
             _observers = new List<IGameObserver>();
-            SubjectState = false;
+            JoinedState = false;
+            PlayerState = false;
         }
 
         public void Attach(IGameObserver observer)
@@ -34,11 +45,40 @@ namespace TheBattleShipClient.Services.Communication
             _observers.Remove(observer);
         }
 
+        public async void StartObserving(string token, string roomId)
+        {
+            bool stateChanged = false;
+            while (stateChanged == false)
+            {
+
+                bool isGuestUserJoinedIn = await RoomsService.IsGuestUserJoined(token, roomId);
+                if (isGuestUserJoinedIn != JoinedState)
+                {
+                    stateChanged = true;
+                    JoinedState = isGuestUserJoinedIn;
+                }
+            }
+        }
+        public async void StartObservingGame(string token, string roomId)
+        {
+            bool stateChanged = false;
+            while (stateChanged == false)
+            {
+
+                bool isMyTurn = await MapsService.IsMyTurn(token, roomId);
+                if (isMyTurn != PlayerState)
+                {
+                    stateChanged = true;
+                    PlayerState = isMyTurn;
+                }
+            }
+        }
+
         public void NotifyObservers()
         {
             foreach (IGameObserver observer in _observers)
             {
-                observer.Update(this);
+                observer.UpdateState();
             }
         }
     }
