@@ -22,7 +22,7 @@ namespace TheBattleShipClient.Services
 
        public static async Task<bool> IsMyTurn(string token, string roomId)
        {
-            Uri uri = new Uri(BASE_URL + "CanDoCation" + roomId);
+            Uri uri = new Uri(BASE_URL + "CanDoAction/" + roomId);
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -40,8 +40,8 @@ namespace TheBattleShipClient.Services
         public class CanDoActionResponse
         {
             public bool CanDoAction { get; set; }
-            public int EnemyShot_X { get; set; }
-            public int EnemyShot_Y { get; set; }
+            public int? EnemyShot_X { get; set; }
+            public int? EnemyShot_Y { get; set; }
 
         }
     }

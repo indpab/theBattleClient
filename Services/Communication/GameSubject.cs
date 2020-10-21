@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Services.Communication
 {
-    class GameSubject 
+    class GameSubject : IGameSubject
     {
         private List<IGameObserver> _observers;
         public bool JoinedState 
@@ -40,10 +40,12 @@ namespace TheBattleShipClient.Services.Communication
             _observers.Add(observer);
         }
 
+        /*
         public void Unattach(IGameObserver observer)
         {
             _observers.Remove(observer);
         }
+        */
 
         public async void StartObserving(string token, string roomId)
         {
@@ -61,16 +63,10 @@ namespace TheBattleShipClient.Services.Communication
         }
         public async void StartObservingGame(string token, string roomId)
         {
-            bool stateChanged = false;
-            while (stateChanged == false)
+            bool isMyTurn = await MapsService.IsMyTurn(token, roomId);
+            if (isMyTurn != PlayerState)
             {
-
-                bool isMyTurn = await MapsService.IsMyTurn(token, roomId);
-                if (isMyTurn != PlayerState)
-                {
-                    stateChanged = true;
-                    PlayerState = isMyTurn;
-                }
+                PlayerState = isMyTurn;
             }
         }
 

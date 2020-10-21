@@ -36,6 +36,7 @@ namespace TheBattleShipClient
             RoomResponse = rr;
             gameSubject.Attach(this);
             gameSubject.StartObserving(token, rr.Id);
+            gameSubject.StartObservingGame(token, rr.Id);
         }
 
         private void Game_Load(object sender, EventArgs e)
@@ -227,7 +228,18 @@ namespace TheBattleShipClient
 
         public void UpdateState()
         {
-            MessageBox.Show("State Changed");
+            if (gameSubject.PlayerState == true)
+            {
+                MessageBox.Show("Your Turn!");
+            }
+            else
+            {
+                MessageBox.Show("Wait for your turn");
+            }
+            if (gameSubject.JoinedState == true)
+            {
+                MessageBox.Show("State Changed");
+            }
         }
     }
 }
