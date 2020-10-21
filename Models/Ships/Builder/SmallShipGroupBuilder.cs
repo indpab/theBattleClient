@@ -31,10 +31,17 @@ namespace TheBattleShipClient.Models
             shipGroup.ShipType = shipType;
         }
 
-        public void AddSmallsubmarine(SmallShipFactory smallShipFactory)
+
+        public void AddSmallSubmarine(SmallShipFactory smallShipFactory)
         {
-            SmallSubmarine smallSubmarine = smallShipFactory.CreateSubmarine(0, 0, false);
+            SmallSubmarine smallSubmarine = (SmallSubmarine)smallShipFactory.CreateSubmarine(0, 0, false);
             shipGroup.Ships.Add(smallSubmarine);
+        }
+
+        public void AddSmallDestroyer(SmallShipFactory smallShipFactory)
+        {
+            SmallDestroyer smallDestroyer = (SmallDestroyer)smallShipFactory.CreateDestroyer(0, 0, false);
+            shipGroup.Ships.Add(smallDestroyer);
         }
 
         public ShipGroup Build()

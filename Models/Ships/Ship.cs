@@ -8,7 +8,7 @@ using static TheBattleShipClient.Services.ShipsService;
 
 namespace TheBattleShipClient.Models.Ships
 {
-    public abstract class Ship
+    public abstract class Ship : ICloneable
     {
         public int Id { get; protected set; }
         public int X { get; set; }
@@ -78,10 +78,10 @@ namespace TheBattleShipClient.Models.Ships
             return new_ad;
         }
 
-        public Ship ShallowClone()
+
+        object ICloneable.Clone()
         {
             return (AtomicDestroyer)this.MemberwiseClone();
         }
-
     }
 }

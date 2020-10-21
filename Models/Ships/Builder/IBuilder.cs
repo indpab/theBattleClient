@@ -6,9 +6,9 @@ namespace TheBattleShipClient.Models.Ships.Builder
 {
     interface IBuilder
     {
-        void SetLimitations();
-        void SetShipType();
-        void AddShip();
+        void InitializeShipGroup(ShipGroup shipGroup);
+        void SetLimitations(int count, int limit);
+        void SetShipType(ShipType shipType);
         ShipGroup Build();
     }
 }

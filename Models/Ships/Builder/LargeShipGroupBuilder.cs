@@ -27,10 +27,9 @@ namespace TheBattleShipClient.Models.Ships.Builder
         {
             shipGroup.ShipType = shipType;
         }
-
         public void AddMediumSubmarine(LargeShipFactory largeShipFactory)
         {
-            LargeShipFactory mediumSubmarine = (LargeShipFactory)largeShipFactory.CreateSubmarine(0, 0, false);
+            LargeSubmarine mediumSubmarine = (LargeSubmarine)largeShipFactory.CreateSubmarine(0, 0, false);
             shipGroup.Ships.Add(mediumSubmarine);
         }
 
