@@ -41,6 +41,10 @@ namespace TheBattleShipClient.Models.Ships
                 this.YOffset = hp;
             }
         }
+        protected bool isShipHorisontal()
+        {
+            return this.X != -1;
+        }
 
         public void SetMotionAlgoritm(IMotionAlgorithm algorithm)
         {
@@ -68,7 +72,16 @@ namespace TheBattleShipClient.Models.Ships
         }
 
         public abstract Task Create();
+        public Ship DeepClone()
+        {
+            AtomicDestroyer new_ad = new AtomicDestroyer(this._token, this._roomId, this.X, this.Y, isShipHorisontal());
+            return new_ad;
+        }
 
+        public Ship ShallowClone()
+        {
+            return (AtomicDestroyer)this.MemberwiseClone();
+        }
 
     }
 }

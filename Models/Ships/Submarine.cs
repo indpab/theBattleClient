@@ -10,5 +10,7 @@ namespace TheBattleShipClient.Models.Ships
             : base(token, roomId, x, y, horizontal, hp)
         {
         }
+
+
     }
 }
