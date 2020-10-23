@@ -48,13 +48,31 @@ namespace TheBattleShipClient.Services
                 throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(jsonResponse));
             }
         }
-        
+
         /*
-        public Task<string> IsMyTurn(string token)
+        public Task<bool> IsMyTurn(string token)
         {
 
         }
         */
+
+       public static async Task<bool> IsGuestUserJoined(string token, string roomId)
+       {
+            Uri uri = new Uri(BASE_URL + roomId);
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var response = await client.GetAsync(uri);
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<RoomGetResponse>(jsonResponse).IsGuestUserJoinedIn;
+                }
+                throw new ApiException(JsonConvert.DeserializeObject<ErrorResponse>(jsonResponse));
+            }
+
+        }
+
         public class RoomRequest
         {
             public int Size { get; set; }
@@ -63,6 +81,11 @@ namespace TheBattleShipClient.Services
         {
             public string Id { get; set; }
             public int Size { get; set; }
+        }
+
+        public class RoomGetResponse
+        {
+            public bool IsGuestUserJoinedIn { get; set; }
         }
     }
 }

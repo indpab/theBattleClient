@@ -7,10 +7,12 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using TheBattleShipClient.Services;
+using System.Drawing.Text;
+using TheBattleShipClient.Services.Communication;
 
 namespace TheBattleShipClient
 {
-    public partial class Game : Form
+    public partial class Game : Form, IGameObserver
     {
         List<Button> playerPositionButtons;
         List<Button> enemyPositionButtons;
@@ -25,11 +27,16 @@ namespace TheBattleShipClient
         int enemyScore;
 
         Facafe fack = new Facafe();
-        public Game(RoomsService.RoomResponse rr)
+        GameSubject gameSubject = new GameSubject();
+
+        public Game(RoomsService.RoomResponse rr, string token)
         {
             InitializeComponent();
             RestartGame();
             RoomResponse = rr;
+            gameSubject.Attach(this);
+            gameSubject.StartObserving(token, rr.Id);
+            gameSubject.StartObservingGame(token, rr.Id);
         }
 
         private void Game_Load(object sender, EventArgs e)
@@ -216,6 +223,22 @@ namespace TheBattleShipClient
                 {
                     index = rand.Next(enemyPositionButtons.Count);
                 }
+            }
+        }
+
+        public void UpdateState()
+        {
+            if (gameSubject.PlayerState == true)
+            {
+                MessageBox.Show("Your Turn!");
+            }
+            else
+            {
+                MessageBox.Show("Wait for your turn");
+            }
+            if (gameSubject.JoinedState == true)
+            {
+                MessageBox.Show("State Changed");
             }
         }
     }

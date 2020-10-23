@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using TheBattleShipClient.Services;
+using TheBattleShipClient.Services.Communication;
 
 namespace TheBattleShipClient
 {
@@ -75,7 +76,8 @@ namespace TheBattleShipClient
                 rs = await RoomsService.JoinRoom(ar.Token, roomIdVal);
             }
 
-            Game g = new Game(rs);
+            Game g = new Game(rs, ar.Token);
+          
             this.Hide();
             g.Show();
         }
