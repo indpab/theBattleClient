@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using TheBattleShipClient.Models.Ships.Algorithms;
@@ -72,16 +74,32 @@ namespace TheBattleShipClient.Models.Ships
         }
 
         public abstract Task Create();
-        public Ship DeepClone()
-        {
-            AtomicDestroyer new_ad = new AtomicDestroyer(this._token, this._roomId, this.X, this.Y, isShipHorisontal());
-            return new_ad;
-        }
-
 
         object ICloneable.Clone()
         {
-            return (AtomicDestroyer)this.MemberwiseClone();
+            return (Ship)this.MemberwiseClone();
+        }
+        protected Ship DeepClone(Ship obj)
+        {
+            using var ms = new MemoryStream();
+            var formatter = new BinaryFormatter();
+            formatter.Serialize(ms, obj);
+            ms.Position = 0;
+
+            return (Ship)formatter.Deserialize(ms);
+        }
+        public void Rotate(bool horizontal)
+        {
+            if (horizontal)
+            {
+                this.XOffset = (int)this.HP;
+                this.YOffset = 1;
+            }
+            else
+            {
+                this.XOffset = -1;
+                this.YOffset = (int)this.HP;
+            }
         }
     }
 }

@@ -7,49 +7,19 @@ using TheBattleShipClient.Models.Ships.Factories;
 
 namespace TheBattleShipClient.Models
 {
-    public class SmallShipGroupBuilder : IBuilder
+    public class SmallShipGroupBuilder : Builder
     {
-
-        ShipGroup shipGroup;
-        /// <summary>
-        /// Expects to get ShipGroup object with limitations initialized
-        /// </summary>
-        /// <param name="shipGroup">object, containing limitations</param>
-        public void InitializeShipGroup(ShipGroup shipGroup)
+        public void AddSmallSubmarine()
         {
-            this.shipGroup = shipGroup;
-        }
-
-        public void SetLimitations(int count, int limit)
-        {
-            shipGroup.Count = count;
-            shipGroup.Limit = limit;
-        }
-
-        public void SetShipType(ShipType shipType)
-        {
-            shipGroup.ShipType = shipType;
-        }
-
-
-        public void AddSmallSubmarine(SmallShipFactory smallShipFactory)
-        {
-            SmallSubmarine smallSubmarine = (SmallSubmarine)smallShipFactory.CreateSubmarine(0, 0, false);
+            SmallSubmarine smallSubmarine = (SmallSubmarine)abstractShipFactory.CreateSubmarine(0, 0, false);
             shipGroup.Ships.Add(smallSubmarine);
         }
 
-        public void AddSmallDestroyer(SmallShipFactory smallShipFactory)
+        public void AddSmallDestroyer()
         {
-            SmallDestroyer smallDestroyer = (SmallDestroyer)smallShipFactory.CreateDestroyer(0, 0, false);
+            SmallDestroyer smallDestroyer = (SmallDestroyer)abstractShipFactory.CreateDestroyer(0, 0, false);
             shipGroup.Ships.Add(smallDestroyer);
         }
-
-        public ShipGroup Build()
-        {
-            return shipGroup;
-        }
-
-
 
     }
 }

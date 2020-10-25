@@ -11,6 +11,9 @@ namespace TheBattleShipClient.Models.Ships
         {
         }
 
-
+        internal Submarine DeepClone()
+        {
+            return (Submarine)base.DeepClone(this);
+        }
     }
 }

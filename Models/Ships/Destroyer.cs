@@ -9,6 +9,12 @@ namespace TheBattleShipClient.Models.Ships
         public Destroyer(string token, string roomId, int x, int y, bool horizontal, int hp)
             : base(token, roomId, x, y, horizontal, hp)
         {
+            
+        }
+
+        internal Destroyer DeepClone()
+        {
+            return (Destroyer)base.DeepClone(this);
         }
     }
 }

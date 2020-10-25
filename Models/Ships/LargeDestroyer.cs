@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TheBattleShipClient.Models.Ships.Algorithms;
 using TheBattleShipClient.Services;
 
 namespace TheBattleShipClient.Models.Ships
@@ -27,5 +28,7 @@ namespace TheBattleShipClient.Models.Ships
             this.Id = ship.Id;
             this.HP = ship.HP;
         }
+
+
     }
 }
