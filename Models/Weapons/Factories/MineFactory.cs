@@ -10,7 +10,7 @@ namespace TheBattleShipClient.Models.Weapons.Factories
 {
     public class MineFactory
     {   
-        public static WeaponRequest Create(int x, int y)
+        public WeaponRequest Create(int x, int y)
         {
             var weaponRequest = new WeaponRequest
             {
@@ -21,7 +21,7 @@ namespace TheBattleShipClient.Models.Weapons.Factories
             return weaponRequest;
         }
 
-        public static async Task<Weapon> Shot(WeaponRequest weaponRequest, string _token, string _roomId)
+        public async Task<Weapon> Shot(WeaponRequest weaponRequest, string _token, string _roomId)
         {
             ShotResponse shot = await WeaponsService.Shot(_token, _roomId, weaponRequest);
             var mine = new Mine

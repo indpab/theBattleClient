@@ -16,8 +16,9 @@ namespace TheBattleShipClient.Models.Weapons.Factories.Adapter
         }
         public override async Task<Weapon> CreateWeapon(int x, int y)
         {
-            var weaponRequest = MineFactory.Create(x, y);
-            var mine = await MineFactory.Shot(weaponRequest, _token, _roomId);
+            MineFactory adaptee = new MineFactory();
+            var weaponRequest = adaptee.Create(x, y);
+            var mine = await adaptee.Shot(weaponRequest, _token, _roomId);
             return mine;
         }
     }
