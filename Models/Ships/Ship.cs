@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using TheBattleShipClient.Models.Ships.Algorithms;
@@ -8,7 +10,7 @@ using static TheBattleShipClient.Services.ShipsService;
 
 namespace TheBattleShipClient.Models.Ships
 {
-    public abstract class Ship : Decorator.IShip
+    public abstract class Ship : Decorator.IShip, ICloneable
     {
         public int Id { get; protected set; }
         public int X { get; set; }
@@ -42,6 +44,10 @@ namespace TheBattleShipClient.Models.Ships
                 this.YOffset = hp;
             }
         }
+        protected bool isShipHorisontal()
+        {
+            return this.X != -1;
+        }
 
         public void SetMotionAlgoritm(IMotionAlgorithm algorithm)
         {
@@ -71,6 +77,33 @@ namespace TheBattleShipClient.Models.Ships
         public string setSkin()
         {
             return "Alive ";
+        }
+
+        object ICloneable.Clone()
+        {
+            return (Ship)this.MemberwiseClone();
+        }
+        protected Ship DeepClone(Ship obj)
+        {
+            using var ms = new MemoryStream();
+            var formatter = new BinaryFormatter();
+            formatter.Serialize(ms, obj);
+            ms.Position = 0;
+
+            return (Ship)formatter.Deserialize(ms);
+        }
+        public void Rotate(bool horizontal)
+        {
+            if (horizontal)
+            {
+                this.XOffset = (int)this.HP;
+                this.YOffset = 1;
+            }
+            else
+            {
+                this.XOffset = -1;
+                this.YOffset = (int)this.HP;
+            }
         }
     }
 }
