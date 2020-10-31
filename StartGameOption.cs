@@ -76,8 +76,12 @@ namespace TheBattleShipClient
                 rs = await RoomsService.JoinRoom(ar.Token, roomIdVal);
             }
 
-            Game g = new Game(rs, ar.Token);
-          
+            GameSubject gameSubject = new GameSubject();
+            gameSubject.StartObserving(ar.Token, rs.Id);
+            gameSubject.StartObservingGame(ar.Token, rs.Id);
+
+            Game g = new Game(rs, ar.Token, gameSubject);
+
             this.Hide();
             g.Show();
         }

@@ -8,14 +8,9 @@ using static TheBattleShipClient.Services.WeaponsService;
 
 namespace TheBattleShipClient.Models.Weapons.Factories
 {
-    public class MineFactory : WeaponFactory
-    {
-        public MineFactory(string token, string roomId)
-            : base(token, roomId)
-        {
-        }
-
-        public override async Task<Weapon> CreateWeapon(int x, int y)
+    public class MineFactory
+    {   
+        public WeaponRequest Create(int x, int y)
         {
             var weaponRequest = new WeaponRequest
             {
@@ -23,6 +18,11 @@ namespace TheBattleShipClient.Models.Weapons.Factories
                 Y = y,
                 WeaponTypeId = 3
             };
+            return weaponRequest;
+        }
+
+        public async Task<Weapon> Shot(WeaponRequest weaponRequest, string _token, string _roomId)
+        {
             ShotResponse shot = await WeaponsService.Shot(_token, _roomId, weaponRequest);
             var mine = new Mine
             {
@@ -33,7 +33,7 @@ namespace TheBattleShipClient.Models.Weapons.Factories
                 ShipTypes = shot.ShipTypes.ToList(),
                 IsDetonated = shot.Successful
             };
-             return mine;
+            return mine;
         }
     }
 }
