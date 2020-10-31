@@ -15,15 +15,7 @@ namespace TheBattleShipClient.Models.Ships
 
         public override async Task Create()
         {
-            var request = new Services.ShipsService.ShipRequest
-            {
-                X = this.X,
-                XOffset = this.XOffset,
-                Y = this.Y,
-                YOffset = this.YOffset,
-                ShipTypeId = 4
-            };
-            var ship = await ShipsService.CreateShip(_token, _roomId, request);
+            var ship = await Service.CreateShip(_token, _roomId, X, XOffset, Y, YOffset, 4);
             this.Id = ship.Id;
             this.HP = ship.HP;
         }
