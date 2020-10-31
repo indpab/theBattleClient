@@ -13,7 +13,7 @@ namespace TheBattleShipClient.Services
     {
         public const string BASE_URL = "https://thebattleshipapi.azurewebsites.net/api/v1/Rooms/";
 
-        public static async Task<RoomResponse> CreateRoom(string token, RoomRequest request)
+        public static async Task<RoomResponse> Create(string token, RoomRequest request)
         {
             var jsonRequest = JsonConvert.SerializeObject(request);
             HttpContent content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
@@ -31,7 +31,7 @@ namespace TheBattleShipClient.Services
             }
         }
         
-        public static async Task<RoomResponse> JoinRoom(string token, string roomId)
+        public static async Task<RoomResponse> Join(string token, string roomId)
         {
             var jsonRequest = JsonConvert.SerializeObject(new RoomRequest());
             HttpContent content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
@@ -56,7 +56,7 @@ namespace TheBattleShipClient.Services
         }
         */
 
-       public static async Task<bool> IsGuestUserJoined(string token, string roomId)
+       public static async Task<bool> CheckGuest(string token, string roomId)
        {
             Uri uri = new Uri(BASE_URL + roomId);
             using (HttpClient client = new HttpClient())

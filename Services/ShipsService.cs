@@ -14,7 +14,7 @@ namespace TheBattleShipClient.Services
     {
         public const string BASE_URL = "https://thebattleshipapi.azurewebsites.net/api/v1/Ships/";
 
-        public static async Task<ShipResponse> CreateShip(string token, string roomId, ShipRequest ship)
+        public static async Task<ShipResponse> Create(string token, string roomId, ShipRequest ship)
         {
             var jsonRequest = JsonConvert.SerializeObject(ship);
             HttpContent content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
@@ -33,7 +33,7 @@ namespace TheBattleShipClient.Services
         }
 
         
-        public static async Task<ShipResponse> UpdateShip(string token, int shipId, ShipRequest ship)
+        public static async Task<ShipResponse> Update(string token, int shipId, ShipRequest ship)
         {
             var jsonRequest = JsonConvert.SerializeObject(ship);
             HttpContent content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");

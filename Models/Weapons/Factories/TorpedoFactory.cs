@@ -17,13 +17,7 @@ namespace TheBattleShipClient.Models.Weapons.Factories
 
         public override async Task<Weapon> CreateWeapon(int x, int y)
         {
-            var weaponRequest = new WeaponRequest
-            {
-                X = x,
-                Y = y,
-                WeaponTypeId = 2
-            };
-            ShotResponse shot = await WeaponsService.Shot(_token, _roomId, weaponRequest);
+            ShotResponse shot = await Service.ShootWeapon(_token, _roomId, x, y, 2);
             var torpedo = new Torpedo
             {
                 Id = shot.WeaponId,

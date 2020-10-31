@@ -23,7 +23,7 @@ namespace TheBattleShipClient.Models.Weapons.Factories
 
         public async Task<Weapon> Shot(WeaponRequest weaponRequest, string _token, string _roomId)
         {
-            ShotResponse shot = await WeaponsService.Shot(_token, _roomId, weaponRequest);
+            ShotResponse shot = await Service.ShootWeapon(_token, _roomId, weaponRequest.X, weaponRequest.Y, weaponRequest.WeaponTypeId);
             var mine = new Mine
             {
                 Id = shot.WeaponId,
@@ -37,3 +37,4 @@ namespace TheBattleShipClient.Models.Weapons.Factories
         }
     }
 }
+

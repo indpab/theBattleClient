@@ -55,15 +55,8 @@ namespace TheBattleShipClient.Models.Ships
 
         public async Task Update()
         {
-            var shipRequest = new ShipRequest
-            {
-                X = this.X,
-                XOffset = this.XOffset,
-                Y = this.Y,
-                YOffset = this.YOffset,
-                ShipTypeId = 0
-            };
-            var shipResponse = await ShipsService.UpdateShip(_token, this.Id, shipRequest);
+
+            var shipResponse = await Service.UpdateShip(_token, this.Id, X, XOffset, Y, YOffset, 0);
             this.HP = shipResponse.HP;
         }
 

@@ -63,7 +63,7 @@ namespace TheBattleShipClient
                 if(roomSize.SelectedItem != null)
                 {
                     var roomSizeVal = Convert.ToInt32(roomSize.SelectedItem.ToString());
-                    rs = await RoomsService.CreateRoom(ar.Token, new RoomsService.RoomRequest { Size = roomSizeVal });
+                    rs = await Service.HostRoom(ar.Token, roomSizeVal);
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace TheBattleShipClient
             else if (join.Checked)
             {
                 var roomIdVal = roomId.Text;
-                rs = await RoomsService.JoinRoom(ar.Token, roomIdVal);
+                rs = await Service.JoinRoom(ar.Token, roomIdVal);
             }
 
             GameSubject gameSubject = new GameSubject();
