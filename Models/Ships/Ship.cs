@@ -8,7 +8,7 @@ using static TheBattleShipClient.Services.ShipsService;
 
 namespace TheBattleShipClient.Models.Ships
 {
-    public abstract class Ship
+    public abstract class Ship : Decorator.IShip
     {
         public int Id { get; protected set; }
         public int X { get; set; }
@@ -22,6 +22,7 @@ namespace TheBattleShipClient.Models.Ships
 
         private IMotionAlgorithm _motionAlgoritm = new MoveStraightSlowAlgorithm();
 
+        protected string skinText = "Alive";
         public Ship(string token, string roomId, int x, int y, bool horizontal, int hp)
         {
             _token = token;
@@ -62,6 +63,14 @@ namespace TheBattleShipClient.Models.Ships
 
         public abstract Task Create();
 
+        public Ship getShip()
+        {
+            return this;
+        }
 
+        public string setSkin()
+        {
+            return "Alive ";
+        }
     }
 }
