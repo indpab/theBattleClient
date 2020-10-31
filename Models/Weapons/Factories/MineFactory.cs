@@ -35,28 +35,5 @@ namespace TheBattleShipClient.Models.Weapons.Factories
             };
             return mine;
         }
-
-        /* Pakeistas iš šio, į "legacy" kodą
-        public override async Task<Weapon> CreateWeapon(int x, int y)
-        {
-            var weaponRequest = new WeaponRequest
-            {
-                X = x,
-                Y = y,
-                WeaponTypeId = 3
-            };
-            ShotResponse shot = await WeaponsService.Shot(_token, _roomId, weaponRequest);
-            var mine = new Mine
-            {
-                Id = shot.WeaponId,
-                X = shot.X,
-                Y = shot.Y,
-                IsSuccessful = shot.Successful,
-                ShipTypes = shot.ShipTypes.ToList(),
-                IsDetonated = shot.Successful
-            };
-             return mine;
-        }
-        */
     }
 }
