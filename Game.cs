@@ -27,16 +27,15 @@ namespace TheBattleShipClient
         int enemyScore;
 
         Facafe fack = new Facafe();
-        GameSubject gameSubject = new GameSubject();
+        GameSubject gameSubject;
 
-        public Game(RoomsService.RoomResponse rr, string token)
+        public Game(RoomsService.RoomResponse rr, string token, GameSubject gs)
         {
             InitializeComponent();
             RestartGame();
             RoomResponse = rr;
+            gameSubject = gs;
             gameSubject.Attach(this);
-            gameSubject.StartObserving(token, rr.Id);
-            gameSubject.StartObservingGame(token, rr.Id);
         }
 
         private void Game_Load(object sender, EventArgs e)

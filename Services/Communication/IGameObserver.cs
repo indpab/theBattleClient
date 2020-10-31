@@ -5,7 +5,7 @@ using TheBattleShipClient.Services.Communication;
 
 namespace TheBattleShipClient.Services
 {
-    interface IGameObserver
+    public interface IGameObserver
     {
         void UpdateState();
     }
