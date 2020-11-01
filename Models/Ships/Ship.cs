@@ -10,13 +10,14 @@ using static TheBattleShipClient.Services.ShipsService;
 
 namespace TheBattleShipClient.Models.Ships
 {
-    public abstract class Ship : ICloneable
+    public abstract class Ship : Decorator.IShip, ICloneable
     {
         public int Id { get; protected set; }
         public int X { get; set; }
         public int XOffset { get; set; }
         public int Y { get; set; }
         public int YOffset { get; set; }
+        public bool horizontal { get; set; }
         public double HP { get; protected set; }
         
         protected string _token;
@@ -24,6 +25,9 @@ namespace TheBattleShipClient.Models.Ships
 
         private IMotionAlgorithm _motionAlgoritm = new MoveStraightSlowAlgorithm();
 
+        private Command.IShipCommand _Command;
+
+        protected string skinText = "Ship";
         public Ship(string token, string roomId, int x, int y, bool horizontal, int hp)
         {
             _token = token;
@@ -31,6 +35,7 @@ namespace TheBattleShipClient.Models.Ships
 
             this.X = x;
             this.Y = y;
+            this.horizontal = horizontal;
             this.HP = hp;
             if (horizontal)
             {
@@ -68,6 +73,11 @@ namespace TheBattleShipClient.Models.Ships
 
         public abstract Task Create();
 
+        public string getSkin()
+        {
+            return "Ship "; 
+        }
+
         object ICloneable.Clone()
         {
             return (Ship)this.MemberwiseClone();
@@ -92,6 +102,23 @@ namespace TheBattleShipClient.Models.Ships
             {
                 this.XOffset = -1;
                 this.YOffset = (int)this.HP;
+            }
+        }
+
+        public void setCordinates(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+
+            if (horizontal)
+            {
+                this.XOffset = Convert.ToInt32(this.HP);
+                this.YOffset = 1;
+            }
+            else
+            {
+                this.XOffset = -1;
+                this.YOffset = Convert.ToInt32(this.HP);
             }
         }
     }
