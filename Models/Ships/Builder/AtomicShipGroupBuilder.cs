@@ -7,13 +7,13 @@ namespace TheBattleShipClient.Models.Ships.Builder
 {
     class AtomicShipGroupBuilder : Builder
     {
-        public void AddMediumSubmarine()
+        public void AddAtomicSubmarine()
         {
             AtomicSubmarine atomicSubmarine = (AtomicSubmarine)abstractShipFactory.CreateSubmarine(0, 0, false);
             shipGroup.Ships.Add(atomicSubmarine);
         }
 
-        public void AddSmallDestroyer()
+        public void AddAtomicDestroyer()
         {
             AtomicDestroyer atomicDestroyer = (AtomicDestroyer)abstractShipFactory.CreateDestroyer(0, 0, false);
             shipGroup.Ships.Add(atomicDestroyer);
