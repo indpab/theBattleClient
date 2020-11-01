@@ -6,14 +6,20 @@ namespace TheBattleShipClient.Models.Ships.Command
 {
     class TurnShipCommand : IPlaceShipCommand
     {
+        Ship ship;
+
+        public TurnShipCommand(Ship newShip)
+        {
+            ship = newShip;
+        }
         public void execute()
         {
-            throw new NotImplementedException();
+            ship.Rotate(!ship.horizontal);
         }
 
         public void undo()
         {
-            throw new NotImplementedException();
+            ship.Rotate(!ship.horizontal);
         }
     }
 }

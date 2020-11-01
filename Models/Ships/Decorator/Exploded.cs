@@ -8,9 +8,9 @@ namespace TheBattleShipClient.Models.Ships.Decorator
     {
         public Exploded(Ship newship) : base(newship) {}
 
-        public override string setSkin()
+        public override string getSkin()
         {
-            return base.setSkin() + " Exploded";
+            return base.getSkin() + " Exploded";
         }
     }
 }

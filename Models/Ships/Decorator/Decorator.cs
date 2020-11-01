@@ -13,14 +13,9 @@ namespace TheBattleShipClient.Models.Ships.Decorator
             tempShip = newShip;
         }
 
-        public Ship getShip()
+        public virtual string getSkin()
         {
-            return tempShip;
-        }
-
-        public virtual string setSkin()
-        {
-            return tempShip.setSkin();
+            return tempShip.getSkin();
         }
     }
 }

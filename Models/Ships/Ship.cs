@@ -17,12 +17,15 @@ namespace TheBattleShipClient.Models.Ships
         public int XOffset { get; set; }
         public int Y { get; set; }
         public int YOffset { get; set; }
+        public bool horizontal { get; set; }
         public double HP { get; protected set; }
         
         protected string _token;
         protected string _roomId;
 
         private IMotionAlgorithm _motionAlgoritm = new MoveStraightSlowAlgorithm();
+
+        private Command.IPlaceShipCommand _Command;
 
         protected string skinText = "Alive";
         public Ship(string token, string roomId, int x, int y, bool horizontal, int hp)
@@ -32,6 +35,7 @@ namespace TheBattleShipClient.Models.Ships
 
             this.X = x;
             this.Y = y;
+            this.horizontal = horizontal;
             this.HP = hp;
             if (horizontal)
             {
@@ -69,14 +73,9 @@ namespace TheBattleShipClient.Models.Ships
 
         public abstract Task Create();
 
-        public Ship getShip()
+        public string getSkin()
         {
-            return this;
-        }
-
-        public string setSkin()
-        {
-            return "Alive ";
+            return "Alive "; 
         }
 
         object ICloneable.Clone()
@@ -103,6 +102,23 @@ namespace TheBattleShipClient.Models.Ships
             {
                 this.XOffset = -1;
                 this.YOffset = (int)this.HP;
+            }
+        }
+
+        public void setCordinates(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+
+            if (horizontal)
+            {
+                this.XOffset = Convert.ToInt32(this.HP);
+                this.YOffset = 1;
+            }
+            else
+            {
+                this.XOffset = -1;
+                this.YOffset = Convert.ToInt32(this.HP);
             }
         }
     }

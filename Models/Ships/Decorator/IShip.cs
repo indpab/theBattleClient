@@ -6,8 +6,6 @@ namespace TheBattleShipClient.Models.Ships.Decorator
 {
     interface IShip
     {
-        public Ship getShip();
-
-        public string setSkin();
+        public string getSkin();
     }
 }
