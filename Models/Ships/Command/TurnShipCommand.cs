@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Command
 {
-    class TurnShipCommand : IPlaceShipCommand
+    class TurnShipCommand : IShipCommand
     {
         Ship ship;
 

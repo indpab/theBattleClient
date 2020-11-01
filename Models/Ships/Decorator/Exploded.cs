@@ -6,11 +6,11 @@ namespace TheBattleShipClient.Models.Ships.Decorator
 {
     class Exploded : Decorator
     {
-        public Exploded(Ship newship) : base(newship) {}
+        public Exploded(IShip newship) : base(newship) {}
 
         public override string getSkin()
         {
-            return base.getSkin() + " Exploded";
+            return tempShip.getSkin() + " Exploded";
         }
     }
 }

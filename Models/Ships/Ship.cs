@@ -25,9 +25,9 @@ namespace TheBattleShipClient.Models.Ships
 
         private IMotionAlgorithm _motionAlgoritm = new MoveStraightSlowAlgorithm();
 
-        private Command.IPlaceShipCommand _Command;
+        private Command.IShipCommand _Command;
 
-        protected string skinText = "Alive";
+        protected string skinText = "Ship";
         public Ship(string token, string roomId, int x, int y, bool horizontal, int hp)
         {
             _token = token;
@@ -75,7 +75,7 @@ namespace TheBattleShipClient.Models.Ships
 
         public string getSkin()
         {
-            return "Alive "; 
+            return "Ship "; 
         }
 
         object ICloneable.Clone()

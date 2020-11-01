@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Command
 {
-    interface IPlaceShipCommand
+    interface IShipCommand
     {
         public void execute();
         public void undo();

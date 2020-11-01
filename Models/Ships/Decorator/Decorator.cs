@@ -6,16 +6,13 @@ namespace TheBattleShipClient.Models.Ships.Decorator
 {
     abstract class Decorator : IShip
     {
-        protected Ship tempShip;
+        protected IShip tempShip;
 
-        public Decorator(Ship newShip)
+        public Decorator(IShip newShip)
         {
             tempShip = newShip;
         }
 
-        public virtual string getSkin()
-        {
-            return tempShip.getSkin();
-        }
+        public abstract string getSkin();
     }
 }

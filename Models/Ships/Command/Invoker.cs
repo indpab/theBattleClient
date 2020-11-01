@@ -6,38 +6,20 @@ namespace TheBattleShipClient.Models.Ships.Command
 {
     class Invoker
     {
-        IPlaceShipCommand placeShip;
-        IPlaceShipCommand turnShip;
-        int lastCommand;
+        private List<IShipCommand> commands = new List<IShipCommand>();
 
-        public Invoker(IPlaceShipCommand placeShip, IPlaceShipCommand turnShip)
+        public void ClickButton(IShipCommand command)
         {
-            this.placeShip = placeShip;
-            this.turnShip = turnShip;
-            lastCommand = -1;
-        }
-
-        public void ClickPlaceShip()
-        {
-            this.placeShip.execute();
-            lastCommand = 0;
-        }
-
-        public void ClickTurnShip()
-        {
-            this.turnShip.execute();
-            lastCommand = 1;
+            this.commands.Add(command);
+            command.execute();
         }
 
         public void ClickUndo()
         {
-            if(lastCommand == 0)
+            if (commands.Count > 0)
             {
-                placeShip.undo();
-            }
-            else if (lastCommand == 1)
-            {
-                turnShip.undo();
+                commands[commands.Count - 1].undo();
+                commands.RemoveAt(commands.Count - 1);
             }
         }
     }
