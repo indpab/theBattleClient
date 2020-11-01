@@ -9,6 +9,9 @@ using System.Drawing;
 using TheBattleShipClient.Services;
 using System.Drawing.Text;
 using TheBattleShipClient.Services.Communication;
+using TheBattleShipClient.Models.Ships;
+using TheBattleShipClient.Models.Ships.Builder;
+using TheBattleShipClient.Models;
 
 namespace TheBattleShipClient
 {
@@ -29,6 +32,8 @@ namespace TheBattleShipClient
         Facafe fack = new Facafe();
         GameSubject gameSubject;
 
+        private List<ShipGroup> _shipGroups = new List<ShipGroup>();
+
         public Game(RoomsService.RoomResponse rr, string token, GameSubject gs)
         {
             InitializeComponent();
@@ -36,6 +41,24 @@ namespace TheBattleShipClient
             RoomResponse = rr;
             gameSubject = gs;
             gameSubject.Attach(this);
+
+            var atomicBuilder = new AtomicShipGroupBuilder(token, rr.Id);
+            var atomicDirector = new BuildShipGroupsDirector(atomicBuilder);
+            atomicDirector.Construct();
+            var largeBuilder = new LargeShipGroupBuilder(token, rr.Id);
+            var largeDirector = new BuildShipGroupsDirector(largeBuilder);
+            largeDirector.Construct();
+            var mediumBuilder = new MediumShipGroupBuilder(token, rr.Id);
+            var mediumDirector = new BuildShipGroupsDirector(mediumBuilder);
+            mediumDirector.Construct();
+            var smallBuilder = new SmallShipGroupBuilder(token, rr.Id);
+            var smallDirector = new BuildShipGroupsDirector(smallBuilder);
+            smallDirector.Construct();
+
+            _shipGroups.AddRange(atomicBuilder.Build());
+            _shipGroups.AddRange(largeBuilder.Build());
+            _shipGroups.AddRange(mediumBuilder.Build());
+            _shipGroups.AddRange(smallBuilder.Build());
         }
 
         private void Game_Load(object sender, EventArgs e)

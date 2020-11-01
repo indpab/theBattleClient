@@ -8,33 +8,20 @@ namespace TheBattleShipClient.Models.Ships.Builder
 {
     public abstract class Builder
     {
-        protected string _token;
-        protected string _roomId;
-        protected AbstractShipFactory abstractShipFactory;
-        protected ShipGroup shipGroup;
-        public void SetFactory(AbstractShipFactory abstractShipFactory)
+        protected AbstractShipFactory _abstractShipFactory;
+        protected List<ShipGroup> _shipGroups = new List<ShipGroup>();
+
+        public abstract void AddSubmarineGroup(int count);
+        public abstract void AddDestroyerGroup(int count);
+
+        public void Reset()
         {
-            this.abstractShipFactory = abstractShipFactory;
+            _shipGroups = new List<ShipGroup>();
         }
-        public void InitializeShipGroup()
+
+        public List<ShipGroup> Build()
         {
-            shipGroup = new ShipGroup();
-        }
-        public void SetShiptype(ShipType shipType)
-        {
-            shipGroup.ShipType = shipType;
-        }
-        public void SetLimit(int limit)
-        {
-            shipGroup.Limit = limit;
-        }
-        public void SetCount(int count)
-        {
-            shipGroup.Count = count;
-        }
-        public ShipGroup Build()
-        {
-            return shipGroup;
+            return _shipGroups;
         }
     }
 }

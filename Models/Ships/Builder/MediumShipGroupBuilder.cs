@@ -7,15 +7,53 @@ namespace TheBattleShipClient.Models.Ships.Builder
 {
     class MediumShipGroupBuilder : Builder
     {
-        public void AddMediumSubmarine()
+        public MediumShipGroupBuilder(string token, string roomId)
         {
-            MediumSubmarine mediumSubmarine = (MediumSubmarine)abstractShipFactory.CreateSubmarine(0, 0, false);
-            shipGroup.Ships.Add(mediumSubmarine);
+            _abstractShipFactory = new MediumShipFactory(token, roomId);
         }
-        public void AddMediumDestroyer()
+
+        public override void AddSubmarineGroup(int count)
         {
-            MediumDestroyer mediumDestroyer = (MediumDestroyer)abstractShipFactory.CreateDestroyer(0, 0, false);
-            shipGroup.Ships.Add(mediumDestroyer);
+            var ships = new List<Ship>();
+            for (int i = 0; i < count; i++)
+            {
+                ships.Add(_abstractShipFactory.CreateSubmarine(0, 0, true));
+            }
+            var shipGroup = new ShipGroup
+            {
+                Limit = count,
+                Count = count,
+                ShipType = new ShipType
+                {
+                    Name = "Medium Submarine",
+                    IsSubmarine = true,
+                    Size = 2
+                },
+                Ships = ships
+            };
+            _shipGroups.Add(shipGroup);
+        }
+
+        public override void AddDestroyerGroup(int count)
+        {
+            var ships = new List<Ship>();
+            for (int i = 0; i < count; i++)
+            {
+                ships.Add(_abstractShipFactory.CreateDestroyer(0, 0, true));
+            }
+            var shipGroup = new ShipGroup
+            {
+                Limit = count,
+                Count = count,
+                ShipType = new ShipType
+                {
+                    Name = "Medium Destroyer",
+                    IsSubmarine = false,
+                    Size = 2
+                },
+                Ships = ships
+            };
+            _shipGroups.Add(shipGroup);
         }
     }
 }

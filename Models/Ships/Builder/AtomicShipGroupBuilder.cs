@@ -5,18 +5,55 @@ using TheBattleShipClient.Models.Ships.Factories;
 
 namespace TheBattleShipClient.Models.Ships.Builder
 {
-    class AtomicShipGroupBuilder : Builder
+    public class AtomicShipGroupBuilder : Builder
     {
-        public void AddMediumSubmarine()
+        public AtomicShipGroupBuilder(string token, string roomId)
         {
-            AtomicSubmarine atomicSubmarine = (AtomicSubmarine)abstractShipFactory.CreateSubmarine(0, 0, false);
-            shipGroup.Ships.Add(atomicSubmarine);
+            _abstractShipFactory = new AtomicShipFactory(token, roomId);
         }
 
-        public void AddSmallDestroyer()
+        public override void AddSubmarineGroup(int count)
         {
-            AtomicDestroyer atomicDestroyer = (AtomicDestroyer)abstractShipFactory.CreateDestroyer(0, 0, false);
-            shipGroup.Ships.Add(atomicDestroyer);
+            var ships = new List<Ship>();
+            for(int i = 0; i < count; i++)
+            {
+                ships.Add(_abstractShipFactory.CreateSubmarine(0, 0, true));
+            }
+            var shipGroup = new ShipGroup
+            {
+                Limit = count,
+                Count = count,
+                ShipType = new ShipType
+                {
+                    Name = "Atomic Submarine",
+                    IsSubmarine = true,
+                    Size = 4
+                },
+                Ships = ships
+            };
+            _shipGroups.Add(shipGroup);
+        }
+
+        public override void AddDestroyerGroup(int count)
+        {
+            var ships = new List<Ship>();
+            for (int i = 0; i < count; i++)
+            {
+                ships.Add(_abstractShipFactory.CreateDestroyer(0, 0, true));
+            }
+            var shipGroup = new ShipGroup
+            {
+                Limit = count,
+                Count = count,
+                ShipType = new ShipType
+                {
+                    Name = "Atomic Destroyer",
+                    IsSubmarine = false,
+                    Size = 4
+                },
+                Ships = ships
+            };
+            _shipGroups.Add(shipGroup);
         }
     }
 }

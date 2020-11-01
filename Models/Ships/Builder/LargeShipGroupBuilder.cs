@@ -7,16 +7,53 @@ namespace TheBattleShipClient.Models.Ships.Builder
 {
     class LargeShipGroupBuilder : Builder
     {
-        public void AddMediumSubmarine()
+        public LargeShipGroupBuilder(string token, string roomId)
         {
-            LargeSubmarine mediumSubmarine = (LargeSubmarine)abstractShipFactory.CreateSubmarine(0, 0, false);
-            shipGroup.Ships.Add(mediumSubmarine);
+            _abstractShipFactory = new LargeShipFactory(token, roomId);
         }
 
-        public void AddSmallDestroyer()
+        public override void AddSubmarineGroup(int count)
         {
-            MediumDestroyer mediumDestroyer = (MediumDestroyer)abstractShipFactory.CreateDestroyer(0, 0, false);
-            shipGroup.Ships.Add(mediumDestroyer);
+            var ships = new List<Ship>();
+            for (int i = 0; i < count; i++)
+            {
+                ships.Add(_abstractShipFactory.CreateSubmarine(0, 0, true));
+            }
+            var shipGroup = new ShipGroup
+            {
+                Limit = count,
+                Count = count,
+                ShipType = new ShipType
+                {
+                    Name = "Large Submarine",
+                    IsSubmarine = true,
+                    Size = 3
+                },
+                Ships = ships
+            };
+            _shipGroups.Add(shipGroup);
+        }
+
+        public override void AddDestroyerGroup(int count)
+        {
+            var ships = new List<Ship>();
+            for (int i = 0; i < count; i++)
+            {
+                ships.Add(_abstractShipFactory.CreateDestroyer(0, 0, true));
+            }
+            var shipGroup = new ShipGroup
+            {
+                Limit = count,
+                Count = count,
+                ShipType = new ShipType
+                {
+                    Name = "Large Destroyer",
+                    IsSubmarine = false,
+                    Size = 3
+                },
+                Ships = ships
+            };
+            _shipGroups.Add(shipGroup);
         }
     }
 }
