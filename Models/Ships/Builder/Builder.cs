@@ -8,33 +8,34 @@ namespace TheBattleShipClient.Models.Ships.Builder
 {
     public abstract class Builder
     {
-        protected string _token;
-        protected string _roomId;
-        protected AbstractShipFactory abstractShipFactory;
-        protected ShipGroup shipGroup;
-        public void SetFactory(AbstractShipFactory abstractShipFactory)
+        protected AbstractShipFactory _smallShipFactory;
+        protected AbstractShipFactory _mediumShipFactory;
+        protected AbstractShipFactory _largeShipFactory;
+        protected AbstractShipFactory _atomicShipFactory;
+
+        protected List<ShipGroup> _shipGroups = new List<ShipGroup>();
+
+        public Builder(string token, string roomId)
         {
-            this.abstractShipFactory = abstractShipFactory;
+            _smallShipFactory = new SmallShipFactory(token, roomId);
+            _mediumShipFactory = new MediumShipFactory(token, roomId);
+            _largeShipFactory = new LargeShipFactory(token, roomId);
+            _atomicShipFactory = new AtomicShipFactory(token, roomId);
         }
-        public void InitializeShipGroup()
+
+        public abstract void AddSmallShips(int count);
+        public abstract void AddMediumShips(int count);
+        public abstract void AddLargeShips(int count);
+        public abstract void AddAtomicShips(int count);
+
+        public void Reset()
         {
-            shipGroup = new ShipGroup();
+            _shipGroups = new List<ShipGroup>();
         }
-        public void SetShiptype(ShipType shipType)
+
+        public List<ShipGroup> Build()
         {
-            shipGroup.ShipType = shipType;
-        }
-        public void SetLimit(int limit)
-        {
-            shipGroup.Limit = limit;
-        }
-        public void SetCount(int count)
-        {
-            shipGroup.Count = count;
-        }
-        public ShipGroup Build()
-        {
-            return shipGroup;
+            return _shipGroups;
         }
     }
 }
