@@ -7,13 +7,6 @@ namespace TheBattleShipClient.Models.Ships.Bridge
 {
     abstract class Visualization
     {
-        protected Decorator.IShip ship;
-
-        public Visualization(Decorator.IShip ship)
-        {
-            this.ship = ship;
-        }
-
-        public abstract string draw();
+        public abstract string draw(string skin);
     }
 }

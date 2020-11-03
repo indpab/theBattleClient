@@ -7,10 +7,9 @@ namespace TheBattleShipClient.Models.Ships.Bridge
 {
     class ColorRed : Visualization
     {
-        public ColorRed(Decorator.IShip ship) : base(ship) { }
-        public override string draw()
+        public override string draw(string skin)
         {
-            return "Red " + ship.getSkin();
+            return "Red " + skin;
         }
     }
 }
