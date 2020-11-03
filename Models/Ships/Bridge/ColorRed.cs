@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace TheBattleShipClient.Models.Ships.Bridge
 {
     class ColorRed : Visualization
     {
-        public override string draw(string skin)
+        public override TextBox draw(TextBox textBox, Decorator.IShip ship)
         {
-            return "Red " + skin;
+            textBox.Text = ship.getSkin();
+            textBox.ForeColor = Color.Red;
+            return textBox;
         }
     }
 }
