@@ -43,8 +43,9 @@
             // roomSize
             // 
             this.roomSize.FormattingEnabled = true;
-            this.roomSize.Items.AddRange(new object[] {
-            resources.GetString("roomSize.Items")});
+            /*            this.roomSize.Items.AddRange(new object[] {
+                        resources.GetString("roomSize.Items")});*/
+            this.roomSize.Items.AddRange(new object[] { 4, 5, 6, 7, 8, 9, 10 });
             resources.ApplyResources(this.roomSize, "roomSize");
             this.roomSize.Name = "roomSize";
             // 

@@ -1,7 +1,12 @@
-﻿namespace TheBattleShipClient
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace TheBattleShipClient
 {
     partial class GameStart
     {
+
         /// <summary>
         ///  Required designer variable.
         /// </summary>

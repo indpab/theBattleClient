@@ -31,9 +31,9 @@ namespace TheBattleShipClient
 
         public Game(RoomsService.RoomResponse rr, string token, GameSubject gs)
         {
+            RoomResponse = rr;
             InitializeComponent();
             RestartGame();
-            RoomResponse = rr;
             gameSubject = gs;
             gameSubject.Attach(this);
         }
@@ -168,7 +168,7 @@ namespace TheBattleShipClient
         {
             //var size = RoomResponse.Size;
 
-            playerPositionButtons = new List<Button> { w1, w2, w3, w4, x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4 };
+/*            playerPositionButtons = new List<Button> { w1, w2, w3, w4, x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4 };
             enemyPositionButtons = new List<Button> { a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 };
 
             EnemyLocationListBox.Items.Clear();
@@ -204,7 +204,7 @@ namespace TheBattleShipClient
 
             btnAttack.Enabled = false;
 
-            EnemyLocationPicker();
+            EnemyLocationPicker();*/
         }
 
         private void EnemyLocationPicker()
