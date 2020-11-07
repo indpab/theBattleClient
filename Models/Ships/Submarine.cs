@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships
 {
+    [Serializable]
     public abstract class Submarine : Ship
     {
         public Submarine(string token, string roomId, int x, int y, bool horizontal, int hp)
@@ -13,7 +14,7 @@ namespace TheBattleShipClient.Models.Ships
 
         internal Submarine DeepClone()
         {
-            return (Submarine)base.DeepClone(this);
+            return (Submarine)base.DeepClone();
         }
     }
 }

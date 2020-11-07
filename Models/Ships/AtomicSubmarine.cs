@@ -6,6 +6,7 @@ using TheBattleShipClient.Services;
 
 namespace TheBattleShipClient.Models.Ships
 {
+    [Serializable]
     class AtomicSubmarine : Submarine
     {
         public AtomicSubmarine(string token, string roomId, int x, int y, bool horizontal)

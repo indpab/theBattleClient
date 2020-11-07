@@ -54,5 +54,20 @@ namespace TheBattleShipClient.Services
             public bool Successful { get; set; }
             public IEnumerable<int> ShipTypes { get; set; }
         }
+        public class WeaponResponse
+        {
+            public int Id { get; set; }
+            public int X { get; set; }
+            public int Y { get; set; }
+            public bool IsUsed { get; set; }
+            public WeaponTypeResponse WeaponType { get; set; }
+        }
+        public class WeaponTypeResponse
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int Power { get; set; }
+            public bool IsMine { get; set; }
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Algorithms
 {
+    [Serializable]
     public class MoveStraightSlowAlgorithm : IMotionAlgorithm
     {
         public void Move(Ship ship)

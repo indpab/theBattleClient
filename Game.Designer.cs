@@ -87,6 +87,7 @@ namespace TheBattleShipClient
             }
 
 
+
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Game));
             this.EnemyLocationListBox = new System.Windows.Forms.ComboBox();
@@ -95,13 +96,17 @@ namespace TheBattleShipClient
             this.txtRounds = new System.Windows.Forms.Label();
             this.enemyMove = new System.Windows.Forms.Label();
             this.txtHelp = new System.Windows.Forms.Label();
-            this.button16 = new System.Windows.Forms.Button();
-            this.btnAttack = new System.Windows.Forms.Button();
             this.EnemyPlayTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.destroyerRadioButton = new System.Windows.Forms.RadioButton();
             this.submarineRadioButton = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.smallRadioButton = new System.Windows.Forms.RadioButton();
+            this.mediumRadioButton = new System.Windows.Forms.RadioButton();
+            this.largeRadioButton = new System.Windows.Forms.RadioButton();
+            this.atomicRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // EnemyLocationListBox
@@ -177,17 +182,7 @@ namespace TheBattleShipClient
             this.txtHelp.Size = new System.Drawing.Size(415, 20);
             this.txtHelp.TabIndex = 0;
             this.txtHelp.Text = "1) Click on 3 different locations from above to start";;
-            // 
-            // button16
-            // 
-            this.button16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button16.Location = new System.Drawing.Point(490, 259);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(84, 69);
-            this.button16.TabIndex = 2;
-            this.button16.Text = "Attack";
-            this.button16.UseVisualStyleBackColor = true;
-            // 
+
             // EnemyPlayTimer
             // 
             this.EnemyPlayTimer.Interval = 1000;
@@ -226,47 +221,70 @@ namespace TheBattleShipClient
             this.submarineRadioButton.Text = "Submarine";
             this.submarineRadioButton.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.smallRadioButton);
+            this.groupBox2.Controls.Add(this.mediumRadioButton);
+            this.groupBox2.Controls.Add(this.largeRadioButton);
+            this.groupBox2.Controls.Add(this.atomicRadioButton);
+            this.groupBox2.Location = new System.Drawing.Point(150, 65);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(112, 146);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Select Ship Type:";
+            // 
+            // smallRadioButton
+            // 
+            this.smallRadioButton.AutoSize = true;
+            this.smallRadioButton.Location = new System.Drawing.Point(6, 22);
+            this.smallRadioButton.Name = "smallRadioButton";
+            this.smallRadioButton.Size = new System.Drawing.Size(75, 19);
+            this.smallRadioButton.TabIndex = 1;
+            this.smallRadioButton.TabStop = true;
+            this.smallRadioButton.Text = "Small";
+            this.smallRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // mediumRadioButton
+            // 
+            this.mediumRadioButton.AutoSize = true;
+            this.mediumRadioButton.Location = new System.Drawing.Point(6, 47);
+            this.mediumRadioButton.Name = "mediumRadioButton";
+            this.mediumRadioButton.Size = new System.Drawing.Size(82, 19);
+            this.mediumRadioButton.TabIndex = 0;
+            this.mediumRadioButton.TabStop = true;
+            this.mediumRadioButton.Text = "Medium";
+            this.mediumRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // largeRadioButton
+            // 
+            this.largeRadioButton.AutoSize = true;
+            this.largeRadioButton.Location = new System.Drawing.Point(6, 72);
+            this.largeRadioButton.Name = "largeRadioButton";
+            this.largeRadioButton.Size = new System.Drawing.Size(75, 19);
+            this.largeRadioButton.TabIndex = 1;
+            this.largeRadioButton.TabStop = true;
+            this.largeRadioButton.Text = "Large";
+            this.largeRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // mediumRadioButton
+            // 
+            this.atomicRadioButton.AutoSize = true;
+            this.atomicRadioButton.Location = new System.Drawing.Point(6, 97);
+            this.atomicRadioButton.Name = "atomicRadioButton";
+            this.atomicRadioButton.Size = new System.Drawing.Size(82, 19);
+            this.atomicRadioButton.TabIndex = 0;
+            this.atomicRadioButton.TabStop = true;
+            this.atomicRadioButton.Text = "Atomic";
+            this.atomicRadioButton.UseVisualStyleBackColor = true;
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1786, 938);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.d2);
-            this.Controls.Add(this.z2);
-            this.Controls.Add(this.c2);
-            this.Controls.Add(this.y2);
-            this.Controls.Add(this.b2);
-            this.Controls.Add(this.x2);
-            this.Controls.Add(this.a2);
-            this.Controls.Add(this.w2);
-            this.Controls.Add(this.d4);
-            this.Controls.Add(this.z4);
-            this.Controls.Add(this.c4);
-            this.Controls.Add(this.y4);
-            this.Controls.Add(this.d3);
-            this.Controls.Add(this.c3);
-            this.Controls.Add(this.z3);
-            this.Controls.Add(this.b4);
-            this.Controls.Add(this.y3);
-            this.Controls.Add(this.b3);
-            this.Controls.Add(this.x4);
-            this.Controls.Add(this.d1);
-            this.Controls.Add(this.x3);
-            this.Controls.Add(this.c1);
-            this.Controls.Add(this.z1);
-            this.Controls.Add(this.a4);
-            this.Controls.Add(this.y1);
-            this.Controls.Add(this.b1);
-            this.Controls.Add(this.w4);
-            this.Controls.Add(this.a3);
-            this.Controls.Add(this.x1);
-            this.Controls.Add(this.a1);
-            this.Controls.Add(this.w3);
-            this.Controls.Add(this.btnAttack);
-            this.Controls.Add(this.w1);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.EnemyLocationListBox);
             this.Controls.Add(this.txtHelp);
             this.Controls.Add(this.txtRounds);
@@ -278,6 +296,8 @@ namespace TheBattleShipClient
             this.Load += new System.EventHandler(this.Game_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.SetClientSizeCore(1600, 2600);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -292,47 +312,14 @@ namespace TheBattleShipClient
         private System.Windows.Forms.Label enemyMove;
         private System.Windows.Forms.Label txtHelp;
         private System.Windows.Forms.ComboBox EnemyLocationListBox;
-        private System.Windows.Forms.Button w1;
-        private System.Windows.Forms.Button w3;
-        private System.Windows.Forms.Button w2;
-        private System.Windows.Forms.Button w4;
-        private System.Windows.Forms.Button x1;
-        private System.Windows.Forms.Button x3;
-        private System.Windows.Forms.Button x4;
-        private System.Windows.Forms.Button x2;
-        private System.Windows.Forms.Button y1;
-        private System.Windows.Forms.Button y3;
-        private System.Windows.Forms.Button y4;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button16;
-        private System.Windows.Forms.Button z1;
-        private System.Windows.Forms.Button z3;
-        private System.Windows.Forms.Button z4;
-        private System.Windows.Forms.Button z2;
-        private System.Windows.Forms.Button a2;
-        private System.Windows.Forms.Button b2;
-        private System.Windows.Forms.Button c2;
-        private System.Windows.Forms.Button d2;
-        private System.Windows.Forms.Button btnAttack;
-        private System.Windows.Forms.Button button34;
-        private System.Windows.Forms.Button button35;
-        private System.Windows.Forms.Button button36;
-        private System.Windows.Forms.Button a1;
-        private System.Windows.Forms.Button a3;
-        private System.Windows.Forms.Button b1;
-        private System.Windows.Forms.Button a4;
-        private System.Windows.Forms.Button c1;
-        private System.Windows.Forms.Button d1;
-        private System.Windows.Forms.Button b3;
-        private System.Windows.Forms.Button b4;
-        private System.Windows.Forms.Button c3;
-        private System.Windows.Forms.Button d3;
-        private System.Windows.Forms.Button c4;
-        private System.Windows.Forms.Button d4;
-        private System.Windows.Forms.Button y2;
         private System.Windows.Forms.Timer EnemyPlayTimer;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton destroyerRadioButton;
         private System.Windows.Forms.RadioButton submarineRadioButton;
+        private System.Windows.Forms.RadioButton smallRadioButton;
+        private System.Windows.Forms.RadioButton mediumRadioButton;
+        private System.Windows.Forms.RadioButton largeRadioButton;
+        private System.Windows.Forms.RadioButton atomicRadioButton;
     }
 }

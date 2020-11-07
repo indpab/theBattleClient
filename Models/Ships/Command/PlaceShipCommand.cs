@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Command
 {
+    [Serializable]
     class PlaceShipCommand : IShipCommand
     {
         Ship ship;

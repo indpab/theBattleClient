@@ -9,6 +9,10 @@ using System.Drawing;
 using TheBattleShipClient.Services;
 using System.Drawing.Text;
 using TheBattleShipClient.Services.Communication;
+using TheBattleShipClient.Models.Ships;
+using TheBattleShipClient.Models.Ships.Builder;
+using TheBattleShipClient.Models;
+using System.Linq;
 
 namespace TheBattleShipClient
 {
@@ -16,6 +20,9 @@ namespace TheBattleShipClient
     {
         List<Button> playerPositionButtons;
         List<Button> enemyPositionButtons;
+        string _token;
+        string _roomId;
+        private List<ShipGroup> _shipGroups = new List<ShipGroup>();
 
         Services.RoomsService.RoomResponse RoomResponse { get; set; }
 
@@ -32,24 +39,26 @@ namespace TheBattleShipClient
         public Game(RoomsService.RoomResponse rr, string token, GameSubject gs)
         {
             RoomResponse = rr;
+            _token = token;
+            _roomId = rr.Id;
             InitializeComponent();
             RestartGame();
             gameSubject = gs;
             gameSubject.Attach(this);
         }
 
-        private void Game_Load(object sender, EventArgs e)
+        private async void Game_Load(object sender, EventArgs e)
         {
-            //CreatePlayer();
-        }
+            var submarine_builder = new SubmarineShipGroupsBuilder(_token, _roomId);
+            var submarine_director = new BuildShipGroupsDirector(submarine_builder);
+            var destroyer_builder = new DestroyerShipGroupsBuilder(_token, _roomId);
+            var destroyer_director = new BuildShipGroupsDirector(destroyer_builder);
 
-        public void CreatePlayer()
-        {
-            Task<string> create = fack.Connector.PostAction("Identity/Register",
-                "{\"userName\":\"" + "JONAS" + "\", \"email\":\"" + "meailemail@mail.com" + "\", \"password\":\"" + "Pass-w0rd" + "\"}");
-            var result = create.Result; // result = "" ?
-            var obj = JObject.Parse(result);
-            string id = obj["token"].Value<string>();
+            var mapResponse = await MapsService.GetMap(_token, _roomId);
+            var submarineLimits = mapResponse.ShipGroups.Where(x => x.ShipType.IsSubmarine).OrderBy(x => x.ShipType.Size).Select(x => x.Limit).ToList();
+            var destroyerLimits = mapResponse.ShipGroups.Where(x => !x.ShipType.IsSubmarine).OrderBy(x => x.ShipType.Size).Select(x => x.Limit).ToList();
+            var submarineGroups = submarine_director.ConstructShipGroups(submarineLimits);
+            var destroyerGroups = destroyer_director.ConstructShipGroups(destroyerLimits);
         }
 
         private void EnemyPlayTimerEvent(object sender, EventArgs e)
@@ -156,9 +165,9 @@ namespace TheBattleShipClient
 
             if (totalShips == 0)
             {
-                btnAttack.Enabled = true;
-                btnAttack.BackColor = Color.Red;
-                btnAttack.ForeColor = Color.White;
+                //btnAttack.Enabled = true;
+                //btnAttack.BackColor = Color.Red;
+                //btnAttack.ForeColor = Color.White;
 
                 txtHelp.Text = "2) Now pick the attack position from drop down";
             }
@@ -166,45 +175,6 @@ namespace TheBattleShipClient
 
         private void RestartGame()
         {
-            //var size = RoomResponse.Size;
-
-/*            playerPositionButtons = new List<Button> { w1, w2, w3, w4, x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4 };
-            enemyPositionButtons = new List<Button> { a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4 };
-
-            EnemyLocationListBox.Items.Clear();
-            EnemyLocationListBox.Text = null;
-
-            txtHelp.Text = "1) Click on three different locations from above to start!";
-
-            for (int i = 0; i < enemyPositionButtons.Count; i++)
-            {
-                enemyPositionButtons[i].Enabled = true;
-                enemyPositionButtons[i].Tag = null;
-                enemyPositionButtons[i].BackColor = Color.White;
-                enemyPositionButtons[i].BackgroundImage = null;
-                EnemyLocationListBox.Items.Add(enemyPositionButtons[i].Text);
-            }
-
-            for (int i = 0; i < playerPositionButtons.Count; i++)
-            {
-                playerPositionButtons[i].Enabled = true;
-                playerPositionButtons[i].Tag = null;
-                playerPositionButtons[i].BackColor = Color.White;
-                playerPositionButtons[i].BackgroundImage = null;
-            }
-
-            playerScore = 0;
-            enemyScore = 0;
-            round = 10;
-            totalShips = 3;
-
-            txtPlayer.Text = playerScore.ToString();
-            txtEnemy.Text = enemyScore.ToString();
-            enemyMove.Text = "A1";
-
-            btnAttack.Enabled = false;
-
-            EnemyLocationPicker();*/
         }
 
         private void EnemyLocationPicker()

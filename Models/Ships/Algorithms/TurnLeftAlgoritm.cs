@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Algorithms
 {
+    [Serializable]
     public class TurnLeftAlgoritm : IMotionAlgorithm
     {
         public void Move(Ship ship)

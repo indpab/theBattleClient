@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using static TheBattleShipClient.Services.ShipsService;
 
 namespace TheBattleShipClient.Models.Ships
 {
+    [Serializable]
     public abstract class Ship : Decorator.IShip, ICloneable
     {
         public int Id { get; protected set; }
@@ -82,11 +84,11 @@ namespace TheBattleShipClient.Models.Ships
         {
             return (Ship)this.MemberwiseClone();
         }
-        protected Ship DeepClone(Ship obj)
+        protected Ship DeepClone()
         {
             using var ms = new MemoryStream();
             var formatter = new BinaryFormatter();
-            formatter.Serialize(ms, obj);
+            formatter.Serialize(ms, this);
             ms.Position = 0;
 
             return (Ship)formatter.Deserialize(ms);

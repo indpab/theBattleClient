@@ -70,5 +70,19 @@ namespace TheBattleShipClient.Services
             public int YOffset { get; set; }
             public double HP { get; set; }
         }
+        public class ShipGroupResponse
+        {
+            public ShipTypeResponse ShipType { get; set; }
+            public int Count { get; set; }
+            public int Limit { get; set; }
+            public IEnumerable<ShipResponse> Ships { get; set; }
+        }
+        public class ShipTypeResponse
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int Size { get; set; }
+            public bool IsSubmarine { get; set; }
+        }
     }
 }
