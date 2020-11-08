@@ -22,7 +22,7 @@ namespace TheBattleShipClient
 
             btn.BackColor = Color.White;
             btn.BackgroundImageLayout = ImageLayout.Stretch;
-            btn.Font = new Font("Courier", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btn.Font = new Font("Courier", 7F, FontStyle.Bold, GraphicsUnit.Point);
             btn.Name = name;
             btn.Text = name;
             btn.UseVisualStyleBackColor = false;
@@ -85,7 +85,7 @@ namespace TheBattleShipClient
             {
                 for (int j = 0; j < xxy; j++)
                 {
-                    AddButton(String.Format("{0}{1}", letters[i], j + 1), BuildConfiguration);
+                    AddButton(String.Format("{0}{1}", letters[i], j + 1), ShootButtonClick);
                 }
             }
             enemyButtons = temp;
@@ -102,8 +102,9 @@ namespace TheBattleShipClient
             this.txtHelp = new System.Windows.Forms.Label();
             this.EnemyPlayTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.destroyerRadioButton = new System.Windows.Forms.RadioButton();
-            this.submarineRadioButton = new System.Windows.Forms.RadioButton();
+            this.torpedoRadioButton = new System.Windows.Forms.RadioButton();
+            this.bombRadioButton = new System.Windows.Forms.RadioButton();
+            this.mineRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.smallRadioButton = new System.Windows.Forms.RadioButton();
             this.mediumRadioButton = new System.Windows.Forms.RadioButton();
@@ -218,44 +219,52 @@ namespace TheBattleShipClient
             this.txtHelp.Size = new System.Drawing.Size(415, 20);
             this.txtHelp.TabIndex = 0;
             this.txtHelp.Text = "1) Click on 3 different locations from above to start"; ;
-
-            // EnemyPlayTimer
-            // 
-            this.EnemyPlayTimer.Interval = 1000;
-            this.EnemyPlayTimer.Tick += new System.EventHandler(this.EnemyPlayTimerEvent);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.destroyerRadioButton);
-            this.groupBox1.Controls.Add(this.submarineRadioButton);
+            this.groupBox1.Controls.Add(this.torpedoRadioButton);
+            this.groupBox1.Controls.Add(this.bombRadioButton);
+            this.groupBox1.Controls.Add(this.mineRadioButton);
             this.groupBox1.Location = new System.Drawing.Point(26, 65);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(112, 73);
+            this.groupBox1.Size = new System.Drawing.Size(112, 200);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Select Ship Type:";
+            this.groupBox1.Text = "Select Weapon:";
             // 
-            // destroyerRadioButton
+            // torpedoRadioButton
             // 
-            this.destroyerRadioButton.AutoSize = true;
-            this.destroyerRadioButton.Location = new System.Drawing.Point(6, 47);
-            this.destroyerRadioButton.Name = "destroyerRadioButton";
-            this.destroyerRadioButton.Size = new System.Drawing.Size(75, 19);
-            this.destroyerRadioButton.TabIndex = 1;
-            this.destroyerRadioButton.TabStop = true;
-            this.destroyerRadioButton.Text = "Destroyer";
-            this.destroyerRadioButton.UseVisualStyleBackColor = true;
+            this.torpedoRadioButton.AutoSize = true;
+            this.torpedoRadioButton.Location = new System.Drawing.Point(6, 47);
+            this.torpedoRadioButton.Name = "torpedo";
+            this.torpedoRadioButton.Size = new System.Drawing.Size(75, 19);
+            this.torpedoRadioButton.TabIndex = 1;
+            this.torpedoRadioButton.TabStop = true;
+            this.torpedoRadioButton.Text = "Torpedo";
+            this.torpedoRadioButton.UseVisualStyleBackColor = true;
             // 
-            // submarineRadioButton
+            // bombRadioButton
             // 
-            this.submarineRadioButton.AutoSize = true;
-            this.submarineRadioButton.Location = new System.Drawing.Point(6, 22);
-            this.submarineRadioButton.Name = "submarineRadioButton";
-            this.submarineRadioButton.Size = new System.Drawing.Size(82, 19);
-            this.submarineRadioButton.TabIndex = 0;
-            this.submarineRadioButton.TabStop = true;
-            this.submarineRadioButton.Text = "Submarine";
-            this.submarineRadioButton.UseVisualStyleBackColor = true;
+            this.bombRadioButton.AutoSize = true;
+            this.bombRadioButton.Location = new System.Drawing.Point(6, 22);
+            this.bombRadioButton.Name = "bomb";
+            this.bombRadioButton.Size = new System.Drawing.Size(82, 19);
+            this.bombRadioButton.TabIndex = 0;
+            this.bombRadioButton.TabStop = true;
+            this.bombRadioButton.Text = "Bomb";
+            this.bombRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // mineRadioButton
+            // 
+            this.mineRadioButton.AutoSize = true;
+            this.mineRadioButton.Location = new System.Drawing.Point(6, 72);
+            this.mineRadioButton.Name = "mine";
+            this.mineRadioButton.Size = new System.Drawing.Size(82, 19);
+            this.mineRadioButton.TabIndex = 0;
+            this.mineRadioButton.TabStop = true;
+            this.mineRadioButton.Text = "Mine";
+            this.mineRadioButton.UseVisualStyleBackColor = true;
+
             // 
             // groupBox2
             // 
@@ -354,8 +363,9 @@ namespace TheBattleShipClient
         private System.Windows.Forms.Timer EnemyPlayTimer;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton destroyerRadioButton;
-        private System.Windows.Forms.RadioButton submarineRadioButton;
+        private System.Windows.Forms.RadioButton torpedoRadioButton;
+        private System.Windows.Forms.RadioButton bombRadioButton;
+        private System.Windows.Forms.RadioButton mineRadioButton;
         private System.Windows.Forms.RadioButton smallRadioButton;
         private System.Windows.Forms.RadioButton mediumRadioButton;
         private System.Windows.Forms.RadioButton largeRadioButton;

@@ -39,7 +39,6 @@ namespace TheBattleShipClient.Services.Communication
             bool stateChanged = false;
             while (stateChanged == false)
             {
-
                 bool guestHasArrived = await Service.HasGuestArrived(token, roomId);
                 if (guestHasArrived != JoinedState)
                 {

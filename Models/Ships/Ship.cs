@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TheBattleShipClient.Models.Ships.Algorithms;
 using TheBattleShipClient.Services;
 using static TheBattleShipClient.Services.ShipsService;
@@ -21,6 +22,9 @@ namespace TheBattleShipClient.Models.Ships
         public int YOffset { get; set; }
         public bool horizontal { get; set; }
         public double HP { get; protected set; }
+        protected double PreviousHP { get; set; }
+
+        public List<Button> buttons { get; set; }
         
         protected string _token;
         protected string _roomId;
@@ -36,6 +40,7 @@ namespace TheBattleShipClient.Models.Ships
             this.Y = y;
             this.horizontal = horizontal;
             this.HP = hp;
+            this.PreviousHP = hp;
             if (horizontal)
             {
                 this.XOffset = hp;
@@ -52,6 +57,10 @@ namespace TheBattleShipClient.Models.Ships
             return this.X != -1;
         }
 
+        public void InitializeButtons()
+        {
+            this.buttons = new List<Button>();
+        }
         public void SetMotionAlgoritm(IMotionAlgorithm algorithm)
         {
             _motionAlgoritm = algorithm;
@@ -74,7 +83,7 @@ namespace TheBattleShipClient.Models.Ships
 
         public string getSkin()
         {
-            return "Ship "; 
+            return " "; 
         }
 
         object ICloneable.Clone()
@@ -120,6 +129,28 @@ namespace TheBattleShipClient.Models.Ships
                 this.XOffset = -1;
                 this.YOffset = Convert.ToInt32(this.HP);
             }
+        }
+
+        public void ParseShipResponse(ShipResponse shipResponse)
+        {
+            this.X = shipResponse.X;
+            this.Y = shipResponse.Y;
+            this.XOffset = shipResponse.XOffset;
+            this.YOffset = shipResponse.YOffset;
+            this.HP = shipResponse.HP;
+            this.Id = shipResponse.Id;
+        }
+        public bool HasBeenShot()
+        {
+            return PreviousHP > HP;
+        }
+        public void Shot()
+        {
+            PreviousHP = HP;
+        }
+        public bool isDead()
+        {
+            return HP == 0;
         }
     }
 }

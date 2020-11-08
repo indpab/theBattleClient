@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Decorator
 {
-    interface IShip
+    public interface IShip
     {
         public string getSkin();
     }

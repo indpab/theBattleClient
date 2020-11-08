@@ -14,7 +14,10 @@ using TheBattleShipClient.Models.Ships.Builder;
 using TheBattleShipClient.Models;
 using System.Linq;
 using TheBattleShipClient.Models.Ships.Command;
+using TheBattleShipClient.Models.Ships.Bridge;
+using TheBattleShipClient.Models.Ships.Decorator;
 using static TheBattleShipClient.Services.MapsService;
+using static TheBattleShipClient.Services.WeaponsService;
 
 namespace TheBattleShipClient
 {
@@ -24,18 +27,19 @@ namespace TheBattleShipClient
         string _roomId;
         private Map map;
         Services.RoomsService.RoomResponse RoomResponse { get; set; }
+        TextBox roomIdTextBox;
         Random rand = new Random();
         Facafe fack = new Facafe();
         GameSubject gameSubject;
 
-        private void startGame_Click(object sender, EventArgs e)
-        {
 
-        }
-        public void UpdateState()
+        public async void UpdateState()
         {
+            Visualization visualization = new ColorBlue();
             if (gameSubject.PlayerState == true)
             {
+                Ship shotShip = await map.UpdateMap(visualization);
+                
                 MessageBox.Show("Your Turn!");
             }
             else
@@ -47,7 +51,61 @@ namespace TheBattleShipClient
                 MessageBox.Show("State Changed");
             }
         }
+        private void startGame_Click(object sender, EventArgs e)
+        {
+            gameSubject = new GameSubject();
+            gameSubject.Attach(this);
+            gameSubject.StartObserving(_token, _roomId);
+            gameSubject.StartObservingGame(_token, _roomId);
+            turnShipButton.Hide();
+            undoButton.Hide();
+            startGameButton.Hide();
 
+            foreach (var but in myButtons)
+            {
+                but.Click -= BuildConfiguration;
+                but.Click += DecoratorClick;
+            }
+        }
+
+        private void DecoratorClick(object sender, EventArgs e)
+        {
+
+            var theShip = map.GetShips().Where(x => x.buttons.Contains((Button)sender)).FirstOrDefault();
+
+            if (((Button)sender).BackColor != Color.White && theShip != null)
+            {
+                Visualization visualization = new ColorBlue();
+                visualization.draw(theShip.buttons, new Dead(new Named(theShip)));
+            }
+        }
+
+        private async void ShootButtonClick(object sender, EventArgs e)
+        {
+            int xCord;
+            if (!((Button)sender).Text.Last().Equals('0'))
+                xCord = Convert.ToInt32(((Button)sender).Text.Last().ToString()) - 1;
+            else
+                xCord = 9;
+
+            int yCord = Array.IndexOf(letters, ((Button)sender).Text[0]);
+
+            var wpType = 0;
+            if (torpedoRadioButton.Checked)
+            {
+                wpType = 1;
+            }
+            else if (bombRadioButton.Checked)
+            {
+                wpType = 2;
+            }
+            else if (mineRadioButton.Checked)
+            {
+                wpType = 3;
+            }
+
+            ShotResponse shotResponse = await Service.ShootWeapon(_token, _roomId, xCord, yCord, wpType);
+        }
 
         #region Build Map Pre Game
 
@@ -59,15 +117,22 @@ namespace TheBattleShipClient
         int groupIndex;
         int shipIndex;
 
-        public Game(RoomsService.RoomResponse rr, string token, GameSubject gs)
+        public Game(RoomsService.RoomResponse rr, string token)
         {
+            MessageBox.Show("Your roomId is: " + rr.Id);
             RoomResponse = rr;
             _token = token;
             _roomId = rr.Id;
             InitializeComponent();
             map = new Map(_token, _roomId, xxy, xxy, myButtons);
-            gameSubject = gs;
-            gameSubject.Attach(this);
+        }
+        private void CreateRoomIdTextBox()
+        {
+            roomIdTextBox = new TextBox();
+            roomIdTextBox.Text = RoomResponse.Id;
+            roomIdTextBox.Size = new Size(200, 20);
+            roomIdTextBox.Location = new Point(50, 10);
+            this.Controls.Add(this.roomIdTextBox);
         }
 
         private async void Game_Load(object sender, EventArgs e)
@@ -89,6 +154,7 @@ namespace TheBattleShipClient
             groupIndex = map.ShipGroups.Count - 1;
             shipIndex = map.ShipGroups.ToList()[groupIndex].Ships.Count;
             iterLimit = countShips();
+            CreateRoomIdTextBox();
         }
 
 
@@ -100,12 +166,6 @@ namespace TheBattleShipClient
                 shipPlaceInfo.Text += 4;
             else
                 shipPlaceInfo.Text += currShip.HP - 1;
-        }
-
-        private void SetPlaceShipInfo(double hp)
-        {
-            shipPlaceInfo.Text = shipPlaceInfo.Text.Remove(shipPlaceInfo.Text.Length - 1);
-            shipPlaceInfo.Text += hp;
         }
 
         private Ship GetCurrentShip()
@@ -173,11 +233,14 @@ namespace TheBattleShipClient
             int buttonIndex = xCord + yCord * xxy;
 
             myButtons[buttonIndex].BackColor = color;
+            ship.buttons.Clear();
             if (ship.horizontal)
             {
                 for (int i = 0; i < ship.HP; i++)
                 {
+                    ship.buttons.Add(myButtons[buttonIndex]);
                     myButtons[buttonIndex++].BackColor = color;
+                    
                 }
             }
             else
@@ -185,6 +248,7 @@ namespace TheBattleShipClient
                 for (int i = 0; i < ship.HP; i++)
                 {
                     myButtons[buttonIndex].BackColor = color;
+                    ship.buttons.Add(myButtons[buttonIndex]);
                     buttonIndex += xxy;
                 }
             }
@@ -208,7 +272,8 @@ namespace TheBattleShipClient
                 if (isSuccess)
                     currShip = GetCurrentShip();
 
-                //invoker.ClickButton(new PlaceShipCommand(currShip, xCord, yCord));
+                currShip.InitializeButtons();
+
                 var newship = currShip;
                 newship.setCordinates(xCord, yCord);
                 var validationResult = map.ValidateCoordinates(newship);
@@ -266,7 +331,8 @@ namespace TheBattleShipClient
             }
             startGameButton.Enabled = false;
         }
-        #endregion
+
+        #endregion       
 
     }
 

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TheBattleShipClient.Exceptions;
 using TheBattleShipClient.Models;
+using TheBattleShipClient.Models.Ships;
 using static TheBattleShipClient.Services.ShipsService;
 using static TheBattleShipClient.Services.WeaponsService;
 
@@ -63,6 +64,8 @@ namespace TheBattleShipClient.Services
             public int? EnemyShot_Y { get; set; }
             public IEnumerable<ShipGroupResponse> ShipGroups { get; set; }
             public IEnumerable<WeaponResponse> Weapons { get; set; }
+
+            
         }
 
 

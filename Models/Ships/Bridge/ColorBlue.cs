@@ -8,11 +8,14 @@ namespace TheBattleShipClient.Models.Ships.Bridge
 {
     class ColorBlue : Visualization
     {
-        public override TextBox draw(TextBox textBox, Decorator.IShip ship)
+        public override List<Button> draw(List<Button> buttons, Decorator.IShip ship)
         {
-            textBox.Text = ship.getSkin();
-            textBox.ForeColor = Color.Blue;
-            return textBox;
+            foreach (var but in buttons)
+            {
+                but.Text = ship.getSkin();
+                but.ForeColor = Color.Blue;
+            }
+            return buttons;
         }
     }
 }

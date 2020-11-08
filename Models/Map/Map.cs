@@ -5,6 +5,11 @@ using TheBattleShipClient.Models.Weapons;
 using TheBattleShipClient.Models.Ships;
 using System.Windows.Forms;
 using System.Drawing;
+using TheBattleShipClient.Services;
+using static TheBattleShipClient.Services.MapsService;
+using System.Threading.Tasks;
+using TheBattleShipClient.Models.Ships.Decorator;
+using TheBattleShipClient.Models.Ships.Bridge;
 
 namespace TheBattleShipClient.Models
 {
@@ -69,6 +74,55 @@ namespace TheBattleShipClient.Models
                 }
             }
             return null;
+        }
+
+        public List<Ship> GetShips()
+        {
+            List<Ship> theShips = new List<Ship>();
+            foreach (var shipGroup in ShipGroups)
+            {
+                foreach (var ship in shipGroup.Ships)
+                {
+                    theShips.Add(ship);
+                }
+            }
+            return theShips;
+        }
+
+        public async Task<Ship> UpdateMap(Visualization visualization)
+        {
+            Ship ship = null;
+            MapResponse mapResponse = await MapsService.GetMap(_token, _roomId);
+            EnemyShot_X = mapResponse.EnemyShot_X;
+            EnemyShot_Y = mapResponse.EnemyShot_Y;
+            this.IsCompleted = mapResponse.IsCompleted;
+            var shipGroupEnum = ShipGroups.GetEnumerator();
+            var shipGroupResponseEnum = mapResponse.ShipGroups.GetEnumerator();
+
+            while (shipGroupEnum.MoveNext() && shipGroupResponseEnum.MoveNext())
+            {
+                var shipsEnum = shipGroupEnum.Current.Ships.GetEnumerator();
+                var shipsResponseEnum = shipGroupResponseEnum.Current.Ships.GetEnumerator();
+                while (shipsEnum.MoveNext() && shipsResponseEnum.MoveNext())
+                {
+                    Ship current = shipsEnum.Current;
+                    visualization.draw(current.buttons, new Named(current));
+                    current.ParseShipResponse(shipsResponseEnum.Current);
+                    if (current.HasBeenShot())
+                    {
+                        ship = current;
+
+                        visualization.draw(ship.buttons, new Named(new Damaged(ship)));
+                        if (ship.isDead())
+                        {
+                            visualization.draw(ship.buttons, new Named(new Dead(ship)));
+                        }
+                        ship.Shot();
+                    }
+                }
+            }
+
+            return ship;
         }
     }
 }

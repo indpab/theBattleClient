@@ -6,8 +6,8 @@ using System.Windows.Forms;
 
 namespace TheBattleShipClient.Models.Ships.Bridge
 {
-    abstract class Visualization
+    public abstract class Visualization
     {
-        public abstract TextBox draw(TextBox textBox, Decorator.IShip ship);
+        public abstract List<Button> draw(List<Button> but, Decorator.IShip ship);
     }
 }

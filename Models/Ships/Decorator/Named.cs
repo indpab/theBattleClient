@@ -4,13 +4,13 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Decorator
 {
-    class Exploded : Decorator
+    class Named : Decorator
     {
-        public Exploded(IShip newship) : base(newship) {}
+        public Named(IShip newship) : base(newship) {}
 
         public override string getSkin()
         {
-            return tempShip.getSkin() + " Exploded";
+            return tempShip.getSkin() + " Ship";
         }
     }
 }
