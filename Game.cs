@@ -20,33 +20,44 @@ namespace TheBattleShipClient
 {
     public partial class Game : Form, IGameObserver
     {
-        List<Button> playerPositionButtons;
-        List<Button> enemyPositionButtons;
         string _token;
         string _roomId;
         private Map map;
-        //private List<ShipGroup> map.ShipGroups.ToList() = new List<ShipGroup>();
         Services.RoomsService.RoomResponse RoomResponse { get; set; }
         Random rand = new Random();
+        Facafe fack = new Facafe();
+        GameSubject gameSubject;
+
+        private void startGame_Click(object sender, EventArgs e)
+        {
+
+        }
+        public void UpdateState()
+        {
+            if (gameSubject.PlayerState == true)
+            {
+                MessageBox.Show("Your Turn!");
+            }
+            else
+            {
+                MessageBox.Show("Wait for your turn");
+            }
+            if (gameSubject.JoinedState == true)
+            {
+                MessageBox.Show("State Changed");
+            }
+        }
+
+
+        #region Build Map Pre Game
 
         Color color;
         int iterLimit;
         Ship currShip;
-
         Invoker invoker = new Invoker();
         int placedShipsCount = 0;
-
         int groupIndex;
         int shipIndex;
-
-        int totalShips = 3;
-        int round = 10;
-        int playerScore;
-        int enemyScore;
-
-
-        Facafe fack = new Facafe();
-        GameSubject gameSubject;
 
         public Game(RoomsService.RoomResponse rr, string token, GameSubject gs)
         {
@@ -54,7 +65,6 @@ namespace TheBattleShipClient
             _token = token;
             _roomId = rr.Id;
             InitializeComponent();
-            RestartGame();
             map = new Map(_token, _roomId, xxy, xxy, myButtons);
             gameSubject = gs;
             gameSubject.Attach(this);
@@ -256,162 +266,8 @@ namespace TheBattleShipClient
             }
             startGameButton.Enabled = false;
         }
+        #endregion
 
-        private void startGame_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void EnemyPlayTimerEvent(object sender, EventArgs e)
-        {
-            if (playerPositionButtons.Count > 0 && round > 0)
-            {
-                round -= 1;
-
-                txtRounds.Text = "Round: " + round;
-                int index = rand.Next(playerPositionButtons.Count);
-
-                if ((string)playerPositionButtons[index].Tag == "playerShip")
-                {
-                    playerPositionButtons[index].BackgroundImage = Properties.Resources.fireIcon;
-                    enemyMove.Text = playerPositionButtons[index].Text;
-                    playerPositionButtons[index].Enabled = false;
-                    playerPositionButtons[index].BackColor = Color.DarkBlue;
-                    playerPositionButtons.RemoveAt(index);
-                    enemyScore += 1;
-                    txtEnemy.Text = enemyScore.ToString();
-                    EnemyPlayTimer.Stop();
-                }
-                else
-                {
-                    playerPositionButtons[index].BackgroundImage = Properties.Resources.missIcon;
-                    enemyMove.Text = playerPositionButtons[index].Text;
-                    playerPositionButtons[index].Enabled = false;
-                    playerPositionButtons[index].BackColor = Color.DarkBlue;
-                    playerPositionButtons.RemoveAt(index);
-                    EnemyPlayTimer.Stop();
-                }
-            }
-
-            if (round < 1 || enemyScore > 2 || playerScore > 2)
-            {
-                if (playerScore > enemyScore)
-                {
-                    MessageBox.Show("You win!!", "Winning");
-                    RestartGame();
-                }
-                else if (enemyScore > playerScore)
-                {
-                    MessageBox.Show("Haha, I sunk your battle ship", "Lost");
-                    RestartGame();
-                }
-                else if (enemyScore == playerScore)
-                {
-                    MessageBox.Show("No one wins this game", "Draw");
-                    RestartGame();
-                }
-            }
-
-
-        }
-
-
-        /*        private void AttackButtonEvent(object sender, EventArgs e)
-                {
-                    if (EnemyLocationListBox.Text != "")
-                    {
-                        var attackPosition = EnemyLocationListBox.Text.ToLower();
-
-                        int index = enemyPositionButtons.FindIndex(a => a.Name == attackPosition);
-
-                        if (enemyPositionButtons[index].Enabled && round > 0)
-                        {
-                            round -= 1;
-                            txtRounds.Text = "Round: " + round;
-
-                            if ((string)enemyPositionButtons[index].Tag == "enemyShip")
-                            {
-                                enemyPositionButtons[index].Enabled = false;
-                                enemyPositionButtons[index].BackgroundImage = Properties.Resources.fireIcon;
-                                enemyPositionButtons[index].BackColor = Color.DarkBlue;
-                                playerScore += 1;
-                                txtPlayer.Text = playerScore.ToString();
-                                EnemyPlayTimer.Start();
-                            }
-                            else
-                            {
-                                enemyPositionButtons[index].Enabled = false;
-                                enemyPositionButtons[index].BackgroundImage = Properties.Resources.missIcon;
-                                enemyPositionButtons[index].BackColor = Color.DarkBlue;
-                                EnemyPlayTimer.Start();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Choose a location from the drop down first", "Information");
-                    }
-                }*/
-
-        private void PlayerPositionButtonsEvent(object sender, EventArgs e)
-        {
-            if (totalShips > 0)
-            {
-                var button = (Button)sender;
-
-                button.Enabled = false;
-                button.Tag = "playerShip";
-                button.BackColor = Color.Orange;
-                totalShips -= 1;
-            }
-
-            if (totalShips == 0)
-            {
-                //btnAttack.Enabled = true;
-                //btnAttack.BackColor = Color.Red;
-                //btnAttack.ForeColor = Color.White;
-
-                txtHelp.Text = "2) Now pick the attack position from drop down";
-            }
-        }
-
-        private void RestartGame()
-        {
-        }
-
-        private void EnemyLocationPicker()
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                int index = rand.Next(enemyPositionButtons.Count);
-
-                if (enemyPositionButtons[index].Enabled == true && (string)enemyPositionButtons[index].Tag == null)
-                {
-                    enemyPositionButtons[index].Tag = "enemyShip";
-                    Debug.WriteLine("Enemy Position: " + enemyPositionButtons[index].Text);
-                }
-                else
-                {
-                    index = rand.Next(enemyPositionButtons.Count);
-                }
-            }
-        }
-
-        public void UpdateState()
-        {
-            if (gameSubject.PlayerState == true)
-            {
-                MessageBox.Show("Your Turn!");
-            }
-            else
-            {
-                MessageBox.Show("Wait for your turn");
-            }
-            if (gameSubject.JoinedState == true)
-            {
-                MessageBox.Show("State Changed");
-            }
-        }
     }
 
 }
