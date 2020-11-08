@@ -242,6 +242,7 @@ namespace TheBattleShipClient
             this.torpedoRadioButton.TabStop = true;
             this.torpedoRadioButton.Text = "Torpedo";
             this.torpedoRadioButton.UseVisualStyleBackColor = true;
+            this.torpedoRadioButton.Checked = true;
             // 
             // bombRadioButton
             // 

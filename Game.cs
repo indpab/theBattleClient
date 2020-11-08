@@ -35,21 +35,26 @@ namespace TheBattleShipClient
 
         public async void UpdateState()
         {
+            if (gameSubject.JoinedState == true)
+            {
+                MessageBox.Show("Enemy has joined");
+            }
             Visualization visualization = new ColorBlue();
             if (gameSubject.PlayerState == true)
             {
                 Ship shotShip = await map.UpdateMap(visualization);
-                
                 MessageBox.Show("Your Turn!");
+                enemyButtons.ForEach(x => x.Enabled = true);
+                map.buttons.ForEach(x => x.Enabled = true);
             }
             else
             {
+/*                enemyButtons.ForEach(x => x.Enabled = false);
+                map.buttons.ForEach(x => x.Enabled = false);*/
                 MessageBox.Show("Wait for your turn");
+           
             }
-            if (gameSubject.JoinedState == true)
-            {
-                MessageBox.Show("State Changed");
-            }
+
         }
         private void startGame_Click(object sender, EventArgs e)
         {

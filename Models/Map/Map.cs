@@ -26,7 +26,7 @@ namespace TheBattleShipClient.Models
 
         public int MapSizeX { get; private set; }
         public int MapSizeY { get; private set; }
-        List<Button> buttons { get; set; }
+        public List<Button> buttons { get; set; }
 
         public Map(string token, string roomId, int mapSizeX, int mapSizeY, List<Button> buttons)
         {
