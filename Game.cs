@@ -53,6 +53,7 @@ namespace TheBattleShipClient
         }
         private void startGame_Click(object sender, EventArgs e)
         {
+            map.StartGameMap();
             gameSubject = new GameSubject();
             gameSubject.Attach(this);
             gameSubject.StartObserving(_token, _roomId);

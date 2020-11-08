@@ -89,6 +89,21 @@ namespace TheBattleShipClient.Models
             return theShips;
         }
 
+        public void StartGameMap()
+        {
+            var shipGroupEnum = ShipGroups.GetEnumerator();
+            while (shipGroupEnum.MoveNext())
+            {
+                ShipGroup shipGroup = shipGroupEnum.Current;
+                var shipsEnum = shipGroup.Ships.GetEnumerator();
+                while (shipsEnum.MoveNext())
+                {
+                    Ship ship = shipsEnum.Current;
+                    ship.Create();
+                }
+            }
+        }
+
         public async Task<Ship> UpdateMap(Visualization visualization)
         {
             Ship ship = null;
