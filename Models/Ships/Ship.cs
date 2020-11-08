@@ -105,6 +105,7 @@ namespace TheBattleShipClient.Models.Ships
                 this.XOffset = -1;
                 this.YOffset = (int)this.HP;
             }
+            this.horizontal = horizontal;
         }
 
         public void setCordinates(int x, int y)

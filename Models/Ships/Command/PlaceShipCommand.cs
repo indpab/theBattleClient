@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace TheBattleShipClient.Models.Ships.Command
 {
@@ -10,29 +12,31 @@ namespace TheBattleShipClient.Models.Ships.Command
         Ship ship;
         int x, y;
 
-        List<int> oldX;
-        List<int> oldY;
-        public PlaceShipCommand(Ship newShip, int x, int y)
+        Ship oldShip;
+
+        List<Button> buttons;
+        public PlaceShipCommand(Ship newShip, int x, int y, List<Button> buttons)
         {
             ship = newShip;
             this.x = x;
             this.y = y;
-            oldX = new List<int>();
-            oldY = new List<int>();
+            this.buttons = buttons;
         }
+
         public void execute()
         {
-            oldX.Add(ship.X);
-            oldY.Add(ship.Y);
+            oldShip = ship;
 
             ship.setCordinates(x, y);
         }
 
         public void undo()
         {
-            ship.setCordinates(oldX[oldX.Count-1],oldY[oldY.Count-1]);
-            oldX.RemoveAt(oldX.Count - 1);
-            oldY.RemoveAt(oldY.Count - 1);
+            ship.setCordinates(oldShip.X, oldShip.Y);
+        }
+        public Ship getShip()
+        {
+            return oldShip;
         }
     }
 }

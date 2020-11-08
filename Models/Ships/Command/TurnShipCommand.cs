@@ -22,5 +22,10 @@ namespace TheBattleShipClient.Models.Ships.Command
         {
             ship.Rotate(!ship.horizontal);
         }
+
+        public Ship getShip()
+        {
+            return ship;
+        }
     }
 }

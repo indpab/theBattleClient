@@ -13,6 +13,7 @@ using TheBattleShipClient.Models.Ships;
 using TheBattleShipClient.Models.Ships.Builder;
 using TheBattleShipClient.Models;
 using System.Linq;
+using TheBattleShipClient.Models.Ships.Command;
 
 namespace TheBattleShipClient
 {
@@ -23,11 +24,12 @@ namespace TheBattleShipClient
         string _token;
         string _roomId;
         private List<ShipGroup> _shipGroups = new List<ShipGroup>();
-
         Services.RoomsService.RoomResponse RoomResponse { get; set; }
-
         Random rand = new Random();
+        IEnumerator<Ship> currentShipEnumerator;
+        IEnumerator<ShipGroup> currentShipGroupEnumerator;
 
+        Color color;
         int totalShips = 3;
         int round = 10;
         int playerScore;
@@ -59,6 +61,143 @@ namespace TheBattleShipClient
             var destroyerLimits = mapResponse.ShipGroups.Where(x => !x.ShipType.IsSubmarine).OrderBy(x => x.ShipType.Size).Select(x => x.Limit).ToList();
             var submarineGroups = submarine_director.ConstructShipGroups(submarineLimits);
             var destroyerGroups = destroyer_director.ConstructShipGroups(destroyerLimits);
+            _shipGroups = submarineGroups.Concat(destroyerGroups).ToList();
+            currentShipGroupEnumerator = SetShipGroupEnumerator();
+            currentShipGroupEnumerator.MoveNext();
+            currentShipEnumerator = SetShipEnumerator(currentShipGroupEnumerator.Current);
+            currentShipEnumerator.MoveNext();
+
+        }
+
+        private IEnumerator<Ship> SetShipEnumerator(ShipGroup shipGroup)
+        {
+            return shipGroup.Ships.GetEnumerator();
+        }
+        private IEnumerator<ShipGroup> SetShipGroupEnumerator()
+        {
+            return _shipGroups.GetEnumerator();
+        }
+
+        private int countShips()
+        {
+            int temp = 0;
+            foreach (var shipGroup in _shipGroups)
+            {
+                temp += shipGroup.Limit;
+            }
+            return temp;
+        }
+
+        private void setColor()
+        {
+            if (currentShipGroup.ShipType.IsSubmarine)
+                color = Color.Aqua;
+            else
+                color = Color.Coral;
+        }
+        
+        private void drawShip(Ship ship, int xCord, int yCord)
+        {
+            int buttonIndex = xCord + yCord * xxy;
+
+            myButtons[buttonIndex].BackColor = color;
+            if (ship.horizontal)
+            {
+                for (int i = 0; i < ship.HP; i++)
+                {
+                    myButtons[buttonIndex++].BackColor = color;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < ship.HP; i++)
+                {
+                    myButtons[buttonIndex].BackColor = color;
+                    buttonIndex += xxy;
+                }
+            }
+        }
+
+        Invoker invoker = new Invoker();
+        int placedShipsCount = 0;
+        Ship currentShip;
+        ShipGroup currentShipGroup;
+
+        private void BuildConfiguration(object sender, EventArgs e)
+        {
+            if (placedShipsCount < countShips())
+            {
+                string text = ((Button)sender).Text.ToString();
+                int xCord;
+                if (!text.Last().Equals('0'))
+                    xCord = Convert.ToInt32(text.Last().ToString()) - 1;
+                else
+                    xCord = 9;
+
+                int yCord = Array.IndexOf(letters, text[0]);
+
+                currentShipGroup = currentShipGroupEnumerator.Current;
+                currentShip = currentShipEnumerator.Current;
+                setColor();
+                invoker.ClickButton(new PlaceShipCommand(
+                    _shipGroups.Where(x => x.Equals(currentShipGroup)).First().
+                    Ships.Where(x => x.Equals(currentShip)).First(), xCord, yCord, myButtons));
+
+                var ship = _shipGroups.Where(x => x.Equals(currentShipGroup)).First().Ships.Where(x => x.Equals(currentShip)).First();
+
+                drawShip(ship, xCord, yCord);
+
+                if (currentShipGroup.Ships.Last().Equals(currentShip))
+                {
+                    if (placedShipsCount != countShips()-1)
+                        currentShipGroupEnumerator.MoveNext();
+                    currentShipEnumerator = SetShipEnumerator(currentShipGroupEnumerator.Current);
+                    currentShipEnumerator.MoveNext();
+                    shipPlaceInfo.Text = shipPlaceInfo.Text.Remove(shipPlaceInfo.Text.Length-1);
+                    shipPlaceInfo.Text += currentShipEnumerator.Current.HP;
+                }
+                else
+                {
+                    currentShipEnumerator.MoveNext();
+                }
+                placedShipsCount++;
+            }
+        }
+
+        private void turnShip_Click(object sender, EventArgs e)
+        {
+            color = Color.White;
+            drawShip(currentShip, currentShip.X, currentShip.Y);
+            setColor();
+            invoker.ClickButton(new TurnShipCommand(_shipGroups.Where(x => x.Equals(currentShipGroup)).First().Ships.Where(x => x.Equals(currentShip)).First()));
+            drawShip(_shipGroups.Where(x => x.Equals(currentShipGroup)).First().Ships.Where(x => x.Equals(currentShip)).First(), _shipGroups.Where(x => x.Equals(currentShipGroup)).First().Ships.Where(x => x.Equals(currentShip)).First().X, _shipGroups.Where(x => x.Equals(currentShipGroup)).First().Ships.Where(x => x.Equals(currentShip)).First().Y);
+        }
+
+        private void undo_Click(object sender, EventArgs e)
+        {
+            if (invoker.getCommandsCount() > 0)
+            {
+                color = Color.White;
+                drawShip(currentShip, currentShip.X, currentShip.Y);
+                setColor();
+
+                IShipCommand lastComm = invoker.ClickUndo();
+                Ship temp = lastComm.getShip();
+
+                color = Color.White;
+                drawShip(temp, temp.X, temp.Y);
+                setColor();
+
+                if(lastComm is TurnShipCommand)
+                {
+                    temp.Rotate(!temp.horizontal);
+                    color = Color.White;
+                    drawShip(temp, temp.X, temp.Y);
+                    setColor();
+                    temp.Rotate(!temp.horizontal);
+                    drawShip(temp, temp.X, temp.Y);
+                }
+            }
         }
 
         private void EnemyPlayTimerEvent(object sender, EventArgs e)
@@ -114,7 +253,8 @@ namespace TheBattleShipClient
 
         }
 
-        private void AttackButtonEvent(object sender, EventArgs e)
+
+/*        private void AttackButtonEvent(object sender, EventArgs e)
         {
             if (EnemyLocationListBox.Text != "")
             {
@@ -149,7 +289,7 @@ namespace TheBattleShipClient
             {
                 MessageBox.Show("Choose a location from the drop down first", "Information");
             }
-        }
+        }*/
 
         private void PlayerPositionButtonsEvent(object sender, EventArgs e)
         {
@@ -211,4 +351,7 @@ namespace TheBattleShipClient
             }
         }
     }
+
 }
+
+

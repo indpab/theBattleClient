@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -11,6 +12,9 @@ namespace TheBattleShipClient
         int startx = 87;
         int butx = 87, buty = 240;
         int offset = 3;
+        List<Button> myButtons;
+        List<Button> enemyButtons;
+        List<Button> temp;
 
         void AddButton(string name, EventHandler e)
         {
@@ -25,13 +29,14 @@ namespace TheBattleShipClient
             btn.Location = new Point(butx, buty);
             btn.Size = new Size(63, 47);
             btn.Click += new EventHandler(e);
+            temp.Add(btn);
             this.Controls.Add(btn);
             if (butx < startx + (btn.Width + offset) * (xxy - 1))
                 butx += offset + btn.Width;
             else
             {
                 butx = startx;
-                buty += btn.Height + offset-1;
+                buty += btn.Height + offset - 1;
             }
         }
 
@@ -54,11 +59,6 @@ namespace TheBattleShipClient
             base.Dispose(disposing);
         }
 
-        private void test(object sender, EventArgs e)
-        {
-
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -67,31 +67,35 @@ namespace TheBattleShipClient
         /// </summary>
         private void InitializeComponent()
         {
+            temp = new List<Button>();
             xxy = RoomResponse.Size;
             for (int i = 0; i < xxy; i++)
             {
                 for (int j = 0; j < xxy; j++)
                 {
-                    AddButton(String.Format("{0}{1}", letters[i], j + 1), test);
+                    AddButton(String.Format("{0}{1}", letters[i], j + 1), BuildConfiguration);
                 }
             }
             butx = startx + (630) + 138;
             startx = butx;
             buty = 240;
+            myButtons = temp;
+            temp = new List<Button>();
             for (int i = 0; i < xxy; i++)
             {
                 for (int j = 0; j < xxy; j++)
                 {
-                    AddButton(String.Format("{0}{1}", letters[i], j + 1), test);
+                    AddButton(String.Format("{0}{1}", letters[i], j + 1), BuildConfiguration);
                 }
             }
-
+            enemyButtons = temp;
+            temp = new List<Button>();
 
 
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Game));
-            this.EnemyLocationListBox = new System.Windows.Forms.ComboBox();
             this.txtPlayer = new System.Windows.Forms.Label();
+            this.shipPlaceInfo = new System.Windows.Forms.Label();
             this.txtEnemy = new System.Windows.Forms.Label();
             this.txtRounds = new System.Windows.Forms.Label();
             this.enemyMove = new System.Windows.Forms.Label();
@@ -105,23 +109,11 @@ namespace TheBattleShipClient
             this.mediumRadioButton = new System.Windows.Forms.RadioButton();
             this.largeRadioButton = new System.Windows.Forms.RadioButton();
             this.atomicRadioButton = new System.Windows.Forms.RadioButton();
+            this.turnShipButton = new System.Windows.Forms.Button();
+            this.undoButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // EnemyLocationListBox
-            // 
-            this.EnemyLocationListBox.BackColor = System.Drawing.Color.PaleGreen;
-            this.EnemyLocationListBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.EnemyLocationListBox.DropDownWidth = 95;
-            this.EnemyLocationListBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.EnemyLocationListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.EnemyLocationListBox.FormattingEnabled = true;
-            this.EnemyLocationListBox.IntegralHeight = false;
-            this.EnemyLocationListBox.Location = new System.Drawing.Point(186, 30);
-            this.EnemyLocationListBox.Name = "EnemyLocationListBox";
-            this.EnemyLocationListBox.Size = new System.Drawing.Size(88, 33);
-            this.EnemyLocationListBox.TabIndex = 1;
             // 
             // txtPlayer
             // 
@@ -134,6 +126,38 @@ namespace TheBattleShipClient
             this.txtPlayer.Size = new System.Drawing.Size(38, 25);
             this.txtPlayer.TabIndex = 0;
             this.txtPlayer.Text = "00";
+            // 
+            // shipPlaceInfo
+            // 
+            this.shipPlaceInfo.AutoSize = true;
+            this.shipPlaceInfo.BackColor = System.Drawing.Color.Transparent;
+            this.shipPlaceInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.shipPlaceInfo.ForeColor = System.Drawing.Color.Black;
+            this.shipPlaceInfo.Location = new System.Drawing.Point(300, 75);
+            this.shipPlaceInfo.Name = "placeShipInfo";
+            this.shipPlaceInfo.Size = new System.Drawing.Size(75, 25);
+            this.shipPlaceInfo.TabIndex = 0;
+            this.shipPlaceInfo.Text = "Next ship size: 1";
+            // 
+            // turnShipButton
+            // 
+            this.turnShipButton.Location = new System.Drawing.Point(300, 30);
+            this.turnShipButton.Name = "turnShipButton";
+            this.turnShipButton.Size = new System.Drawing.Size(100, 30);
+            this.turnShipButton.TabIndex = 2;
+            this.turnShipButton.Text = "Turn ship";
+            this.turnShipButton.UseVisualStyleBackColor = true;
+            this.turnShipButton.Click += new System.EventHandler(this.turnShip_Click);
+            // 
+            // undoButton
+            // 
+            this.undoButton.Location = new System.Drawing.Point(420, 30);
+            this.undoButton.Name = "undoButton";
+            this.undoButton.Size = new System.Drawing.Size(100, 30);
+            this.undoButton.TabIndex = 2;
+            this.undoButton.Text = "Undo";
+            this.undoButton.UseVisualStyleBackColor = true;
+            this.undoButton.Click += new System.EventHandler(this.undo_Click);
             // 
             // txtEnemy
             // 
@@ -181,7 +205,7 @@ namespace TheBattleShipClient
             this.txtHelp.Name = "txtHelp";
             this.txtHelp.Size = new System.Drawing.Size(415, 20);
             this.txtHelp.TabIndex = 0;
-            this.txtHelp.Text = "1) Click on 3 different locations from above to start";;
+            this.txtHelp.Text = "1) Click on 3 different locations from above to start"; ;
 
             // EnemyPlayTimer
             // 
@@ -285,12 +309,14 @@ namespace TheBattleShipClient
             this.ClientSize = new System.Drawing.Size(1786, 938);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.EnemyLocationListBox);
             this.Controls.Add(this.txtHelp);
             this.Controls.Add(this.txtRounds);
             this.Controls.Add(this.enemyMove);
             this.Controls.Add(this.txtEnemy);
             this.Controls.Add(this.txtPlayer);
+            this.Controls.Add(this.shipPlaceInfo);
+            this.Controls.Add(this.turnShipButton);
+            this.Controls.Add(this.undoButton);
             this.Name = "Game";
             this.Text = "BattleShip";
             this.Load += new System.EventHandler(this.Game_Load);
@@ -307,11 +333,11 @@ namespace TheBattleShipClient
         #endregion
 
         private System.Windows.Forms.Label txtPlayer;
+        private Label shipPlaceInfo;
         private System.Windows.Forms.Label txtEnemy;
         private System.Windows.Forms.Label txtRounds;
         private System.Windows.Forms.Label enemyMove;
         private System.Windows.Forms.Label txtHelp;
-        private System.Windows.Forms.ComboBox EnemyLocationListBox;
         private System.Windows.Forms.Timer EnemyPlayTimer;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -321,5 +347,7 @@ namespace TheBattleShipClient
         private System.Windows.Forms.RadioButton mediumRadioButton;
         private System.Windows.Forms.RadioButton largeRadioButton;
         private System.Windows.Forms.RadioButton atomicRadioButton;
+        private System.Windows.Forms.Button turnShipButton;
+        private System.Windows.Forms.Button undoButton;
     }
 }

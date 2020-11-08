@@ -8,5 +8,6 @@ namespace TheBattleShipClient.Models.Ships.Command
     {
         public void execute();
         public void undo();
+        public Ship getShip();
     }
 }
