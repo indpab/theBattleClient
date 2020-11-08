@@ -27,9 +27,6 @@ namespace TheBattleShipClient.Models.Ships
 
         private IMotionAlgorithm _motionAlgoritm = new MoveStraightSlowAlgorithm();
 
-        private Command.IShipCommand _Command;
-
-        protected string skinText = "Ship";
         public Ship(string token, string roomId, int x, int y, bool horizontal, int hp)
         {
             _token = token;
@@ -84,7 +81,7 @@ namespace TheBattleShipClient.Models.Ships
         {
             return (Ship)this.MemberwiseClone();
         }
-        protected Ship DeepClone()
+        public Ship DeepClone()
         {
             using var ms = new MemoryStream();
             var formatter = new BinaryFormatter();

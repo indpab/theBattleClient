@@ -14,13 +14,11 @@ namespace TheBattleShipClient.Models.Ships.Command
 
         Ship oldShip;
 
-        List<Button> buttons;
-        public PlaceShipCommand(Ship newShip, int x, int y, List<Button> buttons)
+        public PlaceShipCommand(Ship newShip, int x, int y)
         {
             ship = newShip;
             this.x = x;
             this.y = y;
-            this.buttons = buttons;
         }
 
         public void execute()
@@ -37,6 +35,12 @@ namespace TheBattleShipClient.Models.Ships.Command
         public Ship getShip()
         {
             return oldShip;
+        }
+
+        public bool ValidateCordinates()
+        {
+
+            return false;
         }
     }
 }

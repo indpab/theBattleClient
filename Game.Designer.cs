@@ -7,7 +7,7 @@ namespace TheBattleShipClient
 {
     partial class Game
     {
-        int xxy = 10;
+        int xxy;
         char[] letters = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
         int startx = 87;
         int butx = 87, buty = 240;
@@ -110,6 +110,7 @@ namespace TheBattleShipClient
             this.largeRadioButton = new System.Windows.Forms.RadioButton();
             this.atomicRadioButton = new System.Windows.Forms.RadioButton();
             this.turnShipButton = new System.Windows.Forms.Button();
+            this.startGameButton = new System.Windows.Forms.Button();
             this.undoButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -137,7 +138,7 @@ namespace TheBattleShipClient
             this.shipPlaceInfo.Name = "placeShipInfo";
             this.shipPlaceInfo.Size = new System.Drawing.Size(75, 25);
             this.shipPlaceInfo.TabIndex = 0;
-            this.shipPlaceInfo.Text = "Next ship size: 1";
+            this.shipPlaceInfo.Text = "Next ship size: 4";
             // 
             // turnShipButton
             // 
@@ -148,6 +149,17 @@ namespace TheBattleShipClient
             this.turnShipButton.Text = "Turn ship";
             this.turnShipButton.UseVisualStyleBackColor = true;
             this.turnShipButton.Click += new System.EventHandler(this.turnShip_Click);
+            // 
+            // startGameButton
+            // 
+            this.startGameButton.Location = new System.Drawing.Point(540, 30);
+            this.startGameButton.Enabled = false;
+            this.startGameButton.Name = "StartGame";
+            this.startGameButton.Size = new System.Drawing.Size(100, 30);
+            this.startGameButton.TabIndex = 2;
+            this.startGameButton.Text = "Start Game";
+            this.startGameButton.UseVisualStyleBackColor = true;
+            this.startGameButton.Click += new System.EventHandler(this.startGame_Click);
             // 
             // undoButton
             // 
@@ -316,6 +328,7 @@ namespace TheBattleShipClient
             this.Controls.Add(this.txtPlayer);
             this.Controls.Add(this.shipPlaceInfo);
             this.Controls.Add(this.turnShipButton);
+            this.Controls.Add(this.startGameButton);
             this.Controls.Add(this.undoButton);
             this.Name = "Game";
             this.Text = "BattleShip";
@@ -348,6 +361,7 @@ namespace TheBattleShipClient
         private System.Windows.Forms.RadioButton largeRadioButton;
         private System.Windows.Forms.RadioButton atomicRadioButton;
         private System.Windows.Forms.Button turnShipButton;
+        private System.Windows.Forms.Button startGameButton;
         private System.Windows.Forms.Button undoButton;
     }
 }
