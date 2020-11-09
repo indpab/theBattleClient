@@ -106,9 +106,9 @@ namespace TheBattleShipClient
             this.bombRadioButton = new System.Windows.Forms.RadioButton();
             this.mineRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.smallRadioButton = new System.Windows.Forms.RadioButton();
-            this.mediumRadioButton = new System.Windows.Forms.RadioButton();
-            this.largeRadioButton = new System.Windows.Forms.RadioButton();
+            this.colorRedRadioButton = new System.Windows.Forms.RadioButton();
+            this.ColorBlueRadioButton = new System.Windows.Forms.RadioButton();
+            this.ColorGreenRadioButton = new System.Windows.Forms.RadioButton();
             this.atomicRadioButton = new System.Windows.Forms.RadioButton();
             this.turnShipButton = new System.Windows.Forms.Button();
             this.startGameButton = new System.Windows.Forms.Button();
@@ -269,60 +269,55 @@ namespace TheBattleShipClient
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.smallRadioButton);
-            this.groupBox2.Controls.Add(this.mediumRadioButton);
-            this.groupBox2.Controls.Add(this.largeRadioButton);
-            this.groupBox2.Controls.Add(this.atomicRadioButton);
+            this.groupBox2.Controls.Add(this.colorRedRadioButton);
+            this.groupBox2.Controls.Add(this.ColorBlueRadioButton);
+            this.groupBox2.Controls.Add(this.ColorGreenRadioButton);
             this.groupBox2.Location = new System.Drawing.Point(150, 65);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(112, 146);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Select Ship Type:";
+            this.groupBox2.Text = "Select Color:";
             // 
-            // smallRadioButton
+            // colorRed
             // 
-            this.smallRadioButton.AutoSize = true;
-            this.smallRadioButton.Location = new System.Drawing.Point(6, 22);
-            this.smallRadioButton.Name = "smallRadioButton";
-            this.smallRadioButton.Size = new System.Drawing.Size(75, 19);
-            this.smallRadioButton.TabIndex = 1;
-            this.smallRadioButton.TabStop = true;
-            this.smallRadioButton.Text = "Small";
-            this.smallRadioButton.UseVisualStyleBackColor = true;
+            this.colorRedRadioButton.AutoSize = true;
+            this.colorRedRadioButton.Location = new System.Drawing.Point(6, 22);
+            this.colorRedRadioButton.Name = "colorRed";
+            this.colorRedRadioButton.Size = new System.Drawing.Size(75, 19);
+            this.colorRedRadioButton.TabIndex = 1;
+            this.colorRedRadioButton.TabStop = true;
+            this.colorRedRadioButton.Text = "Red";
+            this.colorRedRadioButton.ForeColor = Color.Red;
+            this.colorRedRadioButton.UseVisualStyleBackColor = true;
+            this.colorRedRadioButton.Click += VisualizationClick;
             // 
-            // mediumRadioButton
+            // colorBlue
             // 
-            this.mediumRadioButton.AutoSize = true;
-            this.mediumRadioButton.Location = new System.Drawing.Point(6, 47);
-            this.mediumRadioButton.Name = "mediumRadioButton";
-            this.mediumRadioButton.Size = new System.Drawing.Size(82, 19);
-            this.mediumRadioButton.TabIndex = 0;
-            this.mediumRadioButton.TabStop = true;
-            this.mediumRadioButton.Text = "Medium";
-            this.mediumRadioButton.UseVisualStyleBackColor = true;
+            this.ColorBlueRadioButton.AutoSize = true;
+            this.ColorBlueRadioButton.Location = new System.Drawing.Point(6, 47);
+            this.ColorBlueRadioButton.Name = "colorBlue";
+            this.ColorBlueRadioButton.Size = new System.Drawing.Size(82, 19);
+            this.ColorBlueRadioButton.TabIndex = 0;
+            this.ColorBlueRadioButton.TabStop = true;
+            this.ColorBlueRadioButton.ForeColor = Color.Blue;
+            this.ColorBlueRadioButton.Text = "Blue";
+            this.ColorBlueRadioButton.Checked = true;
+            this.ColorBlueRadioButton.UseVisualStyleBackColor = true;
+            this.ColorBlueRadioButton.Click += VisualizationClick;
             // 
-            // largeRadioButton
+            // colorGreen
             // 
-            this.largeRadioButton.AutoSize = true;
-            this.largeRadioButton.Location = new System.Drawing.Point(6, 72);
-            this.largeRadioButton.Name = "largeRadioButton";
-            this.largeRadioButton.Size = new System.Drawing.Size(75, 19);
-            this.largeRadioButton.TabIndex = 1;
-            this.largeRadioButton.TabStop = true;
-            this.largeRadioButton.Text = "Large";
-            this.largeRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // mediumRadioButton
-            // 
-            this.atomicRadioButton.AutoSize = true;
-            this.atomicRadioButton.Location = new System.Drawing.Point(6, 97);
-            this.atomicRadioButton.Name = "atomicRadioButton";
-            this.atomicRadioButton.Size = new System.Drawing.Size(82, 19);
-            this.atomicRadioButton.TabIndex = 0;
-            this.atomicRadioButton.TabStop = true;
-            this.atomicRadioButton.Text = "Atomic";
-            this.atomicRadioButton.UseVisualStyleBackColor = true;
+            this.ColorGreenRadioButton.AutoSize = true;
+            this.ColorGreenRadioButton.Location = new System.Drawing.Point(6, 72);
+            this.ColorGreenRadioButton.Name = "colorGreen";
+            this.ColorGreenRadioButton.Size = new System.Drawing.Size(75, 19);
+            this.ColorGreenRadioButton.TabIndex = 1;
+            this.ColorGreenRadioButton.TabStop = true;
+            this.ColorGreenRadioButton.Text = "Green";
+            this.ColorGreenRadioButton.ForeColor = Color.Green;
+            this.ColorGreenRadioButton.UseVisualStyleBackColor = true;
+            this.ColorGreenRadioButton.Click += VisualizationClick;
             // 
             // Game
             // 
@@ -353,6 +348,11 @@ namespace TheBattleShipClient
 
         }
 
+        private void ColorBlue_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         private System.Windows.Forms.Label txtPlayer;
@@ -367,9 +367,9 @@ namespace TheBattleShipClient
         private System.Windows.Forms.RadioButton torpedoRadioButton;
         private System.Windows.Forms.RadioButton bombRadioButton;
         private System.Windows.Forms.RadioButton mineRadioButton;
-        private System.Windows.Forms.RadioButton smallRadioButton;
-        private System.Windows.Forms.RadioButton mediumRadioButton;
-        private System.Windows.Forms.RadioButton largeRadioButton;
+        private System.Windows.Forms.RadioButton colorRedRadioButton;
+        private System.Windows.Forms.RadioButton ColorBlueRadioButton;
+        private System.Windows.Forms.RadioButton ColorGreenRadioButton;
         private System.Windows.Forms.RadioButton atomicRadioButton;
         private System.Windows.Forms.Button turnShipButton;
         private System.Windows.Forms.Button startGameButton;

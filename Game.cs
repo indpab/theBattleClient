@@ -31,15 +31,16 @@ namespace TheBattleShipClient
         Random rand = new Random();
         Facafe fack = new Facafe();
         GameSubject gameSubject;
-
+        Visualization visualization;
 
         public async void UpdateState()
         {
             if (gameSubject.JoinedState == true)
             {
                 MessageBox.Show("Enemy has joined");
+
             }
-            Visualization visualization = new ColorBlue();
+            visualization = new ColorBlue();
             if (gameSubject.PlayerState == true)
             {
                 Ship shotShip = await map.UpdateMap(visualization);
@@ -47,6 +48,7 @@ namespace TheBattleShipClient
                 enemyButtons.ForEach(x => x.Enabled = true);
                 map.buttons.ForEach(x => x.Enabled = true);
             }
+
             else
             {
 /*                enemyButtons.ForEach(x => x.Enabled = false);
@@ -81,8 +83,23 @@ namespace TheBattleShipClient
 
             if (((Button)sender).BackColor != Color.White && theShip != null)
             {
-                Visualization visualization = new ColorBlue();
                 visualization.draw(theShip.buttons, new Dead(new Named(theShip)));
+            }
+        }
+
+        private void VisualizationClick(object sender, EventArgs e)
+        {
+            if(colorRedRadioButton.Checked)
+            {
+                visualization = new ColorRed();
+            }
+            else if (ColorBlueRadioButton.Checked)
+            {
+                visualization = new ColorBlue();
+            }
+            else if (ColorGreenRadioButton.Checked)
+            {
+                visualization = new ColorGreen();
             }
         }
 
@@ -111,6 +128,8 @@ namespace TheBattleShipClient
             }
 
             ShotResponse shotResponse = await Service.ShootWeapon(_token, _roomId, xCord, yCord, wpType);
+            gameSubject.StartObservingGame(_token, _roomId);
+            UpdateState();
         }
 
         #region Build Map Pre Game
@@ -161,6 +180,7 @@ namespace TheBattleShipClient
             shipIndex = map.ShipGroups.ToList()[groupIndex].Ships.Count;
             iterLimit = countShips();
             CreateRoomIdTextBox();
+            visualization = new ColorBlue();
         }
 
 
