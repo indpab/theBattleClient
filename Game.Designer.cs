@@ -97,9 +97,9 @@ namespace TheBattleShipClient
             this.txtPlayer = new System.Windows.Forms.Label();
             this.shipPlaceInfo = new System.Windows.Forms.Label();
             this.txtEnemy = new System.Windows.Forms.Label();
-            this.txtRounds = new System.Windows.Forms.Label();
-            this.enemyMove = new System.Windows.Forms.Label();
-            this.txtHelp = new System.Windows.Forms.Label();
+            this.yourTurn = new System.Windows.Forms.Label();
+            this.joinedStatus = new System.Windows.Forms.Label();
+            this.yourTurnText = new System.Windows.Forms.Label();
             this.EnemyPlayTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.torpedoRadioButton = new System.Windows.Forms.RadioButton();
@@ -161,6 +161,7 @@ namespace TheBattleShipClient
             this.startGameButton.Text = "Start Game";
             this.startGameButton.UseVisualStyleBackColor = true;
             this.startGameButton.Click += new System.EventHandler(this.startGame_Click);
+            this.startGameButton.Hide();
             // 
             // undoButton
             // 
@@ -177,48 +178,48 @@ namespace TheBattleShipClient
             this.txtEnemy.AutoSize = true;
             this.txtEnemy.BackColor = System.Drawing.Color.Transparent;
             this.txtEnemy.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.txtEnemy.ForeColor = System.Drawing.Color.White;
+            this.txtEnemy.ForeColor = System.Drawing.Color.Black;
             this.txtEnemy.Location = new System.Drawing.Point(1450, 133);
             this.txtEnemy.Name = "txtEnemy";
             this.txtEnemy.Size = new System.Drawing.Size(38, 25);
             this.txtEnemy.TabIndex = 0;
             this.txtEnemy.Text = "00";
             // 
-            // txtRounds
+            // yourTurn
             // 
-            this.txtRounds.AutoSize = true;
-            this.txtRounds.BackColor = System.Drawing.Color.Transparent;
-            this.txtRounds.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.txtRounds.ForeColor = System.Drawing.Color.White;
-            this.txtRounds.Location = new System.Drawing.Point(833, 133);
-            this.txtRounds.Name = "txtRounds";
-            this.txtRounds.Size = new System.Drawing.Size(120, 25);
-            this.txtRounds.TabIndex = 0;
-            this.txtRounds.Text = "Round: 10";
+            this.yourTurn.AutoSize = true;
+            this.yourTurn.BackColor = System.Drawing.Color.Transparent;
+            this.yourTurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.yourTurn.ForeColor = System.Drawing.Color.Black;
+            this.yourTurn.Location = new System.Drawing.Point(800, 30);
+            this.yourTurn.Name = "yourTurn";
+            this.yourTurn.Size = new System.Drawing.Size(120, 25);
+            this.yourTurn.TabIndex = 0;
+            this.yourTurn.Text = "Turn status: ";
             // 
-            // enemyMove
+            // joinedStatus
             // 
-            this.enemyMove.AutoSize = true;
-            this.enemyMove.BackColor = System.Drawing.Color.Transparent;
-            this.enemyMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.enemyMove.ForeColor = System.Drawing.Color.White;
-            this.enemyMove.Location = new System.Drawing.Point(899, 34);
-            this.enemyMove.Name = "enemyMove";
-            this.enemyMove.Size = new System.Drawing.Size(43, 29);
-            this.enemyMove.TabIndex = 0;
-            this.enemyMove.Text = "A1";
+            this.joinedStatus.AutoSize = true;
+            this.joinedStatus.BackColor = System.Drawing.Color.Transparent;
+            this.joinedStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.joinedStatus.ForeColor = System.Drawing.Color.Black;
+            this.joinedStatus.Location = new System.Drawing.Point(800, 60);
+            this.joinedStatus.Name = "enemyMove";
+            this.joinedStatus.Size = new System.Drawing.Size(120, 30);
+            this.joinedStatus.TabIndex = 0;
+            this.joinedStatus.Text = "Enemy is not connected";
             // 
-            // txtHelp
+            // yourTurnText
             // 
-            this.txtHelp.AutoSize = true;
-            this.txtHelp.BackColor = System.Drawing.Color.Transparent;
-            this.txtHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.txtHelp.ForeColor = System.Drawing.Color.White;
-            this.txtHelp.Location = new System.Drawing.Point(100, 885);
-            this.txtHelp.Name = "txtHelp";
-            this.txtHelp.Size = new System.Drawing.Size(415, 20);
-            this.txtHelp.TabIndex = 0;
-            this.txtHelp.Text = "1) Click on 3 different locations from above to start"; ;
+            this.yourTurnText.AutoSize = true;
+            this.yourTurnText.BackColor = System.Drawing.Color.Transparent;
+            this.yourTurnText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.yourTurnText.ForeColor = System.Drawing.Color.Black;
+            this.yourTurnText.Location = new System.Drawing.Point(960, 30);
+            this.yourTurnText.Name = "yourTurnText";
+            this.yourTurnText.Size = new System.Drawing.Size(120, 30);
+            this.yourTurnText.TabIndex = 0;
+            this.yourTurnText.Text = ""; ;
             // 
             // groupBox1
             // 
@@ -326,9 +327,9 @@ namespace TheBattleShipClient
             this.ClientSize = new System.Drawing.Size(1786, 938);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.txtHelp);
-            this.Controls.Add(this.txtRounds);
-            this.Controls.Add(this.enemyMove);
+            this.Controls.Add(this.yourTurnText);
+            this.Controls.Add(this.yourTurn);
+            this.Controls.Add(this.joinedStatus);
             this.Controls.Add(this.txtEnemy);
             this.Controls.Add(this.txtPlayer);
             this.Controls.Add(this.shipPlaceInfo);
@@ -358,9 +359,9 @@ namespace TheBattleShipClient
         private System.Windows.Forms.Label txtPlayer;
         private Label shipPlaceInfo;
         private System.Windows.Forms.Label txtEnemy;
-        private System.Windows.Forms.Label txtRounds;
-        private System.Windows.Forms.Label enemyMove;
-        private System.Windows.Forms.Label txtHelp;
+        private System.Windows.Forms.Label yourTurn;
+        private System.Windows.Forms.Label joinedStatus;
+        private System.Windows.Forms.Label yourTurnText;
         private System.Windows.Forms.Timer EnemyPlayTimer;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;

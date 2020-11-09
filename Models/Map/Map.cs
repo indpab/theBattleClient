@@ -121,18 +121,41 @@ namespace TheBattleShipClient.Models
                 while (shipsEnum.MoveNext() && shipsResponseEnum.MoveNext())
                 {
                     Ship current = shipsEnum.Current;
-                    visualization.draw(current.buttons, new Named(current));
+                    
                     current.ParseShipResponse(shipsResponseEnum.Current);
+
+                    IShip current_decor = new Named(current);
+                    MessageBox.Show(current.HP.ToString() + "  Previous: " + current.PreviousHP);
+
+                    
+                    if (current.isDamaged())
+                    {
+                        if (current.isDead())
+                        {
+                            current_decor = new Dead(current_decor);
+                            if (current.DeadDamaged())
+                            {
+                                visualization.draw(current.buttons, new Damaged(current_decor));
+                            }
+                            else
+                            {
+                                visualization.draw(current.buttons, current_decor);
+                            }
+                        }
+                        else
+                        {
+                            current_decor = new Damaged(current_decor);
+                            visualization.draw(current.buttons, current_decor);
+                        }
+                    }
                     if (current.HasBeenShot())
                     {
                         ship = current;
-
-                        visualization.draw(ship.buttons, new Named(new Damaged(ship)));
-                        if (ship.isDead())
+                        if (!ship.isDead())
                         {
-                            visualization.draw(ship.buttons, new Named(new Dead(ship)));
+                            ship.Shot();
+                            current.Shot();
                         }
-                        //ship.Shot();
                     }
                 }
             }

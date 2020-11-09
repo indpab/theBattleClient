@@ -22,7 +22,8 @@ namespace TheBattleShipClient.Models.Ships
         public int YOffset { get; set; }
         public bool horizontal { get; set; }
         public double HP { get; protected set; }
-        protected double PreviousHP { get; set; }
+        public double PreviousHP { get; set; }
+        protected double InitialHP { get; set; }
 
         public List<Button> buttons { get; set; }
         
@@ -41,6 +42,7 @@ namespace TheBattleShipClient.Models.Ships
             this.horizontal = horizontal;
             this.HP = hp;
             this.PreviousHP = hp;
+            this.InitialHP = hp;
             if (horizontal)
             {
                 this.XOffset = hp;
@@ -144,6 +146,10 @@ namespace TheBattleShipClient.Models.Ships
         {
             return PreviousHP > HP;
         }
+        public bool DeadDamaged()
+        {
+            return PreviousHP != InitialHP;
+        }
         public void Shot()
         {
             PreviousHP = HP;
@@ -151,6 +157,10 @@ namespace TheBattleShipClient.Models.Ships
         public bool isDead()
         {
             return HP == 0;
+        }
+        public bool isDamaged()
+        {
+            return HP < InitialHP;
         }
     }
 }

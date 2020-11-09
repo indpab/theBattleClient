@@ -31,40 +31,40 @@ namespace TheBattleShipClient
         Random rand = new Random();
         Facafe fack = new Facafe();
         GameSubject gameSubject;
-        Visualization visualization;
+        Visualization visualization = new ColorBlue();
+        int colorChange = 10;
 
         public async void UpdateState()
         {
-            
             if (gameSubject.JoinedState == true)
             {
-                MessageBox.Show("Enemy has joined");
-
+                joinedStatus.Text = "Enemy has joined";
+                startGameButton.Enabled = true;
             }
-            visualization = new ColorBlue();
+            else
+            {
+                joinedStatus.Text = "Enemy is not connected";
+            }
+
             if (gameSubject.PlayerState == true)
             {
                 Ship shotShip = await map.UpdateMap(visualization);
-                MessageBox.Show("Your Turn!");
+                yourTurnText.Text = "Your Turn !";
                 enemyButtons.ForEach(x => x.Enabled = true);
                 map.buttons.ForEach(x => x.Enabled = true);
             }
 
             else
             {
-/*                enemyButtons.ForEach(x => x.Enabled = false);
-                map.buttons.ForEach(x => x.Enabled = false);*/
-                MessageBox.Show("Wait for your turn");
-           
+                enemyButtons.ForEach(x => x.Enabled = false);
+                map.buttons.ForEach(x => x.Enabled = false);
+                yourTurnText.Text = "Wait for your turn";
             }
 
         }
         private void startGame_Click(object sender, EventArgs e)
         {
             map.StartGameMap();
-            gameSubject = new GameSubject();
-            gameSubject.Attach(this);
-            gameSubject.StartObserving(_token, _roomId);
             gameSubject.StartObservingGame(_token, _roomId);
             turnShipButton.Hide();
             undoButton.Hide();
@@ -90,7 +90,7 @@ namespace TheBattleShipClient
 
         private void VisualizationClick(object sender, EventArgs e)
         {
-            if(colorRedRadioButton.Checked)
+            if (colorRedRadioButton.Checked)
             {
                 visualization = new ColorRed();
             }
@@ -131,6 +131,8 @@ namespace TheBattleShipClient
             ShotResponse shotResponse = await Service.ShootWeapon(_token, _roomId, xCord, yCord, wpType);
             gameSubject.StartObservingGame(_token, _roomId);
 
+            if (colorChange < 255)
+                ((Button)sender).BackColor = Color.FromArgb(255 - colorChange, 255 - colorChange, 255 - colorChange);
         }
 
         #region Build Map Pre Game
@@ -145,7 +147,6 @@ namespace TheBattleShipClient
 
         public Game(RoomsService.RoomResponse rr, string token)
         {
-            MessageBox.Show("Your roomId is: " + rr.Id);
             RoomResponse = rr;
             _token = token;
             _roomId = rr.Id;
@@ -163,7 +164,10 @@ namespace TheBattleShipClient
 
         private async void Game_Load(object sender, EventArgs e)
         {
-            
+            gameSubject = new GameSubject();
+            gameSubject.Attach(this);
+            gameSubject.StartObserving(_token, _roomId);
+
             var submarine_builder = new SubmarineShipGroupsBuilder(_token, _roomId);
             var submarine_director = new BuildShipGroupsDirector(submarine_builder);
             var destroyer_builder = new DestroyerShipGroupsBuilder(_token, _roomId);
@@ -174,9 +178,9 @@ namespace TheBattleShipClient
             var destroyerLimits = mapResponse.ShipGroups.Where(x => !x.ShipType.IsSubmarine).OrderBy(x => x.ShipType.Size).Select(x => x.Limit).ToList();
             var submarineGroups = submarine_director.ConstructShipGroups(submarineLimits);
             var destroyerGroups = destroyer_director.ConstructShipGroups(destroyerLimits);
-            
-            map.ShipGroups = submarineGroups.Concat(destroyerGroups).ToList();
-            
+
+            map.ShipGroups = destroyerGroups.Concat(submarineGroups).ToList();
+
             groupIndex = map.ShipGroups.Count - 1;
             shipIndex = map.ShipGroups.ToList()[groupIndex].Ships.Count;
             iterLimit = countShips();
@@ -199,7 +203,7 @@ namespace TheBattleShipClient
         {
             if (groupIndex == 1 && shipIndex == 0)
             {
-                startGameButton.Enabled = true;
+                startGameButton.Show();
             }
             shipIndex -= 1;
             if (shipIndex > -1)
@@ -230,7 +234,7 @@ namespace TheBattleShipClient
                     shipIndex += 1;
                 }
             }
-            else if (shipIndex !=0)
+            else if (shipIndex != 0)
             {
                 shipIndex += 1;
             }
@@ -267,7 +271,7 @@ namespace TheBattleShipClient
                 {
                     ship.buttons.Add(myButtons[buttonIndex]);
                     myButtons[buttonIndex++].BackColor = color;
-                    
+
                 }
             }
             else
