@@ -132,7 +132,7 @@ namespace TheBattleShipClient.Models
                         {
                             visualization.draw(ship.buttons, new Named(new Dead(ship)));
                         }
-                        ship.Shot();
+                        //ship.Shot();
                     }
                 }
             }
