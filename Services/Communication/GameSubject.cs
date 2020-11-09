@@ -50,11 +50,17 @@ namespace TheBattleShipClient.Services.Communication
 
         public async void StartObservingGame(string token, string roomId)
         {
-            bool isMyTurn = await MapsService.IsMyTurn(token, roomId);
-            if (isMyTurn != PlayerState)
+            bool stateChanged = false;
+            while (stateChanged == false)
             {
-                PlayerState = isMyTurn;
+                stateChanged = true;
+                bool isMyTurn = await MapsService.IsMyTurn(token, roomId);
+                if (isMyTurn != PlayerState)
+                {
+                    PlayerState = isMyTurn;
+                }
             }
+
         }
     }
 }

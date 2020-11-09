@@ -35,6 +35,7 @@ namespace TheBattleShipClient
 
         public async void UpdateState()
         {
+            
             if (gameSubject.JoinedState == true)
             {
                 MessageBox.Show("Enemy has joined");
@@ -129,7 +130,7 @@ namespace TheBattleShipClient
 
             ShotResponse shotResponse = await Service.ShootWeapon(_token, _roomId, xCord, yCord, wpType);
             gameSubject.StartObservingGame(_token, _roomId);
-            UpdateState();
+
         }
 
         #region Build Map Pre Game
