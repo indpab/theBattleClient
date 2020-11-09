@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TheBattleShipClient.Exceptions;
 using static TheBattleShipClient.Services.RoomsService;
 using static TheBattleShipClient.Services.ShipsService;
 using static TheBattleShipClient.Services.WeaponsService;
@@ -27,7 +28,13 @@ namespace TheBattleShipClient.Services
                 Y = y,
                 WeaponTypeId = weaponType
             };
-            return await Shot(token, roomId, weaponRequest);
+            try
+            {
+                return await Shot(token, roomId, weaponRequest);
+            }
+            catch (ApiException e){
+                return new ShotResponse();
+            }
         }
         public static async Task<ShipResponse> CreateShip(string token, string roomId, int x, int x_offset, int y, int y_offset, int shipTypeId)
         {
