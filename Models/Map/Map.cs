@@ -10,6 +10,7 @@ using static TheBattleShipClient.Services.MapsService;
 using System.Threading.Tasks;
 using TheBattleShipClient.Models.Ships.Decorator;
 using TheBattleShipClient.Models.Ships.Bridge;
+using System.Linq;
 
 namespace TheBattleShipClient.Models
 {
@@ -40,7 +41,57 @@ namespace TheBattleShipClient.Models
         public ICollection<ShipGroup> ShipGroups { get; set; }
         public ICollection<Weapon> Weapons { get; set; }
 
+
         public string ValidateCoordinates(Ship newShip)
+        {
+
+            List<Point> shipCoordinates = new List<Point>();
+            int n = Math.Max(newShip.XOffset, newShip.YOffset);
+
+            int x = newShip.X;
+            int y = newShip.Y;
+            for (int i = 0; i < n; i++)
+            {
+                if (newShip.horizontal)
+                {
+                    shipCoordinates.Add(new Point(x++, y));
+                }
+                else
+                {
+                    shipCoordinates.Add(new Point(x, y++));
+                }
+
+                if (shipCoordinates[i].X > MapSizeX || shipCoordinates[i].Y > MapSizeY || shipCoordinates[i].X < 0 || shipCoordinates[i].Y < 0)
+                {
+                    return "Ship out of map boundaries";
+                }
+            }
+
+
+            Ship ship = null;
+            var shipGroupEnum = ShipGroups.GetEnumerator();
+            while (shipGroupEnum.MoveNext())
+            {
+                var shipsEnum = shipGroupEnum.Current.Ships.GetEnumerator();
+                while (shipsEnum.MoveNext())
+                {
+                    Ship current = shipsEnum.Current;
+                    foreach (var button in current.buttons)
+                    {
+                        foreach (var newShipButton in shipCoordinates)
+                        {
+                            if (getButtonCoordinates(button).Equals(newShipButton) && newShip.Id != current.Id)
+                            {
+                                return "Cannot place ship on another ship";
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+        public string ValidateCoordinatesInitial(Ship newShip)
         {
 
             int index = newShip.X + newShip.Y * MapSizeX; ;
@@ -127,7 +178,7 @@ namespace TheBattleShipClient.Models
                     IShip current_decor = new Named(current);
                     //MessageBox.Show(current.HP.ToString() + "  Previous: " + current.PreviousHP);
 
-                    
+
                     if (current.isDamaged())
                     {
                         if (current.isDead())
@@ -161,6 +212,62 @@ namespace TheBattleShipClient.Models
             }
 
             return ship;
+        }
+
+        public Ship getShipByCoordinates(int xCord, int yCord)
+        {
+            Point point = new Point(xCord, yCord);
+            Ship ship = null;
+            var shipGroupEnum = ShipGroups.GetEnumerator();
+            while (shipGroupEnum.MoveNext())
+            {
+                var shipsEnum = shipGroupEnum.Current.Ships.GetEnumerator();
+                while (shipsEnum.MoveNext())
+                {
+                    Ship current = shipsEnum.Current;
+                    foreach (var button in current.buttons)
+                    {
+                        if (getButtonCoordinates(button).Equals(point))
+                        {
+                            ship = current;
+                        }
+                    }
+                }
+            }
+            return ship;
+        }
+        public Point getButtonCoordinates(Button button)
+        {
+            string text = button.Name.ToString();
+            int xCord;
+            if (!text.Last().Equals('0'))
+                xCord = Convert.ToInt32(text.Last().ToString()) - 1;
+            else
+                xCord = 9;
+
+            int yCord = Array.IndexOf(new char[]{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' }, text[0]);
+
+            return new Point(xCord, yCord);
+        }
+
+        public bool IsSubmarine(Ship ship)
+        {
+            var shipGroupEnum = ShipGroups.GetEnumerator();
+            while (shipGroupEnum.MoveNext())
+            {
+                ShipGroup shipGroup = shipGroupEnum.Current;
+                var shipsEnum = shipGroup.Ships.GetEnumerator();
+                while (shipsEnum.MoveNext())
+                {
+                    Ship current = shipsEnum.Current;
+                    if (current.Id == ship.Id)
+                    {
+                        return shipGroup.ShipType.IsSubmarine;
+                    }
+                    
+                }
+            }
+            return false;
         }
     }
 }

@@ -68,10 +68,10 @@ namespace TheBattleShipClient.Models.Ships
             _motionAlgoritm = algorithm;
         }
 
-        public async Task Move()
+        public void Move()
         {
             _motionAlgoritm.Move(this);
-            await Update();
+            
         }
 
         public async Task Update()
@@ -86,6 +86,11 @@ namespace TheBattleShipClient.Models.Ships
         public string getSkin()
         {
             return " "; 
+        }
+
+        public Ship ShallowClone()
+        {
+            return (Ship)this.MemberwiseClone();
         }
 
         object ICloneable.Clone()

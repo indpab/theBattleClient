@@ -21,6 +21,7 @@ using static TheBattleShipClient.Services.WeaponsService;
 using TheBattleShipClient.Models.Weapons.Factories;
 using TheBattleShipClient.Models.Weapons.Factories.Adapter;
 using TheBattleShipClient.Models.Weapons;
+using TheBattleShipClient.Models.Ships.Algorithms;
 
 namespace TheBattleShipClient
 {
@@ -29,6 +30,7 @@ namespace TheBattleShipClient
         string _token;
         string _roomId;
         private Map map;
+        bool gameStarted = false;
         Services.RoomsService.RoomResponse RoomResponse { get; set; }
         TextBox roomIdTextBox;
         Random rand = new Random();
@@ -120,18 +122,18 @@ namespace TheBattleShipClient
         }
         private void startGame_Click(object sender, EventArgs e)
         {
+            gameStarted = true;
             map.StartGameMap();
             gameSubject.StartObservingGame(_token, _roomId);
-            gameSubject.isStarted = true;
+            gameSubject.isStarted = gameStarted;
             turnShipButton.Hide();
             undoButton.Hide();
             startGameButton.Hide();
+        }
 
-            foreach (var but in myButtons)
-            {
-                but.Click -= BuildConfiguration;
-                but.Click += DecoratorClick;
-            }
+        private void MovingAlgorithmClick(object sender, EventArgs e)
+        {
+
         }
 
         private void DecoratorClick(object sender, EventArgs e)
@@ -280,12 +282,12 @@ namespace TheBattleShipClient
             return temp;
         }
 
-        private void setColor()
+        private void setColor(bool isSubmarine)
         {
-            if (map.ShipGroups.ToList()[groupIndex].ShipType.IsSubmarine)
-                color = Color.Coral;
-            else
+            if (isSubmarine)
                 color = Color.Aqua;
+            else
+                color = Color.Coral;
         }
 
         private void drawShip(Ship ship, int xCord, int yCord)
@@ -314,21 +316,16 @@ namespace TheBattleShipClient
             }
         }
 
-        private void BuildConfiguration(object sender, EventArgs e)
+
+        private async void PlayerGridButtonClicked(object sender, EventArgs e)
         {
+            Point thisPoint = map.getButtonCoordinates((Button)sender);
+            int xCord = thisPoint.X;
+            int yCord = thisPoint.Y;
+
             bool isSuccess = true;
             if (placedShipsCount < iterLimit)
             {
-                string text = ((Button)sender).Text.ToString();
-                int xCord;
-                if (!text.Last().Equals('0'))
-                    xCord = Convert.ToInt32(text.Last().ToString()) - 1;
-                else
-                    xCord = 9;
-
-                int yCord = Array.IndexOf(letters, text[0]);
-
-
                 if (isSuccess)
                     currShip = GetCurrentShip();
 
@@ -336,7 +333,7 @@ namespace TheBattleShipClient
 
                 var newship = currShip;
                 newship.setCordinates(xCord, yCord);
-                var validationResult = map.ValidateCoordinates(newship);
+                var validationResult = map.ValidateCoordinatesInitial(newship);
                 if (validationResult != null)
                 {
                     MessageBox.Show(validationResult);
@@ -345,12 +342,51 @@ namespace TheBattleShipClient
                     return;
                 }
                 invoker.ClickButton(new PlaceShipCommand(currShip, xCord, yCord));
-                setColor();
+                bool isSubmarine = map.ShipGroups.ToList()[groupIndex].ShipType.IsSubmarine;
+                setColor(isSubmarine);
                 drawShip(currShip, xCord, yCord);
                 SetPlaceShipInfo();
 
                 placedShipsCount++;
                 isSuccess = true;
+            }
+            else if (gameStarted)
+            {
+                try
+                {
+                    Ship ship = map.getShipByCoordinates(xCord, yCord);
+                    IMotionAlgorithm motionAlgorithm = new MoveStraightSlowAlgorithm();
+                    if (moveStraightFast.Checked)
+                    {
+                        motionAlgorithm = new MoveStraightFastAlgorithm();
+                    }
+                    else if (turnAround.Checked)
+                    {
+                        motionAlgorithm = new TurnAroundAlgorithm();
+                    }
+
+                    ship.SetMotionAlgoritm(motionAlgorithm);
+                    Ship dummy_ship = ship.ShallowClone();
+                    dummy_ship.Move();
+                    var validationResult = map.ValidateCoordinates(dummy_ship);
+                    if (validationResult == null)
+                    {
+                        color = Color.White;
+                        drawShip(ship, ship.X, ship.Y);
+
+                        setColor(map.IsSubmarine(ship));
+                        ship.Move();
+                        drawShip(ship, ship.X, ship.Y);
+                        await ship.Update();
+                    }
+
+                    gameSubject.StartObservingGame(_token, _roomId);
+
+                }
+                catch (NullReferenceException ne)
+                {
+                    
+                }
             }
         }
 
@@ -358,7 +394,8 @@ namespace TheBattleShipClient
         {
             color = Color.White;
             drawShip(currShip, currShip.X, currShip.Y);
-            setColor();
+            bool isSubmarine = map.ShipGroups.ToList()[groupIndex].ShipType.IsSubmarine;
+            setColor(isSubmarine);
             invoker.ClickButton(new TurnShipCommand(currShip));
             drawShip(currShip, currShip.X, currShip.Y);
         }
@@ -372,14 +409,16 @@ namespace TheBattleShipClient
 
                 color = Color.White;
                 drawShip(temp, temp.X, temp.Y);
-                setColor();
+                bool isSubmarine = map.ShipGroups.ToList()[groupIndex].ShipType.IsSubmarine;
+
+                setColor(isSubmarine);
 
                 if (lastComm is TurnShipCommand)
                 {
                     temp.Rotate(!temp.horizontal);
                     color = Color.White;
                     drawShip(temp, temp.X, temp.Y);
-                    setColor();
+                    setColor(isSubmarine);
                     temp.Rotate(!temp.horizontal);
                     drawShip(temp, temp.X, temp.Y);
                 }

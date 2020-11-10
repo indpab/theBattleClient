@@ -73,7 +73,7 @@ namespace TheBattleShipClient
             {
                 for (int j = 0; j < xxy; j++)
                 {
-                    AddButton(String.Format("{0}{1}", letters[i], j + 1), BuildConfiguration);
+                    AddButton(String.Format("{0}{1}", letters[i], j + 1), PlayerGridButtonClicked);
                 }
             }
             butx = startx + (630) + 138;
@@ -102,6 +102,7 @@ namespace TheBattleShipClient
             this.yourTurnText = new System.Windows.Forms.Label();
             this.EnemyPlayTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.torpedoRadioButton = new System.Windows.Forms.RadioButton();
             this.bombRadioButton = new System.Windows.Forms.RadioButton();
             this.mineRadioButton = new System.Windows.Forms.RadioButton();
@@ -110,11 +111,15 @@ namespace TheBattleShipClient
             this.ColorBlueRadioButton = new System.Windows.Forms.RadioButton();
             this.ColorGreenRadioButton = new System.Windows.Forms.RadioButton();
             this.atomicRadioButton = new System.Windows.Forms.RadioButton();
+            this.moveStraightSlow = new System.Windows.Forms.RadioButton();
+            this.moveStraightFast = new System.Windows.Forms.RadioButton();
+            this.turnAround = new System.Windows.Forms.RadioButton();
             this.turnShipButton = new System.Windows.Forms.Button();
             this.startGameButton = new System.Windows.Forms.Button();
             this.undoButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtPlayer
@@ -135,7 +140,7 @@ namespace TheBattleShipClient
             this.shipPlaceInfo.BackColor = System.Drawing.Color.Transparent;
             this.shipPlaceInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.shipPlaceInfo.ForeColor = System.Drawing.Color.Black;
-            this.shipPlaceInfo.Location = new System.Drawing.Point(300, 75);
+            this.shipPlaceInfo.Location = new System.Drawing.Point(500, 75);
             this.shipPlaceInfo.Name = "placeShipInfo";
             this.shipPlaceInfo.Size = new System.Drawing.Size(75, 25);
             this.shipPlaceInfo.TabIndex = 0;
@@ -320,6 +325,58 @@ namespace TheBattleShipClient
             this.ColorGreenRadioButton.UseVisualStyleBackColor = true;
             this.ColorGreenRadioButton.Click += VisualizationClick;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.moveStraightSlow);
+            this.groupBox3.Controls.Add(this.moveStraightFast);
+            this.groupBox3.Controls.Add(this.turnAround);
+            this.groupBox3.Location = new System.Drawing.Point(270, 65);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(150, 200);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Select moving type:";
+            // 
+            // moveStraightSlow
+            // 
+            this.moveStraightSlow.AutoSize = true;
+            this.moveStraightSlow.Location = new System.Drawing.Point(6, 22);
+            this.moveStraightSlow.Name = "moveStraightSlow";
+            this.moveStraightSlow.Size = new System.Drawing.Size(75, 19);
+            this.moveStraightSlow.TabIndex = 1;
+            this.moveStraightSlow.TabStop = true;
+            this.moveStraightSlow.Text = "Forward Slow";
+            this.moveStraightSlow.ForeColor = Color.Black;
+            this.moveStraightSlow.UseVisualStyleBackColor = true;
+            this.moveStraightSlow.Checked = true;
+            this.moveStraightSlow.Click += MovingAlgorithmClick;
+            // 
+            // moveStraightFast
+            // 
+            this.moveStraightFast.AutoSize = true;
+            this.moveStraightFast.Location = new System.Drawing.Point(6, 47);
+            this.moveStraightFast.Name = "moveStraightFast";
+            this.moveStraightFast.Size = new System.Drawing.Size(75, 19);
+            this.moveStraightFast.TabIndex = 1;
+            this.moveStraightFast.TabStop = true;
+            this.moveStraightFast.Text = "Forward Fast";
+            this.moveStraightFast.ForeColor = Color.Black;
+            this.moveStraightFast.UseVisualStyleBackColor = true;
+            this.moveStraightFast.Click += MovingAlgorithmClick;
+            // 
+            // turnAround
+            // 
+            this.turnAround.AutoSize = true;
+            this.turnAround.Location = new System.Drawing.Point(6, 72);
+            this.turnAround.Name = "turnAround";
+            this.turnAround.Size = new System.Drawing.Size(75, 19);
+            this.turnAround.TabIndex = 1;
+            this.turnAround.TabStop = true;
+            this.turnAround.Text = "Turn";
+            this.turnAround.ForeColor = Color.Black;
+            this.turnAround.UseVisualStyleBackColor = true;
+            this.turnAround.Click += MovingAlgorithmClick;
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -327,6 +384,7 @@ namespace TheBattleShipClient
             this.ClientSize = new System.Drawing.Size(1786, 938);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.yourTurnText);
             this.Controls.Add(this.yourTurn);
             this.Controls.Add(this.joinedStatus);
@@ -343,6 +401,8 @@ namespace TheBattleShipClient
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.SetClientSizeCore(1600, 2600);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -365,6 +425,7 @@ namespace TheBattleShipClient
         private System.Windows.Forms.Timer EnemyPlayTimer;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton torpedoRadioButton;
         private System.Windows.Forms.RadioButton bombRadioButton;
         private System.Windows.Forms.RadioButton mineRadioButton;
@@ -372,6 +433,9 @@ namespace TheBattleShipClient
         private System.Windows.Forms.RadioButton ColorBlueRadioButton;
         private System.Windows.Forms.RadioButton ColorGreenRadioButton;
         private System.Windows.Forms.RadioButton atomicRadioButton;
+        private System.Windows.Forms.RadioButton moveStraightSlow;
+        private System.Windows.Forms.RadioButton moveStraightFast;
+        private System.Windows.Forms.RadioButton turnAround;
         private System.Windows.Forms.Button turnShipButton;
         private System.Windows.Forms.Button startGameButton;
         private System.Windows.Forms.Button undoButton;
