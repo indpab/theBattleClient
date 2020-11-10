@@ -7,6 +7,6 @@ namespace TheBattleShipClient.Services
 {
     public interface IGameObserver
     {
-        void UpdateState();
+        public void UpdateState();
     }
 }

@@ -18,6 +18,9 @@ using TheBattleShipClient.Models.Ships.Bridge;
 using TheBattleShipClient.Models.Ships.Decorator;
 using static TheBattleShipClient.Services.MapsService;
 using static TheBattleShipClient.Services.WeaponsService;
+using TheBattleShipClient.Models.Weapons.Factories;
+using TheBattleShipClient.Models.Weapons.Factories.Adapter;
+using TheBattleShipClient.Models.Weapons;
 
 namespace TheBattleShipClient
 {
@@ -34,7 +37,14 @@ namespace TheBattleShipClient
         Visualization visualization = new ColorBlue();
         int colorChange = 10;
 
-        public async void UpdateState()
+        public void UpdateState()
+        {
+            UpdateJoinedState();
+
+            UpdatePlayerState();
+        }
+
+        public void UpdateJoinedState()
         {
             if (gameSubject.JoinedState == true)
             {
@@ -45,7 +55,10 @@ namespace TheBattleShipClient
             {
                 joinedStatus.Text = "Enemy is not connected";
             }
+        }
 
+        public async void UpdatePlayerState()
+        {
             if (gameSubject.PlayerState == true)
             {
                 Ship shotShip = await map.UpdateMap(visualization);
@@ -56,11 +69,9 @@ namespace TheBattleShipClient
 
             else
             {
-                enemyButtons.ForEach(x => x.Enabled = false);
-                map.buttons.ForEach(x => x.Enabled = false);
+
                 yourTurnText.Text = "Wait for your turn";
             }
-
         }
         private void startGame_Click(object sender, EventArgs e)
         {
@@ -115,21 +126,36 @@ namespace TheBattleShipClient
             int yCord = Array.IndexOf(letters, ((Button)sender).Text[0]);
 
             var wpType = 0;
+            WeaponFactory weaponFactory = null;
             if (torpedoRadioButton.Checked)
             {
                 wpType = 1;
+                weaponFactory = new TorpedoFactory(_token, _roomId);
+
             }
             else if (bombRadioButton.Checked)
             {
                 wpType = 2;
+                weaponFactory = new BombFactory(_token, _roomId);
             }
             else if (mineRadioButton.Checked)
             {
                 wpType = 3;
+                weaponFactory = new MineFactoryAdapter(_token, _roomId);
+            }
+
+            try
+            {
+                Weapon weapon = await weaponFactory.CreateWeapon(xCord, yCord);
+                enemyButtons.ForEach(x => x.Enabled = false);
+                map.buttons.ForEach(x => x.Enabled = false);
+                gameSubject.StartObservingGame(_token, _roomId);
+            }
+            catch (NullReferenceException ne)
+            {
+                MessageBox.Show("Please select a weapon type");
             }
             
-            ShotResponse shotResponse = await Service.ShootWeapon(_token, _roomId, xCord, yCord, wpType);
-            gameSubject.StartObservingGame(_token, _roomId);
 
             if (colorChange < 255)
             {
