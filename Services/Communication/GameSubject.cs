@@ -6,6 +6,7 @@ namespace TheBattleShipClient.Services.Communication
 {
     public class GameSubject : AbstractGameSubject
     {
+        public bool isStarted = false;
         private bool _joinedState;
         public bool JoinedState 
         {
@@ -37,7 +38,7 @@ namespace TheBattleShipClient.Services.Communication
         public async void StartObserving(string token, string roomId)
         {
             bool stateChanged = false;
-            while (stateChanged == false)
+            while (!isStarted)
             {
                 bool guestHasArrived = await Service.HasGuestArrived(token, roomId);
                 if (guestHasArrived != JoinedState)

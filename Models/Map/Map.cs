@@ -121,11 +121,11 @@ namespace TheBattleShipClient.Models
                 while (shipsEnum.MoveNext() && shipsResponseEnum.MoveNext())
                 {
                     Ship current = shipsEnum.Current;
-                    
+                    if (current.HP < 0) { current.HP = 0; } // Tikslas: Nesusidurti su neigiamu skaiciumi
                     current.ParseShipResponse(shipsResponseEnum.Current);
 
                     IShip current_decor = new Named(current);
-                    MessageBox.Show(current.HP.ToString() + "  Previous: " + current.PreviousHP);
+                    //MessageBox.Show(current.HP.ToString() + "  Previous: " + current.PreviousHP);
 
                     
                     if (current.isDamaged())

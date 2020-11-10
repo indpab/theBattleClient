@@ -73,10 +73,56 @@ namespace TheBattleShipClient
                 yourTurnText.Text = "Wait for your turn";
             }
         }
+
+        private async void ShootButtonClick(object sender, EventArgs e)
+        {
+            int xCord;
+            if (!((Button)sender).Text.Last().Equals('0'))
+                xCord = Convert.ToInt32(((Button)sender).Text.Last().ToString()) - 1;
+            else
+                xCord = 9;
+
+            int yCord = Array.IndexOf(letters, ((Button)sender).Text[0]);
+
+            WeaponFactory weaponFactory = null;
+            if (torpedoRadioButton.Checked)
+            {
+                weaponFactory = new TorpedoFactory(_token, _roomId);
+            }
+            else if (bombRadioButton.Checked)
+            {
+                weaponFactory = new MineFactoryAdapter(_token, _roomId);
+            }
+            else if (mineRadioButton.Checked)
+            {
+                weaponFactory = new BombFactory(_token, _roomId);
+            }
+
+            try
+            {
+                Weapon weapon = await weaponFactory.CreateWeapon(xCord, yCord);
+                enemyButtons.ForEach(x => x.Enabled = false);
+                map.buttons.ForEach(x => x.Enabled = false);
+                gameSubject.StartObservingGame(_token, _roomId);
+            }
+            catch (NullReferenceException ne)
+            {
+                MessageBox.Show("Please select a weapon type");
+            }
+
+
+            if (colorChange < 255)
+            {
+                ((Button)sender).UseVisualStyleBackColor = false;
+                ((Button)sender).BackColor = Color.FromArgb(255 - colorChange, 255 - colorChange, 255 - colorChange);
+                colorChange += 10;
+            }
+        }
         private void startGame_Click(object sender, EventArgs e)
         {
             map.StartGameMap();
             gameSubject.StartObservingGame(_token, _roomId);
+            gameSubject.isStarted = true;
             turnShipButton.Hide();
             undoButton.Hide();
             startGameButton.Hide();
@@ -115,55 +161,7 @@ namespace TheBattleShipClient
             }
         }
 
-        private async void ShootButtonClick(object sender, EventArgs e)
-        {
-            int xCord;
-            if (!((Button)sender).Text.Last().Equals('0'))
-                xCord = Convert.ToInt32(((Button)sender).Text.Last().ToString()) - 1;
-            else
-                xCord = 9;
-
-            int yCord = Array.IndexOf(letters, ((Button)sender).Text[0]);
-
-            var wpType = 0;
-            WeaponFactory weaponFactory = null;
-            if (torpedoRadioButton.Checked)
-            {
-                wpType = 1;
-                weaponFactory = new TorpedoFactory(_token, _roomId);
-
-            }
-            else if (bombRadioButton.Checked)
-            {
-                wpType = 2;
-                weaponFactory = new BombFactory(_token, _roomId);
-            }
-            else if (mineRadioButton.Checked)
-            {
-                wpType = 3;
-                weaponFactory = new MineFactoryAdapter(_token, _roomId);
-            }
-
-            try
-            {
-                Weapon weapon = await weaponFactory.CreateWeapon(xCord, yCord);
-                enemyButtons.ForEach(x => x.Enabled = false);
-                map.buttons.ForEach(x => x.Enabled = false);
-                gameSubject.StartObservingGame(_token, _roomId);
-            }
-            catch (NullReferenceException ne)
-            {
-                MessageBox.Show("Please select a weapon type");
-            }
-            
-
-            if (colorChange < 255)
-            {
-                ((Button)sender).UseVisualStyleBackColor = false;
-                ((Button)sender).BackColor = Color.FromArgb(255 - colorChange, 255 - colorChange, 255 - colorChange);
-                colorChange += 10;
-            }
-        }
+       
 
         #region Build Map Pre Game
 
@@ -234,6 +232,7 @@ namespace TheBattleShipClient
             if (groupIndex == 1 && shipIndex == 0)
             {
                 startGameButton.Show();
+                startGameButton.Enabled = true;
             }
             shipIndex -= 1;
             if (shipIndex > -1)

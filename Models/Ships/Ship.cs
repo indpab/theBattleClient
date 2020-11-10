@@ -21,7 +21,7 @@ namespace TheBattleShipClient.Models.Ships
         public int Y { get; set; }
         public int YOffset { get; set; }
         public bool horizontal { get; set; }
-        public double HP { get; protected set; }
+        public double HP { get; set; }
         public double PreviousHP { get; set; }
         protected double InitialHP { get; set; }
 
@@ -156,7 +156,7 @@ namespace TheBattleShipClient.Models.Ships
         }
         public bool isDead()
         {
-            return HP == 0;
+            return HP <= 0;
         }
         public bool isDamaged()
         {
