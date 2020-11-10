@@ -127,12 +127,16 @@ namespace TheBattleShipClient
             {
                 wpType = 3;
             }
-
+            
             ShotResponse shotResponse = await Service.ShootWeapon(_token, _roomId, xCord, yCord, wpType);
             gameSubject.StartObservingGame(_token, _roomId);
 
             if (colorChange < 255)
+            {
+                ((Button)sender).UseVisualStyleBackColor = false;
                 ((Button)sender).BackColor = Color.FromArgb(255 - colorChange, 255 - colorChange, 255 - colorChange);
+                colorChange += 10;
+            }
         }
 
         #region Build Map Pre Game
