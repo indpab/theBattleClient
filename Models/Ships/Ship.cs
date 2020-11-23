@@ -61,12 +61,11 @@ namespace TheBattleShipClient.Models.Ships
         public async Task Move()
         {
             _motionAlgoritm.Move(this);
-            await Update();
+            //await Update();
         }
 
         public async Task Update()
         {
-
             var shipResponse = await Service.UpdateShip(_token, this.Id, X, XOffset, Y, YOffset, 0);
             this.HP = shipResponse.HP;
         }
