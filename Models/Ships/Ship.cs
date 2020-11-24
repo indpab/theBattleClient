@@ -18,12 +18,12 @@ namespace TheBattleShipClient.Models.Ships
         public int Y { get; set; }
         public int YOffset { get; set; }
         public bool horizontal { get; set; }
-        public double HP { get; protected set; }
+        public double HP { get; set; }
         
         protected string _token;
         protected string _roomId;
 
-        private IMotionAlgorithm _motionAlgoritm = new MoveStraightSlowAlgorithm();
+        private IMotionState _motionState = new MoveStraightSlowState();
 
         private Command.IShipCommand _Command;
 
@@ -53,14 +53,14 @@ namespace TheBattleShipClient.Models.Ships
             return this.X != -1;
         }
 
-        public void SetMotionAlgoritm(IMotionAlgorithm algorithm)
+        public void SetMotionState(IMotionState state)
         {
-            _motionAlgoritm = algorithm;
+            _motionState = state;
         }
 
         public async Task Move()
         {
-            _motionAlgoritm.Move(this);
+            _motionState.Move(this);
             //await Update();
         }
 

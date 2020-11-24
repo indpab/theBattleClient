@@ -4,13 +4,11 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Algorithms
 {
-    class TurnRightAlgorithm : IMotionAlgorithm
+    public class DoNothingState : IMotionState
     {
         public void Move(Ship ship)
         {
-            /*
-            throw new NotImplementedException();
-            */
+            Console.WriteLine("DoNothingState");
         }
     }
 }
