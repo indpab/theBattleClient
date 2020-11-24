@@ -16,47 +16,45 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
             else
             {
                 Console.WriteLine("TurnLeftState");
-                /*
+                
                 // Horizontal
                 if (ship.XOffset > 1 || ship.XOffset < -1)
                 {
-                    int x;
-                    int y;
+                    ship.YOffset = ship.XOffset;
                     if(ship.XOffset > 0)
-                    {
-                        x = (int)((ship.X + (ship.X + ship.XOffset - 1)) / 2);
-                        y = (int)(ship.Y - (ship.XOffset / 2) + 1);
-                        ship.YOffset = ship.XOffset;
                         ship.XOffset = -1;
-                    }
                     else
-                    {
-                        x = (int)((ship.X + (ship.X + ship.XOffset - 1)) / 2);
-                        y = (int)(ship.Y + (ship.XOffset / 2) - 1);
-                        ship.YOffset = ship.XOffset;
-                        ship.XOffset = -1;
-                    }
+                        ship.XOffset = 1;
                 }
                 // Vertical
                 else if (ship.YOffset > 1 || ship.YOffset < -1)
                 {
-                    if (ship.YOffset >= 0)
-                        ship.Y -= 1;
+                    ship.XOffset = -ship.YOffset;
+                    if(ship.YOffset > 0)
+                        ship.YOffset = -1;
                     else
-                        ship.Y += 1;
+                        ship.YOffset = 1;
                 }
                 else
                 {
                     if (ship.XOffset > 0 && ship.YOffset > 0)
-                        ship.X -= 1;
-                    if (ship.XOffset < 0 && ship.YOffset > 0)
-                        ship.Y -= 1;
-                    if (ship.XOffset < 0 && ship.YOffset < 0)
-                        ship.X += 1;
-                    if (ship.XOffset > 0 && ship.YOffset < 0)
-                        ship.Y += 1;
+                    {
+                        ship.XOffset = -ship.XOffset;
+                    }
+                    else if (ship.XOffset < 0 && ship.YOffset < 0)
+                    {
+                        ship.XOffset = -ship.XOffset;
+                    }
+                    else if (ship.XOffset > 0 && ship.YOffset < 0)
+                    {
+                        ship.YOffset = -ship.YOffset;
+                    }
+                    else if (ship.XOffset < 0 && ship.YOffset > 0)
+                    {
+                        ship.YOffset = -ship.YOffset;
+                    }
                 }
-                */
+                
 
                 ship.SetMotionState(MotionStateFlyweightFactory.Instance.GetMotionState("straightSlow"));
             }

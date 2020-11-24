@@ -24,6 +24,7 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
                     else
                         ship.X = ship.X + ship.XOffset + 1;
                     ship.XOffset = -ship.XOffset;
+                    ship.YOffset = -ship.YOffset;
                 }
                 else if (ship.YOffset > 1 || ship.YOffset < -1)
                 {
@@ -32,6 +33,7 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
                     else
                         ship.Y = ship.Y + ship.YOffset + 1;
                     ship.YOffset = -ship.YOffset;
+                    ship.XOffset = -ship.XOffset;
                 }
                 else
                 {
