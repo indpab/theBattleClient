@@ -62,7 +62,7 @@ namespace TheBattleShipClient.Models.Ships
         public async Task Move()
         {
             _motionState.Move(this);
-            //await Update();
+            await Update();
         }
 
         public async Task Update()

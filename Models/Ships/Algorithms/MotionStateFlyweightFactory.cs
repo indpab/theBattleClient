@@ -50,10 +50,8 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
                         motionState = new DoNothingState();
                         break;
                 }
-                if(motionState != null)
-                {
-                    motionStateFlyweights.Add(stateKey, motionState);
-                }
+                
+                motionStateFlyweights.Add(stateKey, motionState);
                 
                 return motionState;
             }
