@@ -52,7 +52,6 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
                         ship.YOffset = -ship.YOffset;
                     }
                 }
-                
 
                 ship.SetMotionState(MotionStateFlyweightFactory.Instance.GetMotionState("straightSlow"));
             }

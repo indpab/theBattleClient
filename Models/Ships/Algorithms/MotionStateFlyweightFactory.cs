@@ -54,6 +54,7 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
                 {
                     motionStateFlyweights.Add(stateKey, motionState);
                 }
+                
                 return motionState;
             }
         }
