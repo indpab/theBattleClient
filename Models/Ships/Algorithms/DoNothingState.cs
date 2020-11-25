@@ -8,7 +8,6 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
     {
         public void Move(Ship ship)
         {
-            Console.WriteLine("DoNothingState");
         }
     }
 }

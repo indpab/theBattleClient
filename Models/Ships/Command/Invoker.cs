@@ -6,9 +6,9 @@ namespace TheBattleShipClient.Models.Ships.Command
 {
     class Invoker
     {
-        private List<IShipCommand> commands = new List<IShipCommand>();
+        private List<ShipCommand> commands = new List<ShipCommand>();
 
-        public void ClickButton(IShipCommand command)
+        public void ClickButton(ShipCommand command)
         {
             this.commands.Add(command);
             command.execute();

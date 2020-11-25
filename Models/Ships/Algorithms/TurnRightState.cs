@@ -15,8 +15,6 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
             }
             else
             {
-                Console.WriteLine("TurnRightState");
-
                 // Horizontal
                 if (ship.XOffset > 1 || ship.XOffset < -1)
                 {
@@ -54,9 +52,6 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
                         ship.XOffset = -ship.XOffset;
                     }
                 }
-                /*
-                throw new NotImplementedException();
-                */
 
                 ship.SetMotionState(MotionStateFlyweightFactory.Instance.GetMotionState("straightSlow"));
             }

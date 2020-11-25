@@ -15,8 +15,6 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
             }
             else
             {
-                Console.WriteLine("TurnLeftState");
-                
                 // Horizontal
                 if (ship.XOffset > 1 || ship.XOffset < -1)
                 {

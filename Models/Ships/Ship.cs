@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using TheBattleShipClient.Models.Ships.Algorithms;
+using TheBattleShipClient.Models.Ships.Command;
 using TheBattleShipClient.Services;
 using static TheBattleShipClient.Services.ShipsService;
 
@@ -25,7 +26,7 @@ namespace TheBattleShipClient.Models.Ships
 
         private IMotionState _motionState = new MoveStraightSlowState();
 
-        private Command.IShipCommand _Command;
+        private Command.ShipCommand _Command;
 
         protected string skinText = "Ship";
         public Ship(string token, string roomId, int x, int y, bool horizontal, int hp)
@@ -119,6 +120,27 @@ namespace TheBattleShipClient.Models.Ships
                 this.XOffset = -1;
                 this.YOffset = Convert.ToInt32(this.HP);
             }
+        }
+
+
+        public ShipSnapshotMemento GetSnapshot()
+        {
+            return new ShipSnapshotMemento(new ShipSnapshot
+            {
+                X = this.X,
+                Y = this.Y,
+                XOffset = this.XOffset,
+                YOffset = this.YOffset
+            });
+        }
+
+        public void SetSnapshot(ShipSnapshotMemento snapshot)
+        {
+            var shipSnapshot = snapshot.GetSnapshot();
+            this.X = shipSnapshot.X;
+            this.Y = shipSnapshot.Y;
+            this.XOffset = shipSnapshot.XOffset;
+            this.YOffset = shipSnapshot.YOffset;
         }
     }
 }

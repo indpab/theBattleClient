@@ -22,7 +22,6 @@ namespace TheBattleShipClient.Models.Ships.Algorithms
             }
             else
             {
-                Console.WriteLine("MoveStraightFastState");
                 // Horizontal
                 if (ship.XOffset > 1 || ship.XOffset < -1)
                 {
