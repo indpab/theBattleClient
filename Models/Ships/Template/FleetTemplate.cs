@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using TheBattleShipClient.Models.Ships.Factories;
+using TheBattleShipClient.Models.Ships.Template;
 
 namespace TheBattleShipClient.Models.Ships.Builder
 {
-    public abstract class FleetTemplate
+    public abstract class FleetTemplate : IFleetTemplate
     {
         protected AbstractShipFactory _smallShipFactory;
         protected AbstractShipFactory _mediumShipFactory;
@@ -22,7 +23,6 @@ namespace TheBattleShipClient.Models.Ships.Builder
             _atomicShipFactory = new AtomicShipFactory(token, roomId);
         }
 
-        //Pataisyk
         public sealed override List<ShipGroup> CreateFleet(int smallCount, int mediumCount, int largeCount, int atomicCount)
         {
             shipGroup.Add(CreateSmallShips(smallCount));
