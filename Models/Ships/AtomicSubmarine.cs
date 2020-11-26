@@ -6,7 +6,7 @@ using TheBattleShipClient.Services;
 
 namespace TheBattleShipClient.Models.Ships
 {
-    class AtomicSubmarine : Submarine
+    public class AtomicSubmarine : Submarine
     {
         public AtomicSubmarine(string token, string roomId, int x, int y, bool horizontal)
             : base(token, roomId, x, y, horizontal, 4)

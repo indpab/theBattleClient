@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Algorithms
 {
-    public interface IMotionAlgorithm
+    public interface IMotionState
     {
         void Move(Ship ship);
     }
