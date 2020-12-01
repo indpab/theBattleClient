@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using TheBattleShipClient.Models.Ships.Algorithms;
 using TheBattleShipClient.Services;
 using static TheBattleShipClient.Services.ShipsService;
+using TheBattleShipClient.Models.Ships.Composite;
 
 namespace TheBattleShipClient.Models.Ships
 {
@@ -25,7 +26,7 @@ namespace TheBattleShipClient.Models.Ships
         public double PreviousHP { get; set; }
         protected double InitialHP { get; set; }
 
-        public List<Button> buttons { get; set; }
+        public ButtonComponent button { get; set; }
         
         protected string _token;
         protected string _roomId;
