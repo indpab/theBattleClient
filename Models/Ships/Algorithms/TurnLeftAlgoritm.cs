@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace TheBattleShipClient.Models.Ships.Algorithms
 {
     [Serializable]
     public class TurnLeftAlgoritm : IMotionAlgorithm
     {
-        public void Move(Ship ship)
+        public async Task Move(Ship ship)
         {
             /*
             // Horizontal

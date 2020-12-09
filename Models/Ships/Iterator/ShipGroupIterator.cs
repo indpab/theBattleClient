@@ -7,12 +7,20 @@ namespace TheBattleShipClient.Models.Ships.Iterator
     class ShipGroupIterator : Iterator
     {
         private IEnumerator<ShipGroup> _enumerator;
+        private Map _map;
 
         public ShipGroupIterator(Map map)
         {
             _enumerator = map.ShipGroups.GetEnumerator();
+            _map = map;
 
         }
+
+        public int Count()
+        {
+            return _map.ShipGroups.Count;
+        }
+
         public object Current()
         {
             return _enumerator.Current;

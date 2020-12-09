@@ -14,7 +14,11 @@ namespace TheBattleShipClient.Models.Ships.Composite
         }
         public override void UpdateButton()
         {
-            throw new NotImplementedException();
+            
+        }
+        public int GetNumberOfChildren()
+        {
+            return _children.Count;
         }
 
         public void AddChild(ButtonComponent button)

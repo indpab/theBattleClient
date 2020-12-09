@@ -22,6 +22,7 @@ using TheBattleShipClient.Models.Weapons.Factories;
 using TheBattleShipClient.Models.Weapons.Factories.Adapter;
 using TheBattleShipClient.Models.Weapons;
 using TheBattleShipClient.Models.Ships.Algorithms;
+using TheBattleShipClient.Models.Ships.Composite;
 
 namespace TheBattleShipClient
 {
@@ -138,13 +139,15 @@ namespace TheBattleShipClient
 
         private void DecoratorClick(object sender, EventArgs e)
         {
-
-            var theShip = map.GetShips().Where(x => x.buttons.Contains((Button)sender)).FirstOrDefault();
-
-            if (((Button)sender).BackColor != Color.White && theShip != null)
+            Ship theShip = map.GetShipByButton((Button)sender);
+            if ( theShip != null)
             {
-                visualization.draw(theShip.buttons, new Dead(new Named(theShip)));
+                if (((Button)sender).BackColor != Color.White && theShip != null)
+                {
+                    visualization.draw(theShip.GetButtons(), new Dead(new Named(theShip)));
+                }
             }
+
         }
 
         private void VisualizationClick(object sender, EventArgs e)
@@ -295,22 +298,35 @@ namespace TheBattleShipClient
             int buttonIndex = xCord + yCord * xxy;
 
             myButtons[buttonIndex].BackColor = color;
-            ship.buttons.Clear();
+            ship.button = null;
+            ship.button = new ButtonComposite(myButtons[buttonIndex]);
+            //ship.buttons.Clear();
             if (ship.horizontal)
             {
-                for (int i = 0; i < ship.HP; i++)
+                
+                for (int i = 1; i < ship.HP; i++)
                 {
-                    ship.buttons.Add(myButtons[buttonIndex]);
+                    ButtonLeaf button = new ButtonLeaf(myButtons[buttonIndex]);
+                    ((ButtonComposite)ship.button).AddChild(button);
                     myButtons[buttonIndex++].BackColor = color;
-
                 }
+                
+
+                //for (int i = 0; i < ship.HP; i++)
+                //{
+                    
+                //    ship.buttons.Add(myButtons[buttonIndex]);
+                //    myButtons[buttonIndex++].BackColor = color;
+
+                //}
             }
             else
             {
-                for (int i = 0; i < ship.HP; i++)
+                for (int i = 1; i < ship.HP; i++)
                 {
                     myButtons[buttonIndex].BackColor = color;
-                    ship.buttons.Add(myButtons[buttonIndex]);
+                    ButtonLeaf button = new ButtonLeaf(myButtons[buttonIndex]);
+                    ((ButtonComposite)ship.button).AddChild(button);
                     buttonIndex += xxy;
                 }
             }

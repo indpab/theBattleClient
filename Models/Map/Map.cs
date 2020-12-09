@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 using TheBattleShipClient.Models.Ships.Decorator;
 using TheBattleShipClient.Models.Ships.Bridge;
 using System.Linq;
+using TheBattleShipClient.Models.Ships.Iterator;
 
 namespace TheBattleShipClient.Models
 {
-    public class Map
+    public class Map : Aggregate
     {
 
         protected string _token;
@@ -76,7 +77,8 @@ namespace TheBattleShipClient.Models
                 while (shipsEnum.MoveNext())
                 {
                     Ship current = shipsEnum.Current;
-                    foreach (var button in current.buttons)
+                  
+                    foreach (var button in current.GetButtons())
                     {
                         foreach (var newShipButton in shipCoordinates)
                         {
@@ -268,6 +270,29 @@ namespace TheBattleShipClient.Models
                 }
             }
             return false;
+        }
+
+        public Ship GetShipByButton(Button button)
+        {
+            ShipGroupIterator shipGroups = (ShipGroupIterator)CreateIterator();
+            while (shipGroups.MoveNext())
+            {
+                ShipIterator ships = (ShipIterator)((ShipGroup)shipGroups.Current()).CreateIterator();
+                while (ships.MoveNext())
+                {
+                    if (((Ship)ships.Current()).ContainsButton(button))
+                    {
+                        return (Ship)ships.Current();
+                    }
+                }
+            }
+            return null;
+            
+        }
+
+        public Iterator CreateIterator()
+        {
+            return new ShipGroupIterator(this);
         }
     }
 }

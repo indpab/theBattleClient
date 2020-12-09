@@ -7,14 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TheBattleShipClient.Models.Ships.Algorithms;
+using TheBattleShipClient.Models.Ships.Command;
 using TheBattleShipClient.Services;
 using static TheBattleShipClient.Services.ShipsService;
 using TheBattleShipClient.Models.Ships.Composite;
+using TheBattleShipClient.Models.Ships.Iterator;
 
 namespace TheBattleShipClient.Models.Ships
 {
     [Serializable]
-    public abstract class Ship : Decorator.IShip, ICloneable
+    public abstract class Ship : Decorator.IShip, ICloneable, Aggregate
     {
         public int Id { get; protected set; }
         public int X { get; set; }
@@ -23,15 +25,24 @@ namespace TheBattleShipClient.Models.Ships
         public int YOffset { get; set; }
         public bool horizontal { get; set; }
         public double HP { get; set; }
+
         public double PreviousHP { get; set; }
         protected double InitialHP { get; set; }
 
         public ButtonComponent button { get; set; }
-        
+        public List<Button> buttons { get { return GetButtons(); } }
+        private IMotionAlgorithm _motionAlgoritm = new MoveStraightSlowAlgorithm();
+        private IMotionState _motionState = new MoveStraightSlowState();
+
         protected string _token;
         protected string _roomId;
 
-        private IMotionAlgorithm _motionAlgoritm = new MoveStraightSlowAlgorithm();
+        //private IMotionState _motionState = new MoveStraightSlowState();
+
+
+        private Command.ShipCommand _Command;
+
+        protected string skinText = "Ship";
 
         public Ship(string token, string roomId, int x, int y, bool horizontal, int hp)
         {
@@ -60,24 +71,39 @@ namespace TheBattleShipClient.Models.Ships
             return this.X != -1;
         }
 
+
         public void InitializeButtons()
         {
-            this.buttons = new List<Button>();
+            this.button = null;
+        }
+        public void AddButtons(ButtonComponent button)
+        {
+            this.button = button;
         }
         public void SetMotionAlgoritm(IMotionAlgorithm algorithm)
         {
-            _motionAlgoritm = algorithm;
+            _motionAlgoritm = algorithm;   
         }
 
-        public void Move()
+        public void SetMotionState(IMotionState state)
+
         {
-            _motionAlgoritm.Move(this);
+            _motionState = state;
+        }
+
+        public async Task Move()
+        {
+
+            await _motionAlgoritm.Move(this);
             
+
+            //_motionState.Move(this);
+            //await Update();
+
         }
 
         public async Task Update()
         {
-
             var shipResponse = await Service.UpdateShip(_token, this.Id, X, XOffset, Y, YOffset, 0);
             this.HP = shipResponse.HP;
         }
@@ -139,6 +165,7 @@ namespace TheBattleShipClient.Models.Ships
             }
         }
 
+
         public void ParseShipResponse(ShipResponse shipResponse)
         {
             this.X = shipResponse.X;
@@ -167,6 +194,57 @@ namespace TheBattleShipClient.Models.Ships
         public bool isDamaged()
         {
             return HP < InitialHP;
+        }
+
+        public ShipSnapshotMemento GetSnapshot()
+        {
+            return new ShipSnapshotMemento(new ShipSnapshot
+            {
+                X = this.X,
+                Y = this.Y,
+                XOffset = this.XOffset,
+                YOffset = this.YOffset
+            });
+        }
+
+        public void SetSnapshot(ShipSnapshotMemento snapshot)
+        {
+            var shipSnapshot = snapshot.GetSnapshot();
+            this.X = shipSnapshot.X;
+            this.Y = shipSnapshot.Y;
+            this.XOffset = shipSnapshot.XOffset;
+            this.YOffset = shipSnapshot.YOffset;
+
+        }
+
+        public Iterator.Iterator CreateIterator()
+        {
+            return new ShipButtonIterator(this);
+        }
+        public bool ContainsButton(Button button)
+        {
+            ShipButtonIterator shipButtons = (ShipButtonIterator)CreateIterator();
+            while (shipButtons.MoveNext())
+            {
+                if (shipButtons.Current().Equals(button))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public void UpdateShipButtons()
+        {
+            ShipButtonIterator shipButtons = (ShipButtonIterator)CreateIterator();
+            while (shipButtons.MoveNext())
+            {
+                ((ButtonComponent)shipButtons.Current()).UpdateButton();
+            }
+        }
+        public List<Button> GetButtons()
+        {
+            ShipButtonIterator shipButtons = (ShipButtonIterator)CreateIterator();
+            return shipButtons.GetAsList();
         }
     }
 }

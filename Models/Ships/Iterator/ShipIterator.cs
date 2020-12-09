@@ -7,25 +7,47 @@ namespace TheBattleShipClient.Models.Ships.Iterator
     class ShipIterator : Iterator
     {
         private ShipGroup _shipGroup;
-        private IEnumerator<Ship> _enumerator;
+        private Ship[] _ships;
+        private int _count;
+
 
         public ShipIterator(ShipGroup shipGroup)
         {
-            
+            shipGroup.Ships.CopyTo(_ships,0);
+            _shipGroup = shipGroup;
         }
+
+        public int Count()
+        {
+            return _shipGroup.Ships.Count;
+        }
+
         public object Current()
         {
-            throw new NotImplementedException();
+            return _ships[_count];
         }
 
         public bool MoveNext()
         {
-            throw new NotImplementedException();
+            try
+            {
+                _ = _ships[_count++];
+                return true;
+            }
+            catch (Exception e)
+            {
+                _count--;
+                return false;
+            }
         }
 
         public object Next()
         {
-            throw new NotImplementedException();
+            if (MoveNext())
+            {
+                return Current();
+            }
+            return false;
         }
     }
 }

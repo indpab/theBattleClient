@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TheBattleShipClient.Models.Ships.Algorithms
 {
-    public interface IMotionAlgorithm
+    public interface IMotionState
     {
-        Task Move(Ship ship);
+        void Move(Ship ship);
     }
 }

@@ -15,5 +15,10 @@ namespace TheBattleShipClient.Models.Ships.Composite
         }
 
         public abstract void UpdateButton();
+
+        public Button GetButton()
+        {
+            return button;
+        }
     }
 }
