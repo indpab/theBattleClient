@@ -87,7 +87,6 @@ namespace TheBattleShipClient
                 }
                 catch (ApiException e)
                 {
-
                     errorLabel.Text = e.Message;
                     errorLabel.Visible = true;
                 }
