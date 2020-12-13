@@ -11,7 +11,7 @@ namespace TheBattleShipClient.Services
 {
     public class RoomsService
     {
-        public const string BASE_URL = "https://thebattleshipapi.azurewebsites.net/api/v1/Rooms/";
+        public static string BASE_URL = Resources.ApiEndpoint+"Rooms/";
 
         public static async Task<RoomResponse> Create(string token, RoomRequest request)
         {

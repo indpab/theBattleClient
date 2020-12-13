@@ -15,7 +15,7 @@ namespace TheBattleShipClient.Services
 {
     public class MapsService
     {
-        public const string BASE_URL = "https://thebattleshipapi.azurewebsites.net/api/v1/Maps/";
+        public static string BASE_URL = Resources.ApiEndpoint+"Maps/";
         public static async Task<MapResponse> GetMap(string token, string roomId)
         {
             Uri uri = new Uri(BASE_URL  + roomId);

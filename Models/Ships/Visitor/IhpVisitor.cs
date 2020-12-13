@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Visitor
 {
-    interface IhpElement
+    interface IhpVisitor
     {
     }
 }

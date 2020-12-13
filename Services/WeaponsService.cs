@@ -12,7 +12,7 @@ namespace TheBattleShipClient.Services
 {
     public class WeaponsService
     {
-        public const string BASE_URL = "https://thebattleshipapi.azurewebsites.net/api/v1/Weapons/";
+        public static string BASE_URL = Resources.ApiEndpoint+"Weapons/";
 
         public static async Task<ShotResponse> Shot(string token, string roomId, WeaponRequest weapon)
         {

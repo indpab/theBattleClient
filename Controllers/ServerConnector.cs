@@ -14,7 +14,7 @@ namespace TheBattleShipClient.Controllers
 
         private HttpClient Client = new HttpClient();
         //private readonly string BaseAddress = "https://thebattleapi.azurewebsites.net/api/";
-        private readonly string BaseAddress = "https://thebattleapi.azurewebsites.net/api/v1/";
+        private readonly string BaseAddress = "https://localhost:44350/api/v1/";
 
         private readonly HttpMethod PatchMethod = new HttpMethod("PATCH");
 

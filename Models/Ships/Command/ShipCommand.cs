@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Command
 {
+    [Serializable]
     public abstract class ShipCommand
     {
         protected Ship _ship;

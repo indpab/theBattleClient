@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 namespace TheBattleShipClient.Models.Ships.Composite
 {
+    [Serializable]
     public abstract class ButtonComponent
     {
         Button button;
