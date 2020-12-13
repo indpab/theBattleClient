@@ -11,7 +11,11 @@ namespace TheBattleShipClient.Services
 {
     public class IdentityService
     {
+<<<<<<< HEAD
         public static string BASE_URL = Resources.ApiEndpoint+"Identity/";
+=======
+        public const string BASE_URL = "https://localhost:5001/api/v1/Identity/";
+>>>>>>> Visitor
 
         public static async Task<AuthenticationResponse> Register(UserRequest request)
         {

@@ -4,7 +4,16 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships.Visitor
 {
-    class VisitorAtomic
+    class VisitorAtomic : IhpVisitor
     {
+        public void VisitDestroyer(Destroyer d)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void VisitSubmarine(Submarine s)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
