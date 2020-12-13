@@ -12,7 +12,8 @@ namespace TheBattleShipClient.Services
 {
     public class ShipsService
     {
-        public const string BASE_URL = "https://thebattleshipapi.azurewebsites.net/api/v1/Ships/";
+        //public const string BASE_URL = "https://thebattleshipapi.azurewebsites.net/api/v1/Ships/";
+        public const string BASE_URL = "localhost/v1/Ships/";
 
         public static async Task<ShipResponse> Create(string token, string roomId, ShipRequest ship)
         {

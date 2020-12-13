@@ -11,7 +11,7 @@ namespace TheBattleShipClient.Services
 {
     public class IdentityService
     {
-        public const string BASE_URL = "https://thebattleshipapi.azurewebsites.net/api/v1/Identity/";
+        public const string BASE_URL = "https://localhost:5001/api/v1/Identity/";
 
         public static async Task<AuthenticationResponse> Register(UserRequest request)
         {
