@@ -6,6 +6,6 @@ namespace TheBattleShipClient.Models.Ships.Visitor
 {
     public interface IElement
     {
-        public void Accept(IhpVisitor v);
+        public void Accept(IVisitor v);
     }
 }

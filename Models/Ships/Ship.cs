@@ -29,6 +29,8 @@ namespace TheBattleShipClient.Models.Ships
         public double PreviousHP { get; set; }
         protected double InitialHP { get; set; }
 
+        public ShipType ShipType { get; set; }
+
         public ButtonComponent button { get; set; }
         public List<Button> buttons { get { return GetButtons(); } }
         private IMotionAlgorithm _motionAlgoritm = new MoveStraightSlowAlgorithm();

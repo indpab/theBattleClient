@@ -13,6 +13,7 @@ using TheBattleShipClient.Models.Ships;
 using TheBattleShipClient.Models.Ships.Builder;
 using TheBattleShipClient.Models;
 using System.Linq;
+using TheBattleShipClient.Models.Maps;
 using TheBattleShipClient.Models.Ships.Command;
 using TheBattleShipClient.Models.Ships.Bridge;
 using TheBattleShipClient.Models.Ships.Decorator;

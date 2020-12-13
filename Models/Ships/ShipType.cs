@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TheBattleShipClient.Models.Ships
 {
+    [Serializable]
     public class ShipType
     {
         public string Name { get; set; }

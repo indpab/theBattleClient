@@ -1,6 +1,7 @@
 ﻿    using System;
 using System.Collections.Generic;
 using System.Text;
+using TheBattleShipClient.Models.Ships.Visitor;
 
 namespace TheBattleShipClient.Models.Ships.Factories
 {
@@ -19,6 +20,8 @@ namespace TheBattleShipClient.Models.Ships.Factories
             new_submarine.X = x;
             new_submarine.Y = y;
             new_submarine.Rotate(horizontal);
+            VisitorAtomic visitorAtomic = new VisitorAtomic();
+            new_submarine.Accept(visitorAtomic);
             return new_submarine;
         }
 
@@ -28,6 +31,8 @@ namespace TheBattleShipClient.Models.Ships.Factories
             new_destroyer.X = x;
             new_destroyer.Y = y;
             new_destroyer.Rotate(horizontal);
+            VisitorAtomic visitorAtomic = new VisitorAtomic();
+            new_destroyer.Accept(visitorAtomic);
             return new_destroyer;
         }
 

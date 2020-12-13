@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TheBattleShipClient.Models.Ships.Algorithms;
+using TheBattleShipClient.Models.Ships.Visitor;
 using TheBattleShipClient.Services;
 
 namespace TheBattleShipClient.Models.Ships
@@ -17,7 +18,8 @@ namespace TheBattleShipClient.Models.Ships
 
         public override async Task Create()
         {
-            var ship = await Service.CreateShip(_token, _roomId, X, XOffset, Y, YOffset, 3);
+            int shipType = ShipTypeMappings.typeIdPairs.GetValueOrDefault(this.ShipType.Name);
+            var ship = await Service.CreateShip(_token, _roomId, X, XOffset, Y, YOffset, shipType);
             this.Id = ship.Id;
             this.HP = ship.HP;
         }

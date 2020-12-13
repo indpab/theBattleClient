@@ -11,6 +11,6 @@ namespace TheBattleShipClient.Models
         public bool IsHostTurn { get; set; }
         public string WinnerId { get; set; }
 
-        public ICollection<Map> Maps { get; set; }
+        public ICollection<Maps.Map> Maps { get; set; }
     }
 }

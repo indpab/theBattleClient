@@ -13,7 +13,7 @@ namespace TheBattleShipClient.Models.Ships
         {
             
         }
-        public void Accept(IhpVisitor visitor)
+        public void Accept(IVisitor visitor)
         {
             visitor.VisitDestroyer(this);
         }

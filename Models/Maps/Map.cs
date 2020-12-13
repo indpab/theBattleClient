@@ -13,7 +13,7 @@ using TheBattleShipClient.Models.Ships.Bridge;
 using System.Linq;
 using TheBattleShipClient.Models.Ships.Iterator;
 
-namespace TheBattleShipClient.Models
+namespace TheBattleShipClient.Models.Maps
 {
     public class Map : Aggregate
     {
@@ -175,6 +175,7 @@ namespace TheBattleShipClient.Models
                 {
                     Ship current = shipsEnum.Current;
                     if (current.HP < 0) { current.HP = 0; } // Tikslas: Nesusidurti su neigiamu skaiciumi
+
                     current.ParseShipResponse(shipsResponseEnum.Current);
 
                     IShip current_decor = new Named(current);
