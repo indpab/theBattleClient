@@ -24,6 +24,7 @@ using TheBattleShipClient.Models.Weapons.Factories.Adapter;
 using TheBattleShipClient.Models.Weapons;
 using TheBattleShipClient.Models.Ships.Algorithms;
 using TheBattleShipClient.Models.Ships.Composite;
+using TheBattleShipClient.Models.Ships.Mediator;
 
 namespace TheBattleShipClient
 {
@@ -40,6 +41,8 @@ namespace TheBattleShipClient
         GameSubject gameSubject;
         Visualization visualization = new ColorBlue();
         int colorChange = 10;
+
+        Mediator achievementMediator = new Mediator();
 
         public void UpdateState()
         {
@@ -220,9 +223,30 @@ namespace TheBattleShipClient
             iterLimit = countShips();
             CreateRoomIdTextBox();
             visualization = new ColorBlue();
+            MediatorStart();
         }
 
+        private void MediatorStart()
+        {
+            Notificator SendToAchvievment = new Notificator(achievementMediator);
+            Notificator SendToNotification = new Notificator(achievementMediator);
+            SendToAchvievment.AchievementReceived += AchievementReceivedEventHandler;
+            SendToNotification.NotificationReceived += NotificationReceivedEventHandler;
+            achievementMediator.AddComunicator(SendToAchvievment);
+            achievementMediator.AddComunicator(SendToNotification);
+        }
 
+        public void AchievementReceivedEventHandler(string message)
+        {
+            AchievmentsLabel.Text = message;
+            AchievmentsLabel.Visible = true;
+        }
+
+        public void NotificationReceivedEventHandler(string message)
+        {
+            NotificationsLabel.Text = message;
+            NotificationsLabel.Visible = true;
+        }
 
         private void SetPlaceShipInfo()
         {

@@ -7,12 +7,15 @@ using TheBattleShipClient.Models.Ships.Decorator;
 
 namespace TheBattleShipClient.Models.Chain_of_Responsibility
 {
-    class DeadDamagedShipHandler : Handler
+    class NamedShipHandler : Handler
     {
         public override void Handle(Ship shipResponse, IShip current_decor, Visualization visualization)
         {
-            visualization.draw(shipResponse.GetButtons(), new Damaged(current_decor));
+            current_decor = new Named(shipResponse);
+            if (succesor != null)
+            {
+                succesor.Handle(shipResponse, current_decor, visualization);
+            }
         }
-
     }
 }

@@ -12,6 +12,7 @@ using TheBattleShipClient.Models.Ships.Decorator;
 using TheBattleShipClient.Models.Ships.Bridge;
 using System.Linq;
 using TheBattleShipClient.Models.Ships.Iterator;
+using TheBattleShipClient.Models.Chain_of_Responsibility;
 
 namespace TheBattleShipClient.Models.Maps
 {
@@ -178,30 +179,39 @@ namespace TheBattleShipClient.Models.Maps
 
                     current.ParseShipResponse(shipsResponseEnum.Current);
 
-                    IShip current_decor = new Named(current);
+                    IShip current_decor = null;
                     //MessageBox.Show(current.HP.ToString() + "  Previous: " + current.PreviousHP);
+                    NamedShipHandler namedShipHandler = new NamedShipHandler();
+                    DamagedShipHandler damagedHandler = new DamagedShipHandler();
+                    DeadShipHandler deadShipHandler = new DeadShipHandler();
+                    DeadDamagedShipHandler deadDamagedShipHandler = new DeadDamagedShipHandler();
 
+                    namedShipHandler.SetSuccessor(damagedHandler);
+                    damagedHandler.SetSuccessor(deadShipHandler);
+                    deadShipHandler.SetSuccessor(deadDamagedShipHandler);
 
-                    if (current.isDamaged())
-                    {
-                        if (current.isDead())
-                        {
-                            current_decor = new Dead(current_decor);
-                            if (current.DeadDamaged())
-                            {
-                                visualization.draw(current.buttons, new Damaged(current_decor));
-                            }
-                            else
-                            {
-                                visualization.draw(current.buttons, current_decor);
-                            }
-                        }
-                        else
-                        {
-                            current_decor = new Damaged(current_decor);
-                            visualization.draw(current.buttons, current_decor);
-                        }
-                    }
+                    namedShipHandler.Handle(current, current_decor, visualization);
+
+                    //if (current.isDamaged())
+                    //{
+                    //    if (current.isDead())
+                    //    {
+                    //        current_decor = new Dead(current_decor);
+                    //        if (current.DeadDamaged())
+                    //        {
+                    //            visualization.draw(current.GetButtons(), new Damaged(current_decor));
+                    //        }
+                    //        else
+                    //        {
+                    //            visualization.draw(current.GetButtons(), current_decor);
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        current_decor = new Damaged(current_decor);
+                    //        visualization.draw(current.GetButtons(), current_decor);
+                    //    }
+                    //}
                     if (current.HasBeenShot())
                     {
                         ship = current;
@@ -228,7 +238,7 @@ namespace TheBattleShipClient.Models.Maps
                 while (shipsEnum.MoveNext())
                 {
                     Ship current = shipsEnum.Current;
-                    foreach (var button in current.buttons)
+                    foreach (var button in current.GetButtons())
                     {
                         if (getButtonCoordinates(button).Equals(point))
                         {
