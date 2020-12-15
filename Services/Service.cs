@@ -8,18 +8,18 @@ using static TheBattleShipClient.Services.WeaponsService;
 
 namespace TheBattleShipClient.Services
 {
-    class Service
+    class Service : IService
     {
-        public static async Task<RoomResponse> HostRoom(string token, int roomSizeVal)
+        public async Task<RoomResponse> HostRoom(string token, int roomSizeVal)
         {
             var request = new RoomRequest { Size = roomSizeVal };
             return await Create(token, request);
         }
-        public static async Task<RoomResponse> JoinRoom(string token, string roomIdVal)
+        public async Task<RoomResponse> JoinRoom(string token, string roomIdVal)
         {
             return await Join(token, roomIdVal);
         }
-        public static async Task<ShotResponse> ShootWeapon(string token, string roomId, int x, int y, int weaponType)
+        public async Task<ShotResponse> ShootWeapon(string token, string roomId, int x, int y, int weaponType)
         {
             var weaponRequest = new WeaponRequest
             {
@@ -29,7 +29,7 @@ namespace TheBattleShipClient.Services
             };
             return await Shot(token, roomId, weaponRequest);
         }
-        public static async Task<ShipResponse> CreateShip(string token, string roomId, int x, int x_offset, int y, int y_offset, int shipTypeId)
+        public async Task<ShipResponse> CreateShip(string token, string roomId, int x, int x_offset, int y, int y_offset, int shipTypeId)
         {
             var shipRequest = new ShipRequest
             {
@@ -41,7 +41,7 @@ namespace TheBattleShipClient.Services
             };
             return await ShipsService.Create(token, roomId, shipRequest);
         }
-        public static async Task<ShipResponse> UpdateShip(string token, int shipId, int x, int x_offset, int y, int y_offset, int shipType)
+        public async Task<ShipResponse> UpdateShip(string token, int shipId, int x, int x_offset, int y, int y_offset, int shipType)
         {
             var shipRequest = new ShipRequest
             {
@@ -53,12 +53,10 @@ namespace TheBattleShipClient.Services
             };
             return await Update(token, shipId, shipRequest);
         }
-        public static async Task<bool> HasGuestArrived(string token, string roomId)
+        public async Task<bool> HasGuestArrived(string token, string roomId)
         {
             return await CheckGuest(token, roomId);
         }
-
-
 
     }
 }
