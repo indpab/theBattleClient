@@ -19,7 +19,11 @@ namespace TheBattleShipClient.Models.Ships.Mediator
         {
             for (int i = 0; i < communicators.Count; i++)
             {
-                await communicators[i].Receive(msg, roomId, token);
+                if (communicators[i] != sender)
+                {
+                    await communicators[i].Receive(msg, roomId, token);
+                }
+                
             }
         }
     }

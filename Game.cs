@@ -58,6 +58,7 @@ namespace TheBattleShipClient
         {
             UpdateJoinedState();
             UpdatePlayerState();
+            
         }
 
         public void UpdateJoinedState()
@@ -90,7 +91,6 @@ namespace TheBattleShipClient
             }
             MediatorProcess();
         }
-
         private async void ShootButtonClick(object sender, EventArgs e)
         {
             int xCord;
@@ -181,7 +181,50 @@ namespace TheBattleShipClient
             }
         }
 
-       
+
+        #region ChatBox
+        private void MediatorStart()
+        {
+            hostPlayer = new Participant(chatMediator, chatTextBox);
+            notificator = new Notificator(chatMediator, chatTextBox);
+            systemParticipant = new Participant(chatMediator, chatTextBox);
+            chatMediator.AddComunicator(hostPlayer);
+            chatMediator.AddComunicator(notificator);
+        }
+
+        private async void UpdateChat()
+        {
+            var messages = await CommunicationService.GetAllMessagesByRoomId(_token, _roomId);
+            foreach (var item in messages)
+            {
+                chatTextBox.AppendText(item.MessageContent + Environment.NewLine);
+            }
+        }
+
+        private async void MediatorProcess()
+        {
+            if (messageTextBox.Text.Length < 1)
+            {
+                return;
+            }
+            chatTextBox.Text = "";
+            CommandExpression commanExpression = new CommandExpression();
+            commanExpression.setTextBox(chatTextBox);
+            string message = (commanExpression).Interpret(messageTextBox.Text);
+            message = (new CurseExpression()).Interpret(message);
+            message = cheatExpression.Interpret(message);
+
+            await hostPlayer.Send(message, _roomId, _token);
+            UpdateChat();
+            messageTextBox.Text = "";
+        }
+
+        private void SendMessageButtonClick(object sender, EventArgs e)
+        {
+            MediatorProcess();
+        }
+        #endregion
+
 
         #region Build Map Pre Game
 
@@ -267,46 +310,7 @@ namespace TheBattleShipClient
             MediatorStart();
         }
 
-        private void MediatorStart()
-        {
-            hostPlayer = new Participant(chatMediator, chatTextBox);
-            notificator = new Notificator(chatMediator, chatTextBox);
-            systemParticipant = new Participant(chatMediator, chatTextBox);
-            chatMediator.AddComunicator(hostPlayer);
-            chatMediator.AddComunicator(notificator);
-        }
 
-        private async void UpdateChat()
-        {
-            var messages = await CommunicationService.GetAllMessagesByRoomId(_token, _roomId);
-            foreach (var item in messages)
-            {
-                chatTextBox.AppendText(item.MessageContent + Environment.NewLine);
-            }
-        }
-
-        private async void MediatorProcess()
-        {
-            if (messageTextBox.Text.Length < 1)
-            {
-                return;
-            }
-            chatTextBox.Text = "";
-            CommandExpression commanExpression = new CommandExpression();
-            commanExpression.setTextBox(chatTextBox);
-            string message = (commanExpression).Interpret(messageTextBox.Text);
-            message = (new CurseExpression()).Interpret(message);
-            message = cheatExpression.Interpret(message);
-
-            await hostPlayer.Send(message, _roomId, _token);
-            UpdateChat();
-            messageTextBox.Text = "";
-        }
-
-        private void SendMessageButtonClick(object sender, EventArgs e)
-        {
-            MediatorProcess();
-        }
 
         private Ship GetCurrentShip()
         {

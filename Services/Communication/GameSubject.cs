@@ -8,14 +8,14 @@ namespace TheBattleShipClient.Services.Communication
     {
         public bool isStarted = false;
         private bool _joinedState;
-        public bool JoinedState 
+        public bool JoinedState
         {
             get { return _joinedState; }
-            set 
+            set
             {
                 _joinedState = value;
                 NotifyObservers();
-            } 
+            }
         }
 
         private bool _playerState;
@@ -28,7 +28,7 @@ namespace TheBattleShipClient.Services.Communication
                 NotifyObservers();
             }
         }
-        
+
         public GameSubject()
         {
             JoinedState = false;
@@ -51,11 +51,11 @@ namespace TheBattleShipClient.Services.Communication
 
         public async void StartObservingGame(string token, string roomId)
         {
-          
+
             while (true)
             {
                 bool isMyTurn = await MapsService.IsMyTurn(token, roomId);
-                if (isMyTurn != PlayerState )
+                if (isMyTurn != PlayerState)
                 {
                     PlayerState = isMyTurn;
                 }

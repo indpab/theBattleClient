@@ -13,8 +13,11 @@ namespace TheBattleShipClient.Controllers
         private static readonly object padlock = new object();
 
         private HttpClient Client = new HttpClient();
+        private readonly string BaseAddress = "https://superbattleshipapi.azurewebsites.net/api/";
         //private readonly string BaseAddress = "https://thebattleapi.azurewebsites.net/api/";
-        private readonly string BaseAddress = "https://localhost:44350/api/v1/";
+        //private readonly string BaseAddress = "https://localhost:44350/api/v1/";
+
+
 
         private readonly HttpMethod PatchMethod = new HttpMethod("PATCH");
 
