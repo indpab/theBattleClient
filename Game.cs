@@ -45,6 +45,7 @@ namespace TheBattleShipClient
         Random rand = new Random();
         Facafe fack = new Facafe();
         GameSubject gameSubject;
+        ChatSubject chatSubject;
         Visualization visualization = new ColorBlue();
         int colorChange = 10;
 
@@ -58,7 +59,8 @@ namespace TheBattleShipClient
         {
             UpdateJoinedState();
             UpdatePlayerState();
-            
+            UpdateChat();
+
         }
 
         public void UpdateJoinedState()
@@ -194,6 +196,7 @@ namespace TheBattleShipClient
 
         private async void UpdateChat()
         {
+            chatTextBox.Text = "";
             var messages = await CommunicationService.GetAllMessagesByRoomId(_token, _roomId);
             foreach (var item in messages)
             {
@@ -215,7 +218,6 @@ namespace TheBattleShipClient
             message = cheatExpression.Interpret(message);
 
             await hostPlayer.Send(message, _roomId, _token);
-            UpdateChat();
             messageTextBox.Text = "";
         }
 
@@ -285,8 +287,13 @@ namespace TheBattleShipClient
         private async void Game_Load(object sender, EventArgs e)
         {
             gameSubject = new GameSubject();
+            chatSubject = new ChatSubject();
+
             gameSubject.Attach(this);
+            chatSubject.Attach(this);
+
             gameSubject.StartObserving(_token, _roomId);
+            chatSubject.StartObserving(_token, _roomId);
 
             var submarine_builder = new SubmarineShipGroupsBuilder(_token, _roomId);
             var submarine_director = new BuildShipGroupsDirector(submarine_builder);
@@ -487,7 +494,7 @@ namespace TheBattleShipClient
             {
                 await notificator.Send("You have placed all your ships !", _roomId, _token);
             }
-            UpdateChat();
+            
         }
 
         private void turnShip_Click(object sender, EventArgs e)
