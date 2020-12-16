@@ -102,6 +102,7 @@ namespace TheBattleShipClient
             this.yourTurnText = new System.Windows.Forms.Label();
             this.EnemyPlayTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.torpedoRadioButton = new System.Windows.Forms.RadioButton();
             this.bombRadioButton = new System.Windows.Forms.RadioButton();
@@ -132,7 +133,7 @@ namespace TheBattleShipClient
             this.txtPlayer.Name = "txtPlayer";
             this.txtPlayer.Size = new System.Drawing.Size(38, 25);
             this.txtPlayer.TabIndex = 0;
-            this.txtPlayer.Text = "00";
+            this.txtPlayer.Text = "";
             // 
             // shipPlaceInfo
             // 
@@ -144,7 +145,7 @@ namespace TheBattleShipClient
             this.shipPlaceInfo.Name = "placeShipInfo";
             this.shipPlaceInfo.Size = new System.Drawing.Size(75, 25);
             this.shipPlaceInfo.TabIndex = 0;
-            this.shipPlaceInfo.Text = "Next ship size: 4";
+            this.shipPlaceInfo.Text = "";
             // 
             // turnShipButton
             // 
@@ -188,7 +189,7 @@ namespace TheBattleShipClient
             this.txtEnemy.Name = "txtEnemy";
             this.txtEnemy.Size = new System.Drawing.Size(38, 25);
             this.txtEnemy.TabIndex = 0;
-            this.txtEnemy.Text = "00";
+            this.txtEnemy.Text = "";
             // 
             // yourTurn
             // 
@@ -224,7 +225,7 @@ namespace TheBattleShipClient
             this.yourTurnText.Name = "yourTurnText";
             this.yourTurnText.Size = new System.Drawing.Size(120, 30);
             this.yourTurnText.TabIndex = 0;
-            this.yourTurnText.Text = ""; ;
+            this.yourTurnText.Text = "";
             // 
             // groupBox1
             // 
@@ -423,6 +424,7 @@ namespace TheBattleShipClient
         private System.Windows.Forms.Label joinedStatus;
         private System.Windows.Forms.Label yourTurnText;
         private System.Windows.Forms.Timer EnemyPlayTimer;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;

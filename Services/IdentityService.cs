@@ -50,7 +50,6 @@ namespace TheBattleShipClient.Services
                 var errorResponse = JsonConvert.DeserializeObject<ErrorResponse.Root>(responseString);
 
                 throw new ApiException(string.Join(',', errorResponse.Errors.Select((x) => x.Message)), new ErrorResponse());
-
             }
         }
     }

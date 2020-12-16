@@ -25,6 +25,9 @@ using TheBattleShipClient.Models.Weapons;
 using TheBattleShipClient.Models.Ships.Algorithms;
 using TheBattleShipClient.Models.Ships.Composite;
 using TheBattleShipClient.Models.Ships.Mediator;
+using TheBattleShipClient.Models.Ships.Interpreter;
+using TheBattleShipClient.Models.Communication.Mediator;
+using TheBattleShipClient.Models.Communication.Interpreter;
 
 namespace TheBattleShipClient
 {
@@ -36,18 +39,24 @@ namespace TheBattleShipClient
         bool gameStarted = false;
         Services.RoomsService.RoomResponse RoomResponse { get; set; }
         TextBox roomIdTextBox;
+        TextBox chatTextBox;
+        TextBox messageTextBox;
+        Button sendMessageButton;
         Random rand = new Random();
         Facafe fack = new Facafe();
         GameSubject gameSubject;
         Visualization visualization = new ColorBlue();
         int colorChange = 10;
 
-        Mediator achievementMediator = new Mediator();
+        Mediator chatMediator = new Mediator();
+        Participant hostPlayer;
+        Notificator notificator;
+        Participant systemParticipant;
+        CheatExpression cheatExpression;
 
         public void UpdateState()
         {
             UpdateJoinedState();
-
             UpdatePlayerState();
         }
 
@@ -79,6 +88,7 @@ namespace TheBattleShipClient
 
                 yourTurnText.Text = "Wait for your turn";
             }
+            MediatorProcess();
         }
 
         private async void ShootButtonClick(object sender, EventArgs e)
@@ -125,7 +135,7 @@ namespace TheBattleShipClient
                 colorChange += 10;
             }
         }
-        private void startGame_Click(object sender, EventArgs e)
+        private async void startGame_Click(object sender, EventArgs e)
         {
             gameStarted = true;
             map.StartGameMap();
@@ -134,6 +144,7 @@ namespace TheBattleShipClient
             turnShipButton.Hide();
             undoButton.Hide();
             startGameButton.Hide();
+            await notificator.Send("You started the game!", _roomId, _token);
         }
 
         private void MovingAlgorithmClick(object sender, EventArgs e)
@@ -189,6 +200,8 @@ namespace TheBattleShipClient
             _roomId = rr.Id;
             InitializeComponent();
             map = new Map(_token, _roomId, xxy, xxy, myButtons);
+            cheatExpression = new CheatExpression();
+            cheatExpression.setButtons(map.buttons);
         }
         private void CreateRoomIdTextBox()
         {
@@ -197,6 +210,33 @@ namespace TheBattleShipClient
             roomIdTextBox.Size = new Size(200, 20);
             roomIdTextBox.Location = new Point(50, 10);
             this.Controls.Add(this.roomIdTextBox);
+        }
+
+        private void CreateChatTextBox()
+        {
+            chatTextBox = new TextBox();
+            chatTextBox.Text = "Hi" + Environment.NewLine;
+            chatTextBox.Size = new Size(420, 200);
+            chatTextBox.Location = new Point(1300, 30);
+            chatTextBox.BackColor = Color.White;
+            chatTextBox.Multiline = true;
+            this.Controls.Add(this.chatTextBox);
+
+            messageTextBox = new TextBox();
+            messageTextBox.Text = "";
+            messageTextBox.Size = new Size(300, 100);
+            messageTextBox.Location = new Point(1300, 250);
+            this.Controls.Add(this.messageTextBox);
+
+            sendMessageButton = new Button();
+            sendMessageButton.Location = new Point(1610, 250);
+            sendMessageButton.Name = "senMessageButton";
+            sendMessageButton.Size = new Size(100, 30);
+            sendMessageButton.TabIndex = 2;
+            sendMessageButton.Text = "Send Message";
+            sendMessageButton.UseVisualStyleBackColor = true;
+            sendMessageButton.Click += new System.EventHandler(this.SendMessageButtonClick);
+            this.Controls.Add(this.sendMessageButton);
         }
 
         private async void Game_Load(object sender, EventArgs e)
@@ -222,39 +262,50 @@ namespace TheBattleShipClient
             shipIndex = map.ShipGroups.ToList()[groupIndex].Ships.Count;
             iterLimit = countShips();
             CreateRoomIdTextBox();
+            CreateChatTextBox();
             visualization = new ColorBlue();
             MediatorStart();
         }
 
         private void MediatorStart()
         {
-            Notificator SendToAchvievment = new Notificator(achievementMediator);
-            Notificator SendToNotification = new Notificator(achievementMediator);
-            SendToAchvievment.AchievementReceived += AchievementReceivedEventHandler;
-            SendToNotification.NotificationReceived += NotificationReceivedEventHandler;
-            achievementMediator.AddComunicator(SendToAchvievment);
-            achievementMediator.AddComunicator(SendToNotification);
+            hostPlayer = new Participant(chatMediator, chatTextBox);
+            notificator = new Notificator(chatMediator, chatTextBox);
+            systemParticipant = new Participant(chatMediator, chatTextBox);
+            chatMediator.AddComunicator(hostPlayer);
+            chatMediator.AddComunicator(notificator);
         }
 
-        public void AchievementReceivedEventHandler(string message)
+        private async void UpdateChat()
         {
-            AchievmentsLabel.Text = message;
-            AchievmentsLabel.Visible = true;
+            var messages = await CommunicationService.GetAllMessagesByRoomId(_token, _roomId);
+            foreach (var item in messages)
+            {
+                chatTextBox.AppendText(item.MessageContent + Environment.NewLine);
+            }
         }
 
-        public void NotificationReceivedEventHandler(string message)
+        private async void MediatorProcess()
         {
-            NotificationsLabel.Text = message;
-            NotificationsLabel.Visible = true;
+            if (messageTextBox.Text.Length < 1)
+            {
+                return;
+            }
+            chatTextBox.Text = "";
+            CommandExpression commanExpression = new CommandExpression();
+            commanExpression.setTextBox(chatTextBox);
+            string message = (commanExpression).Interpret(messageTextBox.Text);
+            message = (new CurseExpression()).Interpret(message);
+            message = cheatExpression.Interpret(message);
+
+            await hostPlayer.Send(message, _roomId, _token);
+            UpdateChat();
+            messageTextBox.Text = "";
         }
 
-        private void SetPlaceShipInfo()
+        private void SendMessageButtonClick(object sender, EventArgs e)
         {
-            shipPlaceInfo.Text = shipPlaceInfo.Text.Remove(shipPlaceInfo.Text.Length - 1);
-            if (currShip.HP == 1)
-                shipPlaceInfo.Text += 4;
-            else
-                shipPlaceInfo.Text += currShip.HP - 1;
+            MediatorProcess();
         }
 
         private Ship GetCurrentShip()
@@ -386,8 +437,7 @@ namespace TheBattleShipClient
                 bool isSubmarine = map.ShipGroups.ToList()[groupIndex].ShipType.IsSubmarine;
                 setColor(isSubmarine);
                 drawShip(currShip, xCord, yCord);
-                SetPlaceShipInfo();
-
+                await notificator.Send("Ship Placed!", _roomId, _token);
                 placedShipsCount++;
                 isSuccess = true;
             }
@@ -429,6 +479,11 @@ namespace TheBattleShipClient
                     
                 }
             }
+            if (placedShipsCount == iterLimit)
+            {
+                await notificator.Send("You have placed all your ships !", _roomId, _token);
+            }
+            UpdateChat();
         }
 
         private void turnShip_Click(object sender, EventArgs e)
